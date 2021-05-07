@@ -89,6 +89,11 @@
               class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
               aria-current="page">Editor</a
             >
+            <a
+              href="/mention"
+              class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+              aria-current="page">Mention</a
+            >
           </div>
         </div>
       </div>

@@ -143,7 +143,7 @@
   });
 </script>
 
-<div bind:this={calendarInstance} />
+<div bind:this={calendarInstance} class="bg-white p-6 rounded-xl" />
 
 {#if showDetail}
   <div

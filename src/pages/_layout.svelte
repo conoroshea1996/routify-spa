@@ -5,4 +5,6 @@
 
 <Navbar />
 
-<slot />
+<main class="max-w-6xl mx-auto mt-4">
+  <slot />
+</main>
