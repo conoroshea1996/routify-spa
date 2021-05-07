@@ -22,11 +22,15 @@
   "dependencies": {
     "@editorjs/editorjs": "^2.21.0",
     "@editorjs/header": "^2.6.1",
+    "@editorjs/list": "^1.6.2",
+    "@editorjs/paragraph": "^2.8.0",
+    "@editorjs/simple-image": "^1.4.1",
     "@event-calendar/core": "^0.1.1",
     "@event-calendar/day-grid": "^0.1.1",
     "@event-calendar/list": "^0.1.1",
     "@event-calendar/resource-time-grid": "^0.1.1",
     "@event-calendar/time-grid": "^0.1.1",
+    "editorjs-text-color-plugin": "^1.1.22",
     "tui-calendar": "^1.13.0"
   }
 }
