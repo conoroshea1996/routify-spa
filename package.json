@@ -30,6 +30,7 @@
     "@event-calendar/list": "^0.1.1",
     "@event-calendar/resource-time-grid": "^0.1.1",
     "@event-calendar/time-grid": "^0.1.1",
+    "editorjs-html": "^3.0.5",
     "editorjs-text-color-plugin": "^1.1.22",
     "tui-calendar": "^1.13.0"
   }

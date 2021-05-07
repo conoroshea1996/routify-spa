@@ -6,17 +6,21 @@
   import SimpleImage from "@editorjs/simple-image";
   import ColorPlugin from "editorjs-text-color-plugin";
   import { onMount } from "svelte";
-
+  import edjsHTML from "editorjs-html";
   let editor;
   let editorInstance;
-
+  let x =
+    '<h2> New header </h2><p> Job purpose </p><p> Provide a brief description of the general nature of the position; an overview of why the job exists; and what the job is to accomplish. </p><p> The job purpose is usually no more than a few sentences long. </p><p> Duties and responsibilities </p><p> List the primary job duties and responsibilities using headings and then give examples of the types of activities under each heading. Identify between three and eight primary duties and responsibilities for the position. </p><ul> <li> List the primary duties and responsibilities in order of importance </li><li> Begin each statement with an action verb </li><li> Use the present tense of verbs </li><li> Use gender neutral language </li><li> Use generic language </li><li> Where appropriate use qualifiers to clarify the task – where, when, why or how often – for example instead of “greet visitor to the office” use “greet visitors to the office in a professional and friendly manner” </li> </ul><p> Qualifications </p><p> State the minimum qualifications required to successfully perform the job. </p><p> Qualifications include </p><ul> <li> Education </li><li> Specialized knowledge </li><li> Skills </li><li> Abilities </li><li> Other characteristics such as personal characteristics </li><li> Professional Certification </li><li> Experience </li> </ul><p> Perks/Benefits of the role </p><img src="https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg" />';
   onMount(async () => {
-    console.log(editor);
     editorInstance = new EditorJS({
       holder: editor,
       hideToolbar: false,
       inlineToolbar: true,
       tools: {
+        paragraph: {
+          class: Paragraph,
+          inlineToolbar: true,
+        },
         header: {
           class: Header,
           config: {
@@ -26,16 +30,14 @@
           },
           inlineToolbar: true,
         },
-        paragraph: {
-          class: Paragraph,
-          inlineToolbar: true,
-        },
         list: {
           class: List,
           inlineToolbar: true,
         },
-        image: SimpleImage,
-
+        image: {
+          class: SimpleImage,
+          inlineToolbar: true,
+        },
         Color: {
           class: ColorPlugin,
           config: {
@@ -66,122 +68,23 @@
           },
         },
       },
-      data: {
-        blocks: [
-          {
-            type: "header",
-            data: {
-              text: "New header",
-              level: 2,
-            },
-          },
-          {
-            type: "paragraph",
-            data: {
-              text: "Job purpose",
-            },
-          },
-          {
-            type: "paragraph",
-            data: {
-              text:
-                "Provide a brief description of the general nature of the position; an overview of why the job exists; and what the job is to accomplish.",
-            },
-          },
-          {
-            type: "paragraph",
-            data: {
-              text:
-                "The job purpose is usually no more than a few sentences long.",
-            },
-          },
-          {
-            type: "paragraph",
-            data: {
-              text: "Duties and responsibilities",
-            },
-          },
-          {
-            type: "paragraph",
-            data: {
-              text:
-                "List the primary job duties and responsibilities using headings and then give examples of the types of activities under each heading. Identify between three and eight primary duties and responsibilities for the position.",
-            },
-          },
-          {
-            type: "list",
-            data: {
-              style: "unordered",
-              items: [
-                "List the primary duties and responsibilities in order of importance",
-                "Begin each statement with an action verb",
-                "Use the present tense of verbs",
-                "Use gender neutral language",
-                "Use generic language",
-                "Where appropriate use qualifiers to clarify the task – where, when, why or how often – for example instead of “greet visitor to the office” use “greet visitors to the office in a professional and friendly manner”",
-              ],
-            },
-          },
-          {
-            type: "paragraph",
-            data: {
-              text: "Qualifications",
-            },
-          },
-          {
-            type: "paragraph",
-            data: {
-              text:
-                "State the minimum qualifications required to successfully perform the job.",
-            },
-          },
-          {
-            type: "paragraph",
-            data: {
-              text: "Qualifications include",
-            },
-          },
-          {
-            type: "list",
-            data: {
-              style: "unordered",
-              items: [
-                "Education",
-                "Specialized knowledge",
-                "Skills",
-                "Abilities",
-                "Other characteristics such as personal characteristics",
-                "Professional Certification",
-                "Experience",
-              ],
-            },
-          },
-          {
-            type: "paragraph",
-            data: {
-              text: "Perks/Benefits of the role",
-            },
-          },
-          {
-            type: "image",
-            data: {
-              url:
-                "https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg",
-              caption: "Random Image attached using url",
-              withBorder: false,
-              withBackground: false,
-              stretched: false,
-            },
-          },
-        ],
-      },
     });
+
+    console.log(x, "String USED TO RENDER ON LOAD");
+    await editorInstance.isReady;
+    editorInstance.blocks.renderFromHTML(x);
   });
+
+  const imageParser = (image) => {
+    return `<img src="${image.data.url}" />`;
+  };
+
+  const edjsParser = edjsHTML({ image: imageParser });
 
   const save = async () => {
     const result = await editorInstance.save();
-    console.log(result);
-    alert("Console log results");
+    const parserHtml = edjsParser.parse(result);
+    console.log(parserHtml.join(""), "SAVED DATA");
   };
 </script>
 
@@ -195,3 +98,10 @@
 >
   Save
 </button>
+
+<style global>
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+  }
+</style>
