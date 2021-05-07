@@ -7,8 +7,7 @@
     "validate": "svelte-check"
   },
   "devDependencies": {
-    "@event-calendar/core": "^0.1.1",
-    "@event-calendar/time-grid": "^0.1.1",
+    "@event-calendar/interaction": "^0.1.1",
     "@roxi/routify": "^2.15.1",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.7",
     "@tsconfig/svelte": "^1.0.10",
@@ -19,5 +18,15 @@
     "vite": "^2.2.3",
     "vite-plugin-windicss": "^0.15.10",
     "windicss": "^2.5.14"
+  },
+  "dependencies": {
+    "@editorjs/editorjs": "^2.21.0",
+    "@editorjs/header": "^2.6.1",
+    "@event-calendar/core": "^0.1.1",
+    "@event-calendar/day-grid": "^0.1.1",
+    "@event-calendar/list": "^0.1.1",
+    "@event-calendar/resource-time-grid": "^0.1.1",
+    "@event-calendar/time-grid": "^0.1.1",
+    "tui-calendar": "^1.13.0"
   }
 }

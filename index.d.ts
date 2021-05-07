@@ -1,5 +1,5 @@
 
 declare module "@event-calendar/core" {
-    declare class InputMask {}
-    export default InputMask;
+    declare class Calendar {}
+    export default Calendar;
 }

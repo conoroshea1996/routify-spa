@@ -1,6 +1,7 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
+    "baseUrl": "/",
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
@@ -11,7 +12,10 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
-    "types": ["vite/client", "svelte"]
+    "types": ["vite/client", "svelte"],
+    "paths": {
+			"$lib/*": ["src/lib/*"]
+		}
   },
   "include": [
     "src/**/*.ts",
