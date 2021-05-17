@@ -91,7 +91,7 @@
             <TextInput bind:value={$job.experience} full>
               <span
                 slot="trailing"
-                class="text-gray-400 absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none"
+                class="text-gray-500 absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none"
               >
                 Year
               </span>
@@ -107,13 +107,13 @@
             <TextInput bind:value={$job.salary} full>
               <span
                 slot="leading"
-                class="text-gray-400 absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
+                class="text-gray-500 absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
               >
                 $
               </span>
               <span
                 slot="trailing"
-                class="text-gray-400 absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none"
+                class="text-gray-500 absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none"
               >
                 USD
               </span>
@@ -122,7 +122,7 @@
         </div>
 
         <div class="flex justify-end">
-          <Button href="/jobs/create/description" kind="secondary"
+          <Button href="/jobs/create/description" kind="secondary" size="base"
             >Next: Job Description</Button
           >
         </div>

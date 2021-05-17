@@ -118,19 +118,14 @@
       props: {
         plugins: plugins,
         options: {
-          view: "timeGridWeek",
+          view: "dayGridMonth",
           editable: true,
           headerToolbar: {
-            start: "prev,next today",
-            center: "title",
-            end:
-              "dayGridMonth,timeGridWeek,timeGridDay,listWeek resourceTimeGridWeek",
+            start: "title",
+            center: "",
+            end: "prev,next",
           },
-
-          resources: [
-            { id: 1, title: "Resource A" },
-            { id: 2, title: "Resource B" },
-          ],
+          monthMode: true,
           scrollTime: "09:00:00",
           events: createEvents(),
           eventClick: (cx) => {

@@ -1,14 +1,14 @@
 <script lang="ts">
-  import Tabs from "../lib/Tabs/Tabs.svelte";
-  import Tab from "../lib/Tabs/Tab.svelte";
-  import Todos from "../lib/Todo/Todos.svelte";
-  import TabWrapper from "../lib/Tabs/TabWrapper.svelte";
-  import TabPanel from "../lib/Tabs/TabPanel.svelte";
   import { createCustomArrayStore, customSet } from "../stores/Todo";
   import { useSWR, createSWR } from "sswr";
   import { onMount } from "svelte";
   import { setContext, xlink_attr } from "svelte/internal";
   import { readable } from "svelte/store";
+
+  import Pagination from "hirehive-ui/src/Pagination/Pagination.svelte";
+  import TabsOne from "../lib/Tabs/TabsOne.svelte";
+  import Jobs from "../lib/Jobs/Jobs.svelte";
+
   const { data, mutate } = useSWR(
     "https://jsonplaceholder.typicode.com/posts",
     {
@@ -48,35 +48,18 @@
     mutate((c: any) => (c = data), { revalidate: false });
     validateTime = time();
   };
+
+  let currentPage = 0;
 </script>
 
-<TabWrapper>
-  <Tabs>
-    <Tab>Tab One</Tab>
-    <Tab>Tab Two</Tab>
-    <Tab>Tab Three</Tab>
-    <Tab>Tab Four</Tab>
-  </Tabs>
+<h1 class="text-4xl text-gray-700 text-center my-4">
+  Current Page {currentPage}
+</h1>
 
-  <TabPanel id={0}>
-    <div class="bg-white py-40 justify-center flex items-center">
-      <h2>Hello world</h2>
-    </div>
-  </TabPanel>
-  <TabPanel id={1}>
-    <div class="bg-blue-100 py-40 justify-center flex items-center">
-      <h2>Hello two</h2>
-    </div>
-  </TabPanel>
-  <TabPanel id={2}>
-    <div class="bg-red-100 py-40 justify-center flex items-center">
-      <h2>Hello three</h2>
-    </div>
-  </TabPanel>
-</TabWrapper>
+<TabsOne />
 
-<!-- <Tabs>
-  <Tab>Tab One</Tab>
-  <Tab>Tab Two</Tab>
-  <Tab>Tab Three</Tab>
-</Tabs> -->
+<div class="my-8">
+  <Jobs />
+</div>
+
+<Pagination bind:current={currentPage} numItems={50} perPage={3} />
