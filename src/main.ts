@@ -8,3 +8,17 @@ const app = new App({
 });
 
 export default app;
+
+
+if (import.meta.hot) {
+  if (import.meta.hot) {
+    import.meta.hot.accept((module) => {
+      //module.default is App.svelte
+      // what do we do here?
+      console.log(module);
+    });
+    import.meta.hot.dispose(() => {
+      app.$destroy();
+    });
+  }
+}

@@ -94,6 +94,19 @@
               class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
               aria-current="page">Mention</a
             >
+
+            <a
+              href="/settings/comp"
+              class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+              aria-current="page">Settings Panel</a
+            >
+
+            <a
+              href="/jobs/create"
+              class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+              aria-current="page"
+              >Jobs panel
+            </a>
           </div>
         </div>
       </div>

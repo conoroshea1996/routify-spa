@@ -7,6 +7,7 @@
   import ColorPlugin from "editorjs-text-color-plugin";
   import { onMount } from "svelte";
   import edjsHTML from "editorjs-html";
+  import { beforeUrlChange } from "@roxi/routify";
   let unSavedChanges = false;
   let editor;
   let editorInstance;
@@ -76,10 +77,6 @@
         unSavedChanges = true;
       },
     });
-
-    console.log(x, "String USED TO RENDER ON LOAD");
-    await editorInstance.isReady;
-    editorInstance.blocks.renderFromHTML(x);
   });
 
   const imageParser = (image) => {
@@ -88,34 +85,36 @@
 
   const edjsParser = edjsHTML({ image: imageParser });
 
-  const save = async () => {
-    const result = await editorInstance.save();
-    const parserHtml = edjsParser.parse(result);
-    console.log(parserHtml.join(""), "SAVED DATA");
+  export async function renderFromString(string) {
+    await editorInstance.isReady;
+    editorInstance.blocks.renderFromHTML(string);
+  }
+  export async function getHtml() {
+    await editorInstance.isReady;
+    const output = await editorInstance.save();
     unSavedChanges = false;
-  };
-
-  const checkChanges = () => {
+    const markup = edjsParser.parse(output);
+    return markup.join(" ");
+  }
+  $beforeUrlChange(() => {
     if (unSavedChanges) {
-      alert("Save Changes before continue");
+      const ok = confirm("Unsaved changes");
+      if (ok) return true;
+      return false;
     }
-  };
+
+    return true;
+  });
 </script>
 
-<div class="bg-gray-200 p-10 rounded-md">
-  <div bind:this={editor} class="bg-white rounded-xl max-w-5xl mx-auto" />
-</div>
-
-<button
-  class="bg-blue-500 rounded-md text-white p-4 w-full"
-  on:click={async () => await save()}
->
-  Save
-</button>
+<div bind:this={editor} class="bg-white rounded-xl max-w-5xl mx-auto pb-0" />
 
 <style global>
   h2 {
     font-size: 24px;
     font-weight: 600;
+  }
+  .codex-editor__redactor {
+    padding: 0px !important;
   }
 </style>

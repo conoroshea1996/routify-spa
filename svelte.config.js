@@ -1,8 +1,9 @@
-const preprocess = require('svelte-preprocess');
+const preprocess = require("svelte-preprocess");
 
 module.exports = {
-  extensions: ['.svelte'],
+  extensions: ["svelte"],
   preprocess: preprocess({
     typescript: true,
+    hot: false,
   }),
 };

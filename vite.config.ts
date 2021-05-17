@@ -20,7 +20,7 @@ module.exports = defineConfig(({ mode }) => {
 
   return {
     optimizeDeps: {
-      exclude: ['@roxi/routify'],
+      exclude: ['@roxi/routify',"@urql/svelte", "sswr"],
     },
     plugins: [WindiCSS(), svelte(), isProduction && minifyHtml()],
     build: {
