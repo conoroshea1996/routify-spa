@@ -45,7 +45,7 @@
   const updateTitle = (data: Array<any>, id: number, newTitle: string) => {
     const itemToUpdate = data.find((c) => c.id === id);
     itemToUpdate.title = newTitle;
-    mutate((c) => (c = data), { revalidate: false });
+    mutate((c: any) => (c = data), { revalidate: false });
     validateTime = time();
   };
 </script>

@@ -46,7 +46,6 @@
               options={["PartTime", "FullTime"]}
               bind:value={$job.type}
               full
-              selectedOption={1}
               placeholder="Select"
             />
           </div>
