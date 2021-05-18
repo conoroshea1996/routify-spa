@@ -6,9 +6,9 @@
   let { job } = getContext("Jobs_Context");
 </script>
 
-<section>
+<section class="bg-white">
   <div class="shadow sm:rounded-md sm:overflow-hidden">
-    <div class="border-b border-gray-300 p-4">
+    <div class="border-b border-gray-200 p-4">
       <h1 class=" text-xl font-semibold ">Confirmation email</h1>
       <p class="text-gray-500 py-2">
         Every applicant receives a default confirmation email to confirm their

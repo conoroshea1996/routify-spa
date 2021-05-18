@@ -29,11 +29,11 @@
   });
 </script>
 
-<section>
+<section class="bg-white">
   <div class="shadow sm:rounded-md sm:overflow-hidden h-full">
     <h1
       bind:this={cf}
-      class=" text-xl font-semibold p-4 border-b border-gray-300"
+      class=" text-xl font-semibold p-4 border-b border-gray-200"
     >
       Job description
     </h1>

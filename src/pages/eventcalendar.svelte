@@ -202,7 +202,7 @@
     @apply border-none;
   }
   .ec-content {
-    @apply border border-gray-300 rounded-md;
+    @apply border border-gray-200 rounded-md;
   }
   .ec-body {
     @apply border-none;

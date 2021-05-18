@@ -58,7 +58,7 @@
       name="email"
       id="email"
       autocomplete="off"
-      class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-4 sm:text-sm border-gray-300 rounded-md py-4"
+      class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-4 sm:text-sm border-gray-200 rounded-md py-4"
       placeholder="Search Users"
     />
   </div>
@@ -67,7 +67,7 @@
 <button
   type="button"
   on:click={() => addUser()}
-  class="my-4 inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-blue-300 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+  class="my-4 inline-flex justify-center w-full rounded-md border border-gray-200 shadow-sm px-4 py-2 bg-blue-300 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
   id="menu-button"
 >
   Add user

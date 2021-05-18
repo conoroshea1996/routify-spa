@@ -74,10 +74,10 @@
 </script>
 
 <h1>{teamIds}</h1>
-<section>
+<section class="bg-white">
   <div class="shadow sm:rounded-md sm:overflow-hidden h-full">
     <div
-      class="flex items-center justify-between w-full border-b border-gray-300 px-2"
+      class="flex items-center justify-between w-full border-b border-gray-200 px-2"
     >
       <h1 class=" text-xl font-semibold p-4 ">Application form</h1>
 

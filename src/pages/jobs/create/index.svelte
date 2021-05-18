@@ -8,12 +8,12 @@
   let { job } = getContext("Jobs_Context");
 </script>
 
-<section>
+<section class="bg-white">
   <div class="shadow sm:rounded-md sm:overflow-hidden">
-    <h1 class=" text-xl font-semibold p-4 border-b border-gray-300">
+    <h1 class=" text-xl font-semibold p-4 border-b border-gray-200">
       Job details
     </h1>
-    <div class="px-4 py-3  text-right sm:px-6">
+    <div class="px-4 py-3  text-right sm:px-6 space-y-6">
       <div class="my-2 flex justify-between item-center">
         <div class="w-1/4 flex items-center">
           <span class="font-medium text-gray-500"> Job Title</span>
@@ -73,7 +73,7 @@
         </div>
       </div>
 
-      <div class="my-2 flex justify-between item-center border-b pb-8">
+      <div class="my-2 flex justify-between item-center border-b pb-16">
         <div class="w-1/4 flex items-center">
           <span class="font-medium text-gray-500"> Country</span>
         </div>
@@ -82,7 +82,7 @@
         </div>
       </div>
 
-      <div class="my-2 flex justify-between item-center border-b pb-8">
+      <div class="my-2 flex justify-between item-center">
         <div class="w-1/4 flex items-center">
           <span class="font-medium text-gray-500"> Experience</span>
         </div>
@@ -98,7 +98,7 @@
         </div>
       </div>
 
-      <div class="my-2 flex justify-between item-center border-b pb-8">
+      <div class="my-2 flex justify-between item-center">
         <div class="w-1/4 flex items-center">
           <span class="font-medium text-gray-500"> Salary</span>
         </div>
