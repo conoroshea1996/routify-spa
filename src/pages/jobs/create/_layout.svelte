@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { isActive, page } from "@roxi/routify";
+  import { isActive, layout, page } from "@roxi/routify";
   import { setContext } from "svelte";
   import { writable } from "svelte/store";
-  import Fader from "../../../lib/fader.svelte";
 
   const job = writable({});
 
@@ -13,9 +12,7 @@
   $: console.log($job);
 </script>
 
-<h1>Current Job Details</h1>
 {JSON.stringify($job)}
-
 <main class="mx-auto pb-10 lg:py-12 px-4 w-full">
   <div class="lg:grid lg:grid-cols-12 lg:gap-x-5">
     <aside class="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
@@ -36,43 +33,41 @@
 
         <a
           href="/jobs/create/description"
-          class="text-gray-900 hover:text-gray-900 hover:bg-gray-50 group rounded-md px-3 py-2 flex items-center text-sm font-medium"
+          class="text-gray-900 hover:text-gray-900 hover:bg-yellow-100 group rounded-md px-3 py-2 flex items-center text-sm font-medium"
           class:bg-yellow-100={$isActive("/jobs/create/description")}
         >
           <span class="truncate"> Job description </span>
         </a>
 
         <a
-          href="#"
-          class="text-gray-900 hover:text-gray-900 hover:bg-gray-50 group rounded-md px-3 py-2 flex items-center text-sm font-medium"
+          href="/jobs/create/application"
+          class:bg-yellow-100={$isActive("/jobs/create/application")}
+          class="text-gray-900 hover:text-gray-900 hover:bg-yellow-100 group rounded-md px-3 py-2 flex items-center text-sm font-medium"
         >
-          <span class="truncate"> Password </span>
+          <span class="truncate"> Application form </span>
+        </a>
+
+        <h1
+          class="text-gray-900 group rounded-md px-3 py-2 flex items-center text-lg font-medium"
+        >
+          Settings
+        </h1>
+        <a
+          href="#"
+          class="text-gray-900 hover:text-gray-900 hover:bg-yellow-100 group rounded-md px-3 py-2 flex items-center text-sm font-medium"
+        >
+          <span class="truncate"> Hiring team </span>
         </a>
 
         <a
           href="#"
-          class="text-gray-900 hover:text-gray-900 hover:bg-gray-50 group rounded-md px-3 py-2 flex items-center text-sm font-medium"
+          class="text-gray-900 hover:text-gray-900 hover:bg-yellow-100 group rounded-md px-3 py-2 flex items-center text-sm font-medium"
         >
-          <span class="truncate"> Notifications </span>
-        </a>
-
-        <a
-          href="#"
-          class="bg-gray-50 text-orange-600 hover:bg-white group rounded-md px-3 py-2 flex items-center text-sm font-medium"
-          aria-current="page"
-        >
-          <span class="truncate"> Plan &amp; Billing </span>
-        </a>
-
-        <a
-          href="#"
-          class="text-gray-900 hover:text-gray-900 hover:bg-gray-50 group rounded-md px-3 py-2 flex items-center text-sm font-medium"
-        >
-          <span class="truncate"> Integrations </span>
+          <span class="truncate"> Hiring stages </span>
         </a>
       </nav>
     </aside>
 
-    <slot decorator={Fader} />
+    <slot />
   </div>
 </main>

@@ -1,5 +1,25 @@
-<nav class="bg-gray-800">
-  <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+<script>
+  import { isActive } from "@roxi/routify";
+
+  const navUrls = [
+    { name: "Jobs", url: "/index" },
+    {
+      name: "Candidates",
+      url: "/candidates/index",
+    },
+    {
+      name: "Referrals",
+      url: "/referrals/index",
+    },
+    {
+      name: "Reports",
+      url: "/reports/index",
+    },
+  ];
+</script>
+
+<nav class="bg-gray-900">
+  <div class="max-w-screen-2xl mx-auto px-2 sm:px-6 lg:px-8">
     <div class="relative flex items-center justify-between h-16">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
         <!-- Mobile menu button-->
@@ -11,12 +31,12 @@
         >
           <span class="sr-only">Open main menu</span>
           <!--
-                Icon when menu is closed.
-    
-                Heroicon name: outline/menu
-    
-                Menu open: "hidden", Menu closed: "block"
-              -->
+            Icon when menu is closed.
+
+            Heroicon name: outline/menu
+
+            Menu open: "hidden", Menu closed: "block"
+          -->
           <svg
             class="block h-6 w-6"
             xmlns="http://www.w3.org/2000/svg"
@@ -33,12 +53,12 @@
             />
           </svg>
           <!--
-                Icon when menu is open.
-    
-                Heroicon name: outline/x
-    
-                Menu open: "block", Menu closed: "hidden"
-              -->
+            Icon when menu is open.
+
+            Heroicon name: outline/x
+
+            Menu open: "block", Menu closed: "hidden"
+          -->
           <svg
             class="hidden h-6 w-6"
             xmlns="http://www.w3.org/2000/svg"
@@ -56,57 +76,32 @@
           </svg>
         </button>
       </div>
-      <div
-        class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
-      >
-        <a class="flex-shrink-0 flex items-center" href="/">
+      <div class="flex-1 flex items-center justify-start sm:items-stretch ">
+        <div class="flex-shrink-0 flex items-center">
           <img
             class="block lg:hidden h-8 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+            src="/assets/Vector.png"
             alt="Workflow"
           />
           <img
             class="hidden lg:block h-8 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
+            src="/assets/Vector.png"
             alt="Workflow"
           />
-        </a>
+        </div>
         <div class="hidden sm:block sm:ml-6">
-          <div class="flex space-x-4">
+          <div class="flex space-x-4 text-gray-400">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a
-              href="/tuicalendar"
-              class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
-              aria-current="page">Tui Calendar</a
-            >
-            <a
-              href="/eventcalendar"
-              class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
-              aria-current="page">Event Calendar</a
-            >
-            <a
-              href="/editor"
-              class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
-              aria-current="page">Editor</a
-            >
-            <a
-              href="/mention"
-              class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
-              aria-current="page">Mention</a
-            >
 
-            <a
-              href="/settings/comp"
-              class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
-              aria-current="page">Settings Panel</a
-            >
-
-            <a
-              href="/jobs/create"
-              class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
-              aria-current="page"
-              >Jobs panel
-            </a>
+            {#each navUrls as { name, url }}
+              <a
+                href={url}
+                class=" px-3 py-2 rounded-md text-sm font-medium"
+                class:bg-gray-800={$isActive(url)}
+                class:text-yellow-400={$isActive(url)}
+                aria-current="page">{name}</a
+              >
+            {/each}
           </div>
         </div>
       </div>
@@ -134,6 +129,26 @@
             />
           </svg>
         </button>
+
+        <!-- Profile dropdown -->
+        <div class="ml-3 relative">
+          <div>
+            <button
+              type="button"
+              class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+              id="user-menu-button"
+              aria-expanded="false"
+              aria-haspopup="true"
+            >
+              <span class="sr-only">Open user menu</span>
+              <img
+                class="h-8 w-8 rounded-full"
+                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                alt=""
+              />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -146,6 +161,24 @@
         href="#"
         class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
         aria-current="page">Dashboard</a
+      >
+
+      <a
+        href="#"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+        >Team</a
+      >
+
+      <a
+        href="#"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+        >Projects</a
+      >
+
+      <a
+        href="#"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+        >Calendar</a
       >
     </div>
   </div>

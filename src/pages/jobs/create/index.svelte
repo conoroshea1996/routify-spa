@@ -8,7 +8,7 @@
   let { job } = getContext("Jobs_Context");
 </script>
 
-<section aria-labelledby="payment_details_heading">
+<section class="space-y-6  lg:col-span-9 bg-white h-full">
   <form action="#" method="POST">
     <div class="shadow sm:rounded-md sm:overflow-hidden">
       <h1 class=" text-xl font-semibold p-4 border-b border-gray-300">

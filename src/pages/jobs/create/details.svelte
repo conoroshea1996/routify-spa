@@ -1,5 +1,5 @@
 <!-- Billing history -->
-<section aria-labelledby="billing_history_heading">
+<section class="space-y-6  lg:col-span-9 bg-white h-full">
   <div class="bg-white pt-6 shadow sm:rounded-md sm:overflow-hidden">
     <div class="px-4 sm:px-6">
       <h2

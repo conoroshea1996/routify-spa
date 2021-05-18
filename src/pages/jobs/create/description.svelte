@@ -27,7 +27,7 @@
   });
 </script>
 
-<section class="h-full">
+<section class="space-y-6  lg:col-span-9 bg-white h-full">
   <form action="#" method="POST" class="h-full">
     <div class="shadow sm:rounded-md sm:overflow-hidden h-full">
       <h1 class=" text-xl font-semibold p-4 border-b border-gray-300">

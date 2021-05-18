@@ -3,7 +3,6 @@
   import TimeGrid from "@event-calendar/time-grid";
   import ListGrid from "@event-calendar/list";
   import DayGrid from "@event-calendar/day-grid";
-  import Interaction from "@event-calendar/interaction";
 
   import { onMount } from "svelte";
   function _pad(num) {
@@ -49,14 +48,12 @@
         end: days[0] + " 14:00",
         resourceId: 1,
         title: "The calendar can display background and regular events",
-        color: "#FE6B64",
       },
       {
         start: days[1] + " 16:00",
         end: days[2] + " 08:00",
         resourceId: 2,
         title: "An event may span to another day",
-        color: "#B29DD9",
       },
       {
         start: days[2] + " 09:00",
@@ -64,21 +61,18 @@
         resourceId: 2,
         title:
           "Events can be assigned to resources and the calendar has the resources view built-in",
-        color: "#779ECB",
       },
       {
         start: days[3] + " 14:00",
         end: days[3] + " 20:00",
         resourceId: 1,
         title: "",
-        color: "#FE6B64",
       },
       {
         start: days[3] + " 15:00",
         end: days[3] + " 18:00",
         resourceId: 1,
         title: "Overlapping events are positioned properly",
-        color: "#779ECB",
       },
       {
         start: days[5] + " 10:00",
@@ -86,14 +80,12 @@
         resourceId: 2,
         title:
           "You have complete control over the <i><b>display</b></i> of events…",
-        color: "#779ECB",
       },
       {
         start: days[5] + " 14:00",
         end: days[5] + " 19:00",
         resourceId: 2,
         title: "…and you can drag and drop the events!",
-        color: "#FE6B64",
         editable: true,
       },
       {
@@ -101,16 +93,16 @@
         end: days[5] + " 21:00",
         resourceId: 2,
         title: "",
-        color: "#B29DD9",
       },
     ];
   }
-  let plugins = [TimeGrid, ListGrid, DayGrid, Interaction];
+  let plugins = [TimeGrid, ListGrid, DayGrid];
   let calendarInstance;
 
   let calendar;
   let event;
   let showDetail = false;
+  let fullDate;
 
   onMount(() => {
     calendar = new Calendar({
@@ -119,25 +111,37 @@
         plugins: plugins,
         options: {
           view: "dayGridMonth",
-          editable: true,
+          editable: false,
           headerToolbar: {
             start: "title",
             center: "",
             end: "prev,next",
           },
-          monthMode: true,
-          scrollTime: "09:00:00",
-          events: createEvents(),
-          eventClick: (cx) => {
-            showDetail = true;
-            event = cx.event;
+          titleFormat: (date) => {
+            var options = {
+              month: "long",
+            };
+            let x = new Date(date);
+            const month = new Intl.DateTimeFormat("en-US", options).format(x);
+            fullDate = date;
+            return month;
           },
+
+          eventContent: (eventInfo) => {
+            return `<span>  </span>`;
+          },
+          dateClick: (dateClickInfo) => {
+            console.log(dateClickInfo);
+          },
+          monthMode: true,
+          events: createEvents(),
         },
       },
     });
   });
 </script>
 
+<h1>{fullDate}</h1>
 <div bind:this={calendarInstance} class="bg-white p-6 rounded-xl" />
 
 {#if showDetail}
@@ -189,3 +193,62 @@
     </div>
   </div>
 {/if}
+
+<style global>
+  .ec-header .ec-days .ec-day {
+    @apply border-none font-medium text-gray-900;
+  }
+  .ec-header {
+    @apply border-none;
+  }
+  .ec-content {
+    @apply border border-gray-300 rounded-md;
+  }
+  .ec-body {
+    @apply border-none;
+  }
+
+  .ec-title {
+    @apply font-bold text-gray-900 text-xl;
+  }
+
+  .ec-month .ec-day-head {
+    @apply text-center;
+  }
+  .ec-content .ec-days .ec-day {
+    @apply flex items-center justify-center relative;
+  }
+
+  .ec-content .ec-days .ec-day .ec-events {
+    @apply w-4 h-4 absolute;
+  }
+
+  .ec-content .ec-days .ec-day .ec-events .ec-event {
+    @apply rounded-full bg-yellow-400 absolute transform translate-1/2;
+    width: 1rem !important;
+    height: 1rem !important;
+    margin-top: 20px !important;
+  }
+
+  .ec-content .ec-days .ec-today .ec-events {
+    @apply w-8 h-8 absolute;
+  }
+
+  .ec-content .ec-days .ec-today .ec-events .ec-event {
+    margin: 0px !important;
+    padding: 0px !important;
+  }
+  .ec-content .ec-days .ec-today .ec-events .ec-event {
+    @apply w-8 h-8;
+    width: 2rem !important;
+    height: 2rem !important;
+  }
+
+  .ec-today.ec-day {
+    @apply bg-white;
+  }
+
+  .ec-day-head {
+    z-index: 100 !important;
+  }
+</style>

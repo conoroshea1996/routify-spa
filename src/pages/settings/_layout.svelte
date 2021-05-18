@@ -2,7 +2,6 @@
   import { setContext } from "svelte";
   import { afterPageLoad } from "@roxi/routify";
 
-  import FadeDecorator from "../../lib/fader.svelte";
   setContext("HH_SETTTINGS_PAGE_", {
     set: "test",
   });
@@ -21,6 +20,4 @@
       </div>
     </a>
   </div>
-
-  <slot decorator={FadeDecorator} />
 </div>

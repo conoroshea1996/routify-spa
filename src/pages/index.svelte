@@ -6,8 +6,9 @@
   import { readable } from "svelte/store";
 
   import Pagination from "hirehive-ui/src/Pagination/Pagination.svelte";
-  import TabsOne from "../lib/Tabs/TabsOne.svelte";
   import Jobs from "../lib/Jobs/Jobs.svelte";
+  import TextInput from "hirehive-ui/src/Inputs/TextInput.svelte";
+  import Button from "hirehive-ui/src/Button/Button.svelte";
 
   const { data, mutate } = useSWR(
     "https://jsonplaceholder.typicode.com/posts",
@@ -49,14 +50,58 @@
     validateTime = time();
   };
 
-  let currentPage = 0;
+  let currentPage = 1;
 </script>
 
-<h1 class="text-4xl text-gray-700 text-center my-4">
-  Current Page {currentPage}
-</h1>
-
-<TabsOne />
+<h1 class="text-gray-600 text-2xl text-center">Current Page {currentPage}</h1>
+<div
+  class="max-w-screen-2xl	 mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5  lg:px-8"
+>
+  <div class="flex items-center space-x-5 w-96">
+    <TextInput placeholder="search jobs..." full>
+      <div
+        slot="leading"
+        class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none text-gray-400"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 text-gray-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
+        </svg>
+      </div>
+    </TextInput>
+  </div>
+  <div
+    class="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3"
+  >
+    <Button kind="primary" href="/jobs/create/index">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+        />
+      </svg>
+      <span> New Job </span>
+    </Button>
+  </div>
+</div>
 
 <div class="my-8">
   <Jobs />
