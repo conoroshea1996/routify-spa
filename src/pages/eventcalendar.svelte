@@ -194,7 +194,7 @@
   </div>
 {/if}
 
-<style global>
+<!-- <style global>
   .ec-header .ec-days .ec-day {
     @apply border-none font-medium text-gray-900;
   }
@@ -251,4 +251,4 @@
   .ec-day-head {
     z-index: 100 !important;
   }
-</style>
+</style> -->
