@@ -15,6 +15,18 @@
       name: "Reports",
       url: "/reports/index",
     },
+    {
+      name: "Inbox",
+      url: "/inbox/index",
+    },
+    {
+      name: "Agenda",
+      url: "/agenda/index",
+    },
+    {
+      name: "Career Page",
+      url: "/careerpage/index",
+    },
   ];
 </script>
 

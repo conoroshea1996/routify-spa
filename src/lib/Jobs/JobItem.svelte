@@ -1,5 +1,5 @@
 <script>
-  import { Badge } from "hirehive-ui";
+  import Badge from "hirehive-ui/src/Badge/Badge.svelte";
   import Menu from "hirehive-ui/src/Inputs/Menu.svelte";
 
   import { slide } from "svelte/transition";
@@ -16,7 +16,7 @@
       <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
         <div class="truncate">
           <div class="flex">
-            <button class="focus:outline-none" on:click={() => (open = !open)}>
+            <button class="" on:click={() => (open = !open)}>
               <svg
                 class="h-8 w-8 text-gray-400 transform rotate-90"
                 class:open
@@ -60,7 +60,7 @@
         <div class="mt-4 flex flex-shrink-0 sm:mt-0 sm:ml-5">
           <div class="ml-2 flex-shrink-0 flex pr-4">
             <Menu position="left" bind:open={publishMenu}>
-              <span slot="menu_trigger" class="cursor-pointer z-50">
+              <button slot="menu_trigger" class="cursor-pointer z-50">
                 <Badge kind="green">
                   {job.status}
                   <svg
@@ -78,7 +78,7 @@
                     />
                   </svg></Badge
                 >
-              </span>
+              </button>
               <div slot="menu_context">
                 <div class="bg-white shadow-md rounded-md">
                   <button
@@ -134,7 +134,7 @@
 
           <div class="flex items-center ml-4 text-gray-400">
             <Menu position="right" bind:open={actionMenu}>
-              <span slot="menu_trigger" class="cursor-pointer z-50">
+              <button slot="menu_trigger" class="cursor-pointer z-50">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-6 w-6"
@@ -149,7 +149,7 @@
                     d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
                   />
                 </svg>
-              </span>
+              </button>
               <div slot="menu_context">
                 <div class="bg-white shadow-md rounded-md">
                   <button

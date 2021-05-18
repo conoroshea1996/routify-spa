@@ -5,7 +5,7 @@
   import List from "@editorjs/list";
   import SimpleImage from "@editorjs/simple-image";
   import ColorPlugin from "editorjs-text-color-plugin";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import edjsHTML from "editorjs-html";
   import { beforeUrlChange } from "@roxi/routify";
   let unSavedChanges = false;
@@ -89,6 +89,12 @@
     await editorInstance.isReady;
     editorInstance.blocks.renderFromHTML(string);
   }
+
+  export async function focusTop() {
+    await editorInstance.isReady;
+    editorInstance.focus();
+  }
+
   export async function getHtml() {
     await editorInstance.isReady;
     const output = await editorInstance.save();
@@ -104,6 +110,11 @@
     }
 
     return true;
+  });
+
+  onDestroy(async () => {
+    await editorInstance.isReady;
+    editorInstance.destroy();
   });
 </script>
 
