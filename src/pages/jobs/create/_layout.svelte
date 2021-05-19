@@ -23,7 +23,7 @@
       invalid = true;
       $formErrors.city = true;
     }
-    if (!$job.county) {
+    if (!$job.country) {
       invalid = true;
       $formErrors.country = true;
     }
