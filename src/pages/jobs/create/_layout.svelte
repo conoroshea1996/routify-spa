@@ -40,8 +40,10 @@
   });
 </script>
 
-<div class="border-b border-gray-200 w-full">
-  <div class=" mx-auto py-4 px-10 lg:flex lg:items-center lg:justify-between">
+<div class="border-b  border-gray-200 w-full">
+  <div
+    class="mx-auto max-w-screen-2xl py-4  lg:flex lg:items-center lg:justify-between"
+  >
     <div
       class="font-medium tracking-tight text-gray-500  flex items-center text-2xl"
     >
@@ -76,9 +78,9 @@
   </div>
 </div>
 
-<main class=" max-w-screen-2xl mx-auto pb-10 lg:py-12 px-4 w-full">
-  <div class="lg:grid lg:grid-cols-12 lg:gap-x-5">
-    <aside class="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
+<main class="max-w-screen-2xl mx-auto pb-10 lg:py-12">
+  <div class="lg:grid lg:grid-cols-12">
+    <aside class="py-6 lg:py-0  lg:col-span-2 pr-6">
       <nav class="space-y-1">
         <!-- Current: "bg-gray-50 text-orange-600 hover:bg-white", Default: "text-gray-900 hover:text-gray-900 hover:bg-gray-50" -->
         <h1

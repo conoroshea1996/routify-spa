@@ -10,7 +10,7 @@
 
 <section class="bg-white">
   <div class="shadow sm:rounded-md sm:overflow-hidden">
-    <h1 class=" text-xl font-semibold p-4 border-b border-gray-200">
+    <h1 class=" text-xl font-semibold p-4 border-b border-gray-100">
       Job details
     </h1>
     <div class="px-4 py-3  text-right sm:px-6 space-y-6">

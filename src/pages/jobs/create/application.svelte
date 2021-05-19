@@ -13,7 +13,7 @@
 <section class="bg-white">
   <div class="shadow sm:rounded-md sm:overflow-hidden h-full">
     <div
-      class="flex items-center justify-between w-full border-b border-gray-200 px-2"
+      class="flex items-center justify-between w-full border-b border-gray-100 px-2"
     >
       <h1 class=" text-xl font-semibold p-4 ">Application form</h1>
 
@@ -65,7 +65,7 @@
                   Name, Email, Location
                 </p>
               </div>
-              <div
+              <button
                 class="ml-2 flex-shrink-0 flex cursor-pointer"
                 on:click={() => (personalModal = true)}
               >
@@ -84,7 +84,7 @@
                     clip-rule="evenodd"
                   />
                 </svg>
-              </div>
+              </button>
             </div>
           </li>
           <li class="border border-gray-200 rounded-md p-5 my-2">
@@ -110,7 +110,7 @@
                   Education, Work Experience
                 </p>
               </div>
-              <div class="ml-2 flex-shrink-0 flex">
+              <button class="ml-2 flex-shrink-0 flex">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-5 w-5 text-gray-500"
@@ -126,7 +126,7 @@
                     clip-rule="evenodd"
                   />
                 </svg>
-              </div>
+              </button>
             </div>
           </li>
         </ul>

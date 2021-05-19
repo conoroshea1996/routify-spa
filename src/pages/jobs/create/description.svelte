@@ -33,7 +33,7 @@
   <div class="shadow sm:rounded-md sm:overflow-hidden h-full">
     <h1
       bind:this={cf}
-      class=" text-xl font-semibold p-4 border-b border-gray-200"
+      class=" text-xl font-semibold p-4 border-b border-gray-100"
     >
       Job description
     </h1>

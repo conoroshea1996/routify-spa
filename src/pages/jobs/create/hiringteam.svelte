@@ -77,7 +77,7 @@
 <section class="bg-white">
   <div class="shadow sm:rounded-md sm:overflow-hidden h-full">
     <div
-      class="flex items-center justify-between w-full border-b border-gray-200 px-2"
+      class="flex items-center justify-between w-full border-b border-gray-100 px-2"
     >
       <h1 class=" text-xl font-semibold p-4 ">Application form</h1>
 
@@ -342,8 +342,12 @@
 
   <div slot="footer" class="flex justify-end mt-4 max-w-3xl">
     <div>
-      <Button kind="white">Cancel</Button>
-      <Button kind="primary">Apply changes</Button>
+      <Button kind="white" on:click={() => (editHiringTeam = false)}
+        >Cancel</Button
+      >
+      <Button kind="primary" on:click={() => (editHiringTeam = false)}
+        >Apply changes</Button
+      >
     </div>
   </div>
 </Modal>
