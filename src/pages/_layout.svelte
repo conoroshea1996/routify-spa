@@ -4,6 +4,6 @@
 
 <Navbar />
 
-<main class="max-w-screen-2xl mx-auto mt-4">
+<main class="mx-auto mt-4">
   <slot />
 </main>

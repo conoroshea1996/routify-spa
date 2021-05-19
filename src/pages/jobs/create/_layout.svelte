@@ -1,5 +1,6 @@
 <script>
   import { isActive, layout, page, prefetch } from "@roxi/routify";
+  import Button from "hirehive-ui/src/Button/Button.svelte";
   import { setContext } from "svelte";
   import { writable } from "svelte/store";
   import Transistion from "../../../lib/Transistion.svelte";
@@ -12,7 +13,42 @@
   $: console.log($job);
 </script>
 
-<main class="mx-auto pb-10 lg:py-12 px-4 w-full">
+<div class="border-b border-gray-200 w-full">
+  <div class=" mx-auto py-4 px-10 lg:flex lg:items-center lg:justify-between">
+    <div
+      class="font-medium tracking-tight text-gray-500  flex items-center text-2xl"
+    >
+      <button class="flex items-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-8 w-8 pr-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+        <h1 class="pr-2 ">Add Job /</h1>
+      </button>
+      <h1 class="text-gray-900">{$job.title}</h1>
+    </div>
+    <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0 space-x-3">
+      <Button kind="white">Save as Draft</Button>
+      <Button
+        kind="primary"
+        disabled={$isActive("/jobs/create/index") ||
+          $isActive("/jobs/create/description")}>Publish Job</Button
+      >
+    </div>
+  </div>
+</div>
+
+<main class=" max-w-screen-2xl mx-auto pb-10 lg:py-12 px-4 w-full">
   <div class="lg:grid lg:grid-cols-12 lg:gap-x-5">
     <aside class="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
       <nav class="space-y-1">

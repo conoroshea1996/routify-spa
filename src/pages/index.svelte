@@ -54,18 +54,38 @@
 </script>
 
 <h1 class="text-gray-600 text-2xl text-center">Current Page {currentPage}</h1>
-<div
-  class="max-w-screen-2xl	 mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5  lg:px-8"
->
-  <div class="flex items-center space-x-5 w-96">
-    <TextInput placeholder="search jobs..." full>
-      <div
-        slot="leading"
-        class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none text-gray-400"
-      >
+<div class="max-w-screen-2xl	mx-auto">
+  <div class="flex items-center justify-between space-x-5 w-full">
+    <div class="w-96">
+      <TextInput placeholder="search jobs..." full>
+        <div
+          slot="leading"
+          class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none text-gray-400"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+        </div>
+      </TextInput>
+    </div>
+    <div
+      class="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3"
+    >
+      <Button kind="primary" href="/jobs/create/index">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6 text-gray-400"
+          class="h-6 w-6"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -74,37 +94,17 @@
             stroke-linecap="round"
             stroke-linejoin="round"
             stroke-width="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
           />
         </svg>
-      </div>
-    </TextInput>
+        <span> New Job </span>
+      </Button>
+    </div>
   </div>
-  <div
-    class="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3"
-  >
-    <Button kind="primary" href="/jobs/create/index">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-        />
-      </svg>
-      <span> New Job </span>
-    </Button>
+
+  <div class="my-8">
+    <Jobs />
   </div>
-</div>
 
-<div class="my-8">
-  <Jobs />
+  <Pagination bind:current={currentPage} numItems={50} perPage={3} />
 </div>
-
-<Pagination bind:current={currentPage} numItems={50} perPage={3} />
