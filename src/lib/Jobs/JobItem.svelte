@@ -60,7 +60,7 @@
         <div class="mt-4 flex flex-shrink-0 sm:mt-0 sm:ml-5">
           <div class="ml-2 flex-shrink-0 flex pr-4">
             <Menu position="left" bind:open={publishMenu}>
-              <button slot="menu_trigger" class="cursor-pointer z-50">
+              <button slot="menu_trigger" class="cursor-pointer z-30">
                 <Badge kind="green">
                   {job.status}
                   <svg

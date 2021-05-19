@@ -53,10 +53,9 @@
   let currentPage = 1;
 </script>
 
-<h1 class="text-gray-600 text-2xl text-center">Current Page {currentPage}</h1>
-<div class="max-w-screen-2xl	mx-auto">
-  <div class="flex items-center justify-between space-x-5 w-full">
-    <div class="w-96">
+<div class=" space-x-5 w-full border-b border-gray-200">
+  <div class="max-w-screen-2xl mx-auto flex justify-between py-4">
+    <div class="w-64">
       <TextInput placeholder="search jobs..." full>
         <div
           slot="leading"
@@ -101,7 +100,9 @@
       </Button>
     </div>
   </div>
+</div>
 
+<div class="max-w-screen-2xl	mx-auto">
   <div class="my-8">
     <Jobs />
   </div>

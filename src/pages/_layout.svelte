@@ -4,6 +4,6 @@
 
 <Navbar />
 
-<main class="mx-auto mt-4">
+<main>
   <slot />
 </main>
