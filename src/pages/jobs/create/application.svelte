@@ -5,7 +5,7 @@
   import CheckBox from "hirehive-ui/src/Inputs/CheckBox.svelte";
   import { getContext } from "svelte";
 
-  let { job } = getContext("Jobs_Context");
+  let { job, handleFormSubmit } = getContext("Jobs_Context");
 
   let personalModal = false;
 </script>
@@ -177,8 +177,12 @@
         </ul>
       </div>
       <div class="flex justify-end space-x-4">
-        <Button kind="secondary">Next: Settings (optional)</Button>
-        <Button kind="primary">Publish Job</Button>
+        <Button href="/jobs/create/hiringteam" kind="secondary" size="base"
+          >Next: Settings (optional)</Button
+        >
+        <Button kind="primary" on:click={() => handleFormSubmit()}
+          >Publish Job</Button
+        >
       </div>
     </div>
   </div>

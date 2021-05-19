@@ -5,7 +5,7 @@
   import Select from "hirehive-ui/src/Inputs/Select.svelte";
   import { getContext } from "svelte";
 
-  let { job } = getContext("Jobs_Context");
+  let { job, formErrors } = getContext("Jobs_Context");
 </script>
 
 <section class="bg-white">
@@ -19,7 +19,14 @@
           <span class="font-medium text-gray-500"> Job Title</span>
         </div>
         <div class="w-3/4">
-          <TextInput bind:value={$job.title} full placeholder="Job Title" />
+          <TextInput
+            bind:value={$job.title}
+            full
+            placeholder="Job Title"
+            on:focus={() => ($formErrors.jobTitle = false)}
+            hasError={$formErrors.jobTitle}
+            errorMessage="Required field"
+          />
         </div>
       </div>
       <div class="my-2 flex justify-between item-center">
@@ -69,7 +76,13 @@
           <span class="font-medium text-gray-500"> City</span>
         </div>
         <div class="w-3/4">
-          <TextInput bind:value={$job.city} full />
+          <TextInput
+            bind:value={$job.city}
+            full
+            hasError={$formErrors.city}
+            on:focus={() => ($formErrors.city = false)}
+            errorMessage="Required field"
+          />
         </div>
       </div>
 
@@ -78,7 +91,13 @@
           <span class="font-medium text-gray-500"> Country</span>
         </div>
         <div class="w-3/4">
-          <TextInput bind:value={$job.country} full />
+          <TextInput
+            bind:value={$job.country}
+            full
+            hasError={$formErrors.country}
+            errorMessage="Required field"
+            on:focus={() => ($formErrors.country = false)}
+          />
         </div>
       </div>
 

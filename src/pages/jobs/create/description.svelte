@@ -47,7 +47,9 @@
         </div>
       </div>
       <div class="flex justify-end">
-        <Button kind="secondary">Next: Application form</Button>
+        <Button href="/jobs/create/application" kind="secondary" size="base"
+          >Next: Job Description</Button
+        >
       </div>
     </div>
   </div>

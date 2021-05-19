@@ -1,5 +1,5 @@
 <script>
-  import { isActive, layout, page, prefetch } from "@roxi/routify";
+  import { goto, isActive, layout, page, prefetch } from "@roxi/routify";
   import Button from "hirehive-ui/src/Button/Button.svelte";
   import { setContext } from "svelte";
   import { writable } from "svelte/store";
@@ -7,10 +7,37 @@
 
   const job = writable({});
 
+  const formErrors = writable({
+    jobTitle: false,
+    city: false,
+    country: false,
+  });
+
+  const handleFormSubmit = () => {
+    let invalid;
+    if (!$job.title) {
+      invalid = true;
+      $formErrors.jobTitle = true;
+    }
+    if (!$job.city) {
+      invalid = true;
+      $formErrors.city = true;
+    }
+    if (!$job.county) {
+      invalid = true;
+      $formErrors.country = true;
+    }
+
+    if (invalid) {
+      $goto("/jobs/create/index");
+    }
+  };
+
   setContext("Jobs_Context", {
     job,
+    formErrors,
+    handleFormSubmit,
   });
-  $: console.log($job);
 </script>
 
 <div class="border-b border-gray-200 w-full">
@@ -18,7 +45,7 @@
     <div
       class="font-medium tracking-tight text-gray-500  flex items-center text-2xl"
     >
-      <button class="flex items-center">
+      <a href="/index" class="flex items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-8 w-8 pr-4"
@@ -34,13 +61,14 @@
           />
         </svg>
         <h1 class="pr-2 ">Add Job /</h1>
-      </button>
+      </a>
       <h1 class="text-gray-900">{$job.title}</h1>
     </div>
     <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0 space-x-3">
       <Button kind="white">Save as Draft</Button>
       <Button
         kind="primary"
+        on:click={() => handleFormSubmit()}
         disabled={$isActive("/jobs/create/index") ||
           $isActive("/jobs/create/description")}>Publish Job</Button
       >
