@@ -1,9 +1,5 @@
 <script lang="ts">
-  import Badge from "hirehive-ui/src/Badge/Badge.svelte";
-  import Button from "hirehive-ui/src/Button/Button.svelte";
-  import CheckBox from "hirehive-ui/src/Inputs/CheckBox.svelte";
-  import Switch from "hirehive-ui/src/Inputs/Switch.svelte";
-  import Modal from "hirehive-ui/src/Modal/Modal.svelte";
+  import { Badge, Button, CheckBox, Modal } from "hirehive-ui";
   import type { userType } from "../../../types/roles";
   import { userBadgeType, userTypeAsString } from "../../../utils/badgeType";
 

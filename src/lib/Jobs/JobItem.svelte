@@ -1,4 +1,5 @@
 <script>
+  // Loads just component
   import Badge from "hirehive-ui/src/Badge/Badge.svelte";
   import Menu from "hirehive-ui/src/Inputs/Menu.svelte";
 
@@ -11,12 +12,15 @@
 </script>
 
 <li class="my-3">
-  <div class="block bg-white border border-gray-200 shadow-md rounded-md">
+  <div
+    href="/jobs/{job.id}"
+    class="block bg-white border border-gray-200 shadow-md rounded-md"
+  >
     <div class="px-4 py-4 flex items-center sm:px-6 border-b border-gray-100">
       <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
         <div class="truncate">
           <div class="flex">
-            <button class="" on:click={() => (open = !open)}>
+            <button on:click={() => (open = !open)}>
               <svg
                 class="h-8 w-8 text-gray-400 transform rotate-90"
                 class:open
@@ -33,9 +37,12 @@
               </svg>
             </button>
 
-            <h1 class="font-medium text-gray-900 truncate font-bold ml-4">
+            <a
+              href="/jobs/{job.id}"
+              class="font-medium text-gray-900 truncate font-bold ml-4"
+            >
               Back End Developer
-            </h1>
+            </a>
           </div>
           <div class="mt-2 flex ml-10">
             <div class="flex items-center text-sm text-gray-500">

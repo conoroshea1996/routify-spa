@@ -4,6 +4,7 @@
   import Menu from "hirehive-ui/src/Inputs/Menu.svelte";
   import Button from "hirehive-ui/src/Button/Button.svelte";
   import CheckBox from "hirehive-ui/src/Inputs/CheckBox.svelte";
+  import FilterDropDown from "../Filters/FilterDropDown.svelte";
   const jobs = [
     {
       id: 34,
@@ -311,271 +312,33 @@
   <div class="flex text-gray-700 space-x-4">
     <button on:click={() => clearAll()}> Clear all </button>
 
-    <Menu position="left" bind:open={categoriesMenu}>
-      <span slot="menu_trigger" class="cursor-pointer z-50">
-        <Button kind="white" size="large">
-          <span class="mx-1">Categories</span>
+    <FilterDropDown
+      filterName="Categories"
+      facets={["Tech", "Sales", "HR"]}
+      open={categoriesMenu}
+      bind:activeFilters={categoryFitlers}
+    />
 
-          {#if categoryFitlers.length}
-            <span
-              class="bg-blue-100 text-blue-500 px-2 py-1 rounded-md text-xs flex items-center mx-1"
-            >
-              {categoryFitlers.length}
-            </span>
-          {/if}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4 mx-1 text-gray-500"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </Button>
-      </span>
-      <div slot="menu_context" class="bg-white shadow-md rounded-md p-3">
-        <div class="relative flex items-start">
-          <div class="flex items-center h-5">
-            <input
-              id="checkbox id"
-              name="checkbox id"
-              type="checkbox"
-              bind:group={categoryFitlers}
-              value="Product"
-              class="h-3 w-3 border-gray-300 svelte-112l3bx"
-              aria-checked="true"
-            />
-          </div>
-          <div class="ml-3 text-sm">
-            <label
-              for="checkbox id"
-              class="font-medium text-gray-700 svelte-112l3bx">Product</label
-            >
-          </div>
-        </div>
+    <FilterDropDown
+      filterName="Locations"
+      facets={["Ireland", "United Kingdom", "Germany"]}
+      open={locationsMenu}
+      bind:activeFilters={locationsFilter}
+    />
 
-        <div class="relative flex items-start">
-          <div class="flex items-center h-5">
-            <input
-              id="checkbox id"
-              name="checkbox id"
-              type="checkbox"
-              bind:group={categoryFitlers}
-              value="Dev"
-              class="h-3 w-3 border-gray-300 svelte-112l3bx"
-              aria-checked="true"
-            />
-          </div>
-          <div class="ml-3 text-sm">
-            <label
-              for="checkbox id"
-              class="font-medium text-gray-700 svelte-112l3bx">Dev</label
-            >
-          </div>
-        </div>
-      </div>
-    </Menu>
+    <FilterDropDown
+      filterName="Owners"
+      facets={["Dave", "Jack", "Max"]}
+      open={ownersMenu}
+      bind:activeFilters={ownersFilter}
+    />
 
-    <Menu position="left" bind:open={locationsMenu}>
-      <span slot="menu_trigger" class="cursor-pointer z-50">
-        <Button kind="white" size="large">
-          <span class="mx-1">Locations</span>
-
-          {#if locationsFilter.length}
-            <span
-              class="bg-blue-100 text-blue-500 px-2 py-1 rounded-md text-xs flex items-center mx-1"
-            >
-              {locationsFilter.length}
-            </span>
-          {/if}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4 mx-1 text-gray-500"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </Button>
-      </span>
-      <div slot="menu_context" class="bg-white shadow-md rounded-md p-3">
-        <div class="relative flex items-start">
-          <div class="flex items-center h-5">
-            <input
-              id="checkbox id"
-              name="checkbox id"
-              type="checkbox"
-              bind:group={locationsFilter}
-              value="Ireland"
-              class="h-3 w-3 border-gray-300 svelte-112l3bx"
-              aria-checked="true"
-            />
-          </div>
-          <div class="ml-3 text-sm">
-            <label
-              for="checkbox id"
-              class="font-medium text-gray-700 svelte-112l3bx">Ireland</label
-            >
-          </div>
-        </div>
-
-        <div class="relative flex items-start">
-          <div class="flex items-center h-5">
-            <input
-              id="checkbox id"
-              name="checkbox id"
-              type="checkbox"
-              bind:group={locationsFilter}
-              value="Uk"
-              class="h-3 w-3 border-gray-300 svelte-112l3bx"
-              aria-checked="true"
-            />
-          </div>
-          <div class="ml-3 text-sm">
-            <label
-              for="checkbox id"
-              class="font-medium text-gray-700 svelte-112l3bx">Uk</label
-            >
-          </div>
-        </div>
-      </div>
-    </Menu>
-
-    <Menu position="left" bind:open={ownersMenu}>
-      <span slot="menu_trigger" class="cursor-pointer z-50">
-        <Button kind="white" size="large">
-          <span class="mx-1">Owners</span>
-
-          {#if ownersFilter.length}
-            <span
-              class="bg-blue-100 text-blue-500 px-2 py-1 rounded-md text-xs flex items-center mx-1"
-            >
-              {ownersFilter.length}
-            </span>
-          {/if}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4 mx-1 text-gray-500"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </Button>
-      </span>
-      <div slot="menu_context" class="bg-white shadow-md rounded-md p-3">
-        <div class="relative flex items-start">
-          <div class="flex items-center h-5">
-            <input
-              id="checkbox id"
-              name="checkbox id"
-              type="checkbox"
-              bind:group={ownersFilter}
-              value="Max verstappen"
-              class="h-3 w-3 border-gray-300 svelte-112l3bx"
-              aria-checked="true"
-            />
-          </div>
-          <div class="ml-3 text-sm">
-            <label
-              for="checkbox id"
-              class="font-medium text-gray-700 svelte-112l3bx"
-              >Max verstappen</label
-            >
-          </div>
-        </div>
-      </div>
-    </Menu>
-
-    <Menu position="left" bind:open={stageMenu}>
-      <span slot="menu_trigger" class="cursor-pointer z-50">
-        <Button kind="white" size="large">
-          <span class="mx-1">Stages</span>
-
-          {#if stagesFilter.length}
-            <span
-              class="bg-blue-100 text-blue-500 px-2 py-1 rounded-md text-xs flex items-center mx-1"
-            >
-              {stagesFilter.length}
-            </span>
-          {/if}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4 mx-1 text-gray-500"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </Button>
-      </span>
-      <div slot="menu_context" class="bg-white shadow-md rounded-md p-3">
-        <div class="relative flex items-start">
-          <div class="flex items-center h-5">
-            <input
-              id="checkbox id"
-              name="checkbox id"
-              type="checkbox"
-              bind:group={stagesFilter}
-              value="Published"
-              class="h-3 w-3 border-gray-300 svelte-112l3bx"
-              aria-checked="true"
-            />
-          </div>
-          <div class="ml-3 text-sm">
-            <label
-              for="checkbox id"
-              class="font-medium text-gray-700 svelte-112l3bx">Published</label
-            >
-          </div>
-        </div>
-
-        <div class="relative flex items-start">
-          <div class="flex items-center h-5">
-            <input
-              id="checkbox id"
-              name="checkbox id"
-              type="checkbox"
-              bind:group={stagesFilter}
-              value="Cv needs to be reviewed by team lead"
-              class="h-3 w-3 border-gray-300 svelte-112l3bx"
-              aria-checked="true"
-            />
-          </div>
-          <div class="ml-3 text-sm">
-            <label
-              for="checkbox id"
-              class="font-medium text-gray-700 svelte-112l3bx"
-              >Cv needs to be reviewed by team lead</label
-            >
-          </div>
-        </div>
-      </div>
-    </Menu>
+    <FilterDropDown
+      filterName="Stages"
+      facets={["Draft", "Interal", "Published"]}
+      open={stageMenu}
+      bind:activeFilters={stagesFilter}
+    />
   </div>
 </div>
 
