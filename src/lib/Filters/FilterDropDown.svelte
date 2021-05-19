@@ -21,7 +21,7 @@
   $: syncFitlers(activeFilters);
 </script>
 
-<Menu position="left" bind:open>
+<Menu position="right" bind:open>
   <span slot="menu_trigger" class="cursor-pointer z-50">
     <Button kind="white" size="large">
       <span class="mx-1">{filterName}</span>
