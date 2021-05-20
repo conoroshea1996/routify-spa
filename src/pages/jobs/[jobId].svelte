@@ -464,25 +464,23 @@
 <Sidepanel bind:open={jobSidepanel}>
   <TabsContainer>
     <TabBar>
-        <Tab TabId={1} let:isActive>
-          <div
-            class="p-2 border-b-3 z-50 mt-1 focus:outline-transparent"
-            class:border-blue-500={isActive}
-          >
-            Notes
-          </div>
-        </Tab>
-        <Tab TabId={2} let:isActive>
-          <div
-            class="p-2 border-b-3 z-50 mt-1 focus:outline-transparent"
-            class:border-blue-500={isActive}
-          >
-            Email
-          </div>
-        </Tab>
-      </div>
+      <Tab TabId={1} let:isActive>
+        <div
+          class="p-2 border-b-3 z-50 mt-1 focus:outline-transparent"
+          class:border-blue-500={isActive}
+        >
+          Notes
+        </div>
+      </Tab>
+      <Tab TabId={2} let:isActive>
+        <div
+          class="p-2 border-b-3 z-50 mt-1 focus:outline-transparent"
+          class:border-blue-500={isActive}
+        >
+          Email
+        </div>
+      </Tab>
     </TabBar>
-
 
     <TabPanel panelId={1}>
       <div
