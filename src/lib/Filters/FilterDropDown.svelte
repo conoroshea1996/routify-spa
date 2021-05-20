@@ -53,6 +53,7 @@
         checked={activeFilters.includes(facet)}
         value={facet}
         label={facet}
+        name={`${facet}-${filterName}`}
       />
     {/each}
   </div>

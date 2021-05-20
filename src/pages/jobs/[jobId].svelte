@@ -7,6 +7,11 @@
     Pagination,
     Badge,
     CheckBox,
+    Sidepanel,
+    TabsContainer,
+    TabBar,
+    Tab,
+    TabPanel,
   } from "hirehive-ui";
   import FilterDropDown from "$lib/Filters/FilterDropDown.svelte";
   import { jobs } from "../../stores/jobs";
@@ -73,6 +78,8 @@
   };
 
   $: selectAll(checkAll);
+
+  let jobSidepanel = false;
 </script>
 
 <div class="border-b bg-white  border-gray-200 w-full">
@@ -174,24 +181,24 @@
             <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
             <a
               href={$url("/jobs/create/index", { jobId: job.id })}
-              class="text-gray-700 block px-4 py-2 text-sm"
-              role="menuitem"
-              tabindex="-1"
-              id="menu-item-0">Edit</a
+              class="text-gray-700 block px-4 py-2 text-sm">Edit</a
+            >
+            <button
+              on:click={() => {
+                jobSidepanel = true;
+                jobActionMenu = false;
+              }}
+              class="text-gray-700 block px-4 py-2 text-sm">Notes</button
             >
             <a
               href="#"
               class="text-gray-700 block px-4 py-2 text-sm"
-              role="menuitem"
-              tabindex="-1"
               id="menu-item-1">Duplicate</a
             >
 
             <a
               href="#"
               class="text-gray-700 block px-4 py-2 text-sm"
-              role="menuitem"
-              tabindex="-1"
               id="menu-item-1">Delete</a
             >
           </div>
@@ -453,3 +460,44 @@
     <Pagination numItems={jobsCandidates.length} current={1} perPage={5} />
   </div>
 </main>
+
+<Sidepanel bind:open={jobSidepanel}>
+  <TabsContainer>
+    <TabBar>
+        <Tab TabId={1} let:isActive>
+          <div
+            class="p-2 border-b-3 z-50 mt-1 focus:outline-transparent"
+            class:border-blue-500={isActive}
+          >
+            Notes
+          </div>
+        </Tab>
+        <Tab TabId={2} let:isActive>
+          <div
+            class="p-2 border-b-3 z-50 mt-1 focus:outline-transparent"
+            class:border-blue-500={isActive}
+          >
+            Email
+          </div>
+        </Tab>
+      </div>
+    </TabBar>
+
+
+    <TabPanel panelId={1}>
+      <div
+        class="my-2 mx-auto sm:px-6 lg:px-8 border border-dashed border-gray-400 h-32"
+      >
+        <h1 class="text-xl text-gray-500">Panel 1</h1>
+      </div>
+    </TabPanel>
+
+    <TabPanel panelId={2}>
+      <div
+        class=" my-2 mx-auto sm:px-6 lg:px-8 border border-dashed border-gray-400 h-32"
+      >
+        <h1 class="text-xl text-gray-500">Panel 2</h1>
+      </div>
+    </TabPanel>
+  </TabsContainer>
+</Sidepanel>
