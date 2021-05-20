@@ -147,7 +147,65 @@
         </div>
       </div>
     </div>
-    <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0 space-x-3">
+    <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0 space-x-3 items-center">
+      <div class="inline-block h-6 w-6 relative">
+        <img
+          class=" rounded-full ring-2 ring-gray-100"
+          src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+          alt="Dries Vincent"
+        />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-3 w-3 text-yellow-400 absolute top-0 -right-1"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+          />
+        </svg>
+      </div>
+      <div class="flex items-center overflow-hidden -space-x-1">
+        <img
+          class="inline-block h-6 w-6 rounded-full ring-2 ring-gray-100"
+          src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+          alt="Dries Vincent"
+        />
+
+        <img
+          class="inline-block h-6 w-6 rounded-full ring-2 ring-gray-100"
+          src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+          alt="Lindsay Walton"
+        />
+
+        <img
+          class="inline-block h-6 w-6 rounded-full ring-2 ring-gray-100"
+          src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+          alt="Courtney Henry"
+        />
+
+        <img
+          class="inline-block h-6 w-6 rounded-full ring-2 ring-gray-100"
+          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+          alt="Tom Cook"
+        />
+
+        <button
+          class="flex items-center justify-center h-6 w-6 rounded-full ring-2 ring-gray-100 bg-white"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 text-gray-900"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+            />
+          </svg>
+        </button>
+      </div>
+
       <Menu bind:open={jobActionMenu} position="right">
         <span slot="menu_trigger">
           <Button kind="white">

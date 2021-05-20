@@ -1,27 +1,35 @@
 <script>
-  import { isActive } from "@roxi/routify";
-
-  const navUrls = [
-    { name: "Jobs", url: "/index" },
+  import { isActive, page } from "@roxi/routify";
+  $: navUrls = [
+    {
+      name: "Jobs",
+      url: "/index",
+      active: $isActive("/index") || $page.path.includes("/jobs/"),
+    },
     {
       name: "Candidates",
       url: "/candidates/index",
+      active: $isActive("/candidates/index"),
     },
     {
       name: "Referrals",
       url: "/referrals/index",
+      active: $isActive("/referrals/index"),
     },
     {
       name: "Reports",
       url: "/reports/index",
+      active: $isActive("/reports/index"),
     },
     {
       name: "Inbox",
       url: "/inbox/index",
+      active: $isActive("/inbox/index"),
     },
     {
       name: "Agenda",
       url: "/agenda/index",
+      active: $isActive("/agenda/index"),
     },
     {
       name: "Career Page",
@@ -105,12 +113,12 @@
           <div class="flex space-x-4 text-gray-400">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
 
-            {#each navUrls as { name, url }}
+            {#each navUrls as { name, url, active }}
               <a
                 href={url}
                 class=" px-3 py-2 rounded-md text-sm font-medium"
-                class:bg-gray-800={$isActive(url)}
-                class:text-yellow-400={$isActive(url)}
+                class:bg-gray-800={active}
+                class:text-yellow-400={active}
                 aria-current="page">{name}</a
               >
             {/each}
