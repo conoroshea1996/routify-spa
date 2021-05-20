@@ -41,7 +41,7 @@
               href="/jobs/{job.id}"
               class="font-medium text-gray-900 truncate font-bold ml-4"
             >
-              Back End Developer
+              {job.title}
             </a>
           </div>
           <div class="mt-2 flex ml-10">
@@ -60,7 +60,9 @@
                   clip-rule="evenodd"
                 />
               </svg>
-              <p>Dublin , Ireland | Product</p>
+              <p class="capitalize">
+                {job.location}, {job.country} | {job.category}
+              </p>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 <script>
   import { Menu, Button } from "hirehive-ui";
+  import CheckBox from "hirehive-ui/src/Inputs/CheckBox.svelte";
   export let filterName = "";
   export let open;
   export let facets = [];
@@ -13,12 +14,7 @@
     }
   };
 
-  const syncFitlers = (activeFilters) => {
-    filters = activeFilters;
-  };
-
   $: handleCheckAway(open);
-  $: syncFitlers(activeFilters);
 </script>
 
 <Menu position="right" bind:open>
@@ -35,7 +31,7 @@
       {/if}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="h-4 w-4 mx-1 text-gray-500"
+        class="h-6 w-5 mx-1 text-gray-500"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -51,25 +47,13 @@
   </span>
   <div slot="menu_context" class="bg-white shadow-md rounded-md p-3">
     {#each facets as facet}
-      <div class="relative flex items-start">
-        <div class="flex items-center h-5">
-          <input
-            id={facet}
-            name={facet}
-            type="checkbox"
-            bind:group={filters}
-            value={facet}
-            class="h-3 w-3 border-gray-300"
-            aria-checked="true"
-          />
-        </div>
-        <div class="ml-3 text-sm">
-          <label
-            for="checkbox id"
-            class="font-medium text-gray-700 svelte-112l3bx">{facet}</label
-          >
-        </div>
-      </div>
+      <CheckBox
+        size="medium"
+        bind:group={filters}
+        checked={activeFilters.includes(facet)}
+        value={facet}
+        label={facet}
+      />
     {/each}
   </div>
 </Menu>

@@ -9,6 +9,7 @@
   import Jobs from "../lib/Jobs/Jobs.svelte";
   import TextInput from "hirehive-ui/src/Inputs/TextInput.svelte";
   import Button from "hirehive-ui/src/Button/Button.svelte";
+  import Rating from "../lib/Rating/rating.svelte";
 
   const { data, mutate } = useSWR(
     "https://jsonplaceholder.typicode.com/posts",

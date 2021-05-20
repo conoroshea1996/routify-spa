@@ -1,15 +1,31 @@
 <script>
-  import { goto, isActive, layout, page, prefetch } from "@roxi/routify";
+  import {
+    goto,
+    isActive,
+    layout,
+    page,
+    prefetch,
+    params,
+  } from "@roxi/routify";
   import Button from "hirehive-ui/src/Button/Button.svelte";
   import { setContext } from "svelte";
   import { writable } from "svelte/store";
   import Transistion from "../../../lib/Transistion.svelte";
+  import { jobs } from "../../../stores/jobs";
+  export let jobId = $params.jobId ? parseInt($params.jobId) : null;
 
   const job = writable({});
 
+  let jobDetails;
+  // is editing a job
+  if (jobId) {
+    jobDetails = $jobs.find((j) => j.id === jobId);
+    $job = jobDetails;
+  }
+
   const formErrors = writable({
     jobTitle: false,
-    city: false,
+    location: false,
     country: false,
   });
 
@@ -19,9 +35,9 @@
       invalid = true;
       $formErrors.jobTitle = true;
     }
-    if (!$job.city) {
+    if (!$job.location) {
       invalid = true;
-      $formErrors.city = true;
+      $formErrors.location = true;
     }
     if (!$job.country) {
       invalid = true;

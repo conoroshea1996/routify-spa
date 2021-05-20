@@ -1,6 +1,6 @@
 import { userType } from "../types/roles";
 
-enum BadgeType {
+enum UserBadgeType {
     admin = "gray",
     reviewer = "red",
     user = "blue",
@@ -9,19 +9,19 @@ enum BadgeType {
 
 
 
-export const userBadgeType = (type: userType): BadgeType => {
-    let result : BadgeType = BadgeType.admin;
+export const userBadgeType = (type: userType): UserBadgeType => {
+    let result : UserBadgeType = UserBadgeType.admin;
     switch (type) {
         case userType.ADMIN:
-            result = BadgeType.admin
+            result = UserBadgeType.admin
             break;
         
         case userType.USER:
-            result =  BadgeType.owner;
+            result =  UserBadgeType.owner;
             break;
 
         case userType.REVIEWER:
-            result = BadgeType.reviewer;
+            result = UserBadgeType.reviewer;
             break;
     }
 
@@ -47,3 +47,45 @@ export const userTypeAsString = (type: userType):string => {
     return result;
 }
 
+enum CandidateStatusBadgeType {
+    new = "gray",
+    screening = "pink",
+    interviewing = "blue",
+    offered = "yellow",
+    hired = "green",
+}
+
+enum CandidateStatuses {
+    new = 2,
+    screening = 3,
+    interviewing = 4,
+    offered = 5,
+    hired = 6,
+}
+
+
+export const candidateBadgeType = (type: CandidateStatuses) : CandidateStatusBadgeType => {
+    let result: CandidateStatusBadgeType = CandidateStatusBadgeType.new;
+    switch (type) {
+        case CandidateStatuses.new:
+            result = CandidateStatusBadgeType.new
+            break;
+        
+        case CandidateStatuses.screening:
+            result = CandidateStatusBadgeType.screening ;
+            break;
+
+        case CandidateStatuses.interviewing:
+            result = CandidateStatusBadgeType.interviewing;
+            break;
+        case CandidateStatuses.offered:
+            result = CandidateStatusBadgeType.offered;
+            break;
+            
+        case CandidateStatuses.hired:
+            result = CandidateStatusBadgeType.hired;
+            break;
+    }
+    
+    return result;
+} 

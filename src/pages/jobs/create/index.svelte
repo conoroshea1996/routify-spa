@@ -77,10 +77,10 @@
         </div>
         <div class="w-3/4">
           <TextInput
-            bind:value={$job.city}
+            bind:value={$job.location}
             full
-            hasError={$formErrors.city}
-            on:focus={() => ($formErrors.city = false)}
+            hasError={$formErrors.location}
+            on:focus={() => ($formErrors.location = false)}
             errorMessage="Required field"
           />
         </div>

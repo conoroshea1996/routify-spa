@@ -1,54 +1,78 @@
 <script>
-  import { Button, Menu, ChipSet } from "hirehive-ui";
+  import {
+    Button,
+    Menu,
+    ChipSet,
+    TextInput,
+    Pagination,
+    Badge,
+    CheckBox,
+  } from "hirehive-ui";
   import FilterDropDown from "$lib/Filters/FilterDropDown.svelte";
-  import TextInput from "hirehive-ui/src/Inputs/TextInput.svelte";
-  let jobActionMenu = false;
+  import { jobs } from "../../stores/jobs";
+  import { candidates } from "../../stores/candidates";
+  import { candidateBadgeType } from "../../utils/badgeType";
+  import Rating from "../../lib/Rating/rating.svelte";
+  import { url } from "@roxi/routify";
   export let jobId;
+  jobId = parseInt(jobId);
 
-  let categoriesMenu = false;
+  let job = $jobs.find((j) => j.jobId === jobId);
+
+  let jobsCandidates = $candidates.filter((c) => c.jobId === jobId);
+
+  console.log(jobsCandidates);
+
+  let jobActionMenu = false;
+  let jobStatusMenu = false;
+  let statusMenu = false;
+  let tagsMenu = false;
+  let ratingsMenu = false;
   let locationsMenu = false;
-  let ownersMenu = false;
-  let stageMenu = false;
 
   let activeFilters = [];
-  let categoryFitlers = [];
-  let locationsFilter = [];
-  let ownersFilter = [];
-  let stagesFilter = [];
+  let statusFilter = [];
+  let tagsFilter = [];
+  let ratingFilter = [];
+  let locationFilter = [];
 
   const buildChipSet = (
-    categoryFitlers,
-    locationsFilter,
-    ownersFilter,
-    stagesFilter
+    statusFilter,
+    tagsFilter,
+    ratingFilter,
+    locationFilter
   ) => {
     activeFilters = [
-      ...categoryFitlers,
-      ...locationsFilter,
-      ...ownersFilter,
-      ...stagesFilter,
+      ...statusFilter,
+      ...tagsFilter,
+      ...ratingFilter,
+      ...locationFilter,
     ];
   };
 
-  $: buildChipSet(categoryFitlers, locationsFilter, ownersFilter, stagesFilter);
-
-  $: console.log(activeFilters);
+  $: buildChipSet(statusFilter, tagsFilter, ratingFilter, locationFilter);
 
   const removeNonActiveFilter = (activeFilters) => {
-    categoryFitlers = categoryFitlers.filter((c) => activeFilters.includes(c));
-    locationsFilter = locationsFilter.filter((c) => activeFilters.includes(c));
-    ownersFilter = ownersFilter.filter((c) => activeFilters.includes(c));
-    stagesFilter = stagesFilter.filter((c) => activeFilters.includes(c));
-  };
-
-  const clearAll = () => {
-    categoryFitlers = [];
-    locationsFilter = [];
-    ownersFilter = [];
-    stagesFilter = [];
+    statusFilter = statusFilter.filter((c) => activeFilters.includes(c));
+    tagsFilter = tagsFilter.filter((c) => activeFilters.includes(c));
+    ratingFilter = ratingFilter.filter((c) => activeFilters.includes(c));
+    locationFilter = locationFilter.filter((c) => activeFilters.includes(c));
   };
 
   $: removeNonActiveFilter(activeFilters);
+
+  let checkAll;
+  let selectedCandidates;
+
+  const selectAll = (checkAll) => {
+    if (checkAll) {
+      selectedCandidates = jobsCandidates.map((c) => c.id);
+    } else {
+      selectedCandidates = [];
+    }
+  };
+
+  $: selectAll(checkAll);
 </script>
 
 <div class="border-b bg-white  border-gray-200 w-full">
@@ -60,7 +84,7 @@
         <a href="/index" class="pr-6">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4"
+            class="h-6 w-5"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -75,7 +99,7 @@
         </a>
       </div>
       <div>
-        <h1 class="text-gray-900">Backend Developer</h1>
+        <h1 class="text-gray-900">{job.title}</h1>
 
         <div class="sm:flex space-x-6">
           <p class="mt-2 flex items-center text-sm text-gray-500">
@@ -92,7 +116,7 @@
                 clip-rule="evenodd"
               />
             </svg>
-            Dublin, Ireland
+            {job.location}, {job.country}
           </p>
 
           <p class="mt-2 flex items-center text-sm text-gray-500">
@@ -111,7 +135,7 @@
                 d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"
               />
             </svg>
-            Product
+            {job.category}
           </p>
         </div>
       </div>
@@ -119,7 +143,23 @@
     <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0 space-x-3">
       <Menu bind:open={jobActionMenu} position="right">
         <span slot="menu_trigger">
-          <Button kind="white">Save as Draft</Button>
+          <Button kind="white">
+            <span class="mx-1"> Actions </span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-5 mx-1 text-gray-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </Button>
         </span>
 
         <div
@@ -133,7 +173,7 @@
           <div class="py-1" role="none">
             <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
             <a
-              href="#"
+              href={$url("/jobs/create/index", { jobId: job.id })}
               class="text-gray-700 block px-4 py-2 text-sm"
               role="menuitem"
               tabindex="-1"
@@ -157,22 +197,90 @@
           </div>
         </div>
       </Menu>
-      <Button kind="primary">Publish Job</Button>
+
+      <Menu bind:open={jobStatusMenu} position="right">
+        <span slot="menu_trigger">
+          <Button kind="primary">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-5 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            <span class="mx-1 ml-2"> {job.status}</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-5 mx-1 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </Button>
+        </span>
+
+        <div
+          slot="menu_context"
+          class="w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
+          role="menu"
+          aria-orientation="vertical"
+          aria-labelledby="menu-button"
+          tabindex="-1"
+        >
+          <div class="py-1" role="none">
+            <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+            <a
+              href="#"
+              class="text-gray-700 block px-4 py-2 text-sm"
+              role="menuitem"
+              tabindex="-1"
+              id="menu-item-0">Slots</a
+            >
+            <a
+              href="#"
+              class="text-gray-700 block px-4 py-2 text-sm"
+              role="menuitem"
+              tabindex="-1"
+              id="menu-item-1">Slots</a
+            >
+
+            <a
+              href="#"
+              class="text-gray-700 block px-4 py-2 text-sm"
+              role="menuitem"
+              tabindex="-1"
+              id="menu-item-1">Slots</a
+            >
+          </div>
+        </div>
+      </Menu>
     </div>
   </div>
 </div>
 
-<main class="max-w-screen-2xl mx-auto">
-  <h1 class="text-5xl text-gray-700 text-center">Show Details for {jobId}</h1>
-
-  <div class="hidden md:flex pb-4 justify-between">
+<main class="max-w-screen-2xl mx-auto flex flex-col">
+  <div class="hidden md:flex pb-4 justify-between py-8">
     <div>
       <ChipSet bind:chipArray={activeFilters} />
     </div>
 
     <div class="flex text-gray-700 space-x-4">
-      <div class="w-72">
-        <TextInput placeholder="Search candidates" full>
+      <div class="w-96">
+        <TextInput placeholder="Search candidates" full size="large">
           <div
             slot="leading"
             class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none text-gray-400"
@@ -197,30 +305,151 @@
       <FilterDropDown
         filterName="Status"
         facets={["Hired", "Interviewing", "Screening"]}
-        open={categoriesMenu}
-        bind:activeFilters={categoryFitlers}
+        open={statusMenu}
+        bind:activeFilters={statusFilter}
       />
 
       <FilterDropDown
         filterName="Tags"
         facets={["New", "Good", "Possible"]}
-        open={locationsMenu}
-        bind:activeFilters={locationsFilter}
+        open={tagsMenu}
+        bind:activeFilters={tagsFilter}
       />
 
       <FilterDropDown
         filterName="Rating"
         facets={["5", "4", "3", "2", "1"]}
-        open={ownersMenu}
-        bind:activeFilters={ownersFilter}
+        open={ratingsMenu}
+        bind:activeFilters={ratingFilter}
       />
 
       <FilterDropDown
         filterName="Location"
         facets={["Ireland", "United Kingdom", "South Africa"]}
-        open={stageMenu}
-        bind:activeFilters={stagesFilter}
+        open={locationsMenu}
+        bind:activeFilters={locationFilter}
       />
     </div>
+  </div>
+
+  <div class="flex flex-col">
+    <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+        <div
+          class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
+        >
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-white">
+              <tr>
+                <th
+                  scope="col"
+                  class="px-6 w-1/4 py-3 text-left text-xs font-medium text-gray-500  tracking-wider flex items-center space-x-2"
+                >
+                  <CheckBox size="medium" bind:checked={checkAll} />
+                  <span>Name </span>
+                </th>
+                <th
+                  scope="col"
+                  class="px-6 w-1/4 py-3 text-left text-xs font-medium text-gray-500  tracking-wider"
+                >
+                  Current title
+                </th>
+                <th
+                  scope="col"
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider"
+                >
+                  Status
+                </th>
+                <th
+                  scope="col"
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider"
+                >
+                  Sourced
+                </th>
+
+                <th
+                  scope="col"
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider"
+                >
+                  Tags
+                </th>
+
+                <th
+                  scope="col"
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider"
+                >
+                  Rating
+                </th>
+
+                <th
+                  scope="col"
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider"
+                >
+                  Applications
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              {#each jobsCandidates as candidate}
+                <tr>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center">
+                      <div
+                        class="text-sm font-medium text-gray-900 flex items-center space-x-2"
+                      >
+                        <CheckBox
+                          size="medium"
+                          value={candidate.id}
+                          bind:group={selectedCandidates}
+                        />
+                        <span> {candidate.fullName}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-500">
+                      {candidate.currentTitle}
+                    </div>
+                  </td>
+
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <Badge kind={candidateBadgeType(candidate.parentStatusId)}
+                      >{candidate.statusName}</Badge
+                    >
+                  </td>
+                  <td
+                    class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex flex-col"
+                  >
+                    <span>{candidate.dateApplied}</span>
+                    <span class="text-xs"> get date from now to apply </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <Badge kind="gray">Good</Badge>
+                  </td>
+
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <Rating rating={candidate.rating} />
+                  </td>
+
+                  <td
+                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500"
+                  >
+                    {candidate.otherApplications.length}
+                  </td>
+                </tr>
+              {/each}
+
+              <!-- More people... -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h1 class="text-xs text-gray-400">Selected Ids {selectedCandidates}</h1>
+
+  <div class="absolute bottom-0 w-full max-w-screen-2xl mx-auto my-4">
+    <Pagination numItems={jobsCandidates.length} current={1} perPage={5} />
   </div>
 </main>
