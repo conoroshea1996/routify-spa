@@ -10,6 +10,7 @@
   import Button from "hirehive-ui/src/Button/Button.svelte";
   import { setContext } from "svelte";
   import { writable } from "svelte/store";
+  import SidebarNav from "../../../lib/SidebarNav/SidebarNav.svelte";
   import Transistion from "../../../lib/Transistion.svelte";
   import { jobs } from "../../../stores/jobs";
   export let jobId = $params.jobId ? parseInt($params.jobId) : null;
@@ -54,12 +55,51 @@
     formErrors,
     handleFormSubmit,
   });
+
+  const sections = [
+    {
+      heading: "Job",
+      urls: [
+        {
+          name: "Job details",
+          url: "/jobs/create/index",
+        },
+        {
+          name: "Job description",
+          url: "/jobs/create/description",
+        },
+        {
+          name: "Application form",
+          url: "/jobs/create/application",
+        },
+      ],
+    },
+    {
+      heading: "Settings",
+      urls: [
+        {
+          name: "Hiring team",
+          url: "/jobs/create/hiringteam",
+        },
+        {
+          name: "Hiring stages",
+          url: "#",
+        },
+        {
+          name: "Confirmation email",
+          url: "/jobs/create/confirmationemail",
+        },
+        {
+          name: "Internal settings",
+          url: "/jobs/create/internal",
+        },
+      ],
+    },
+  ];
 </script>
 
 <div class="border-b  border-gray-200 w-full">
-  <div
-    class="mx-auto max-w-screen-2xl py-4  lg:flex lg:items-center lg:justify-between"
-  >
+  <div class="mx-auto  px-4 py-4  lg:flex lg:items-center lg:justify-between">
     <div
       class="font-medium tracking-tight text-gray-500  flex items-center text-2xl"
     >
@@ -94,83 +134,9 @@
   </div>
 </div>
 
-<main class="max-w-screen-2xl mx-auto pb-10 lg:py-12">
+<main class=" px-4 mx-auto pb-10 lg:py-12">
   <div class="lg:grid lg:grid-cols-12">
-    <aside class="py-6 lg:py-0  lg:col-span-2 pr-6">
-      <nav class="space-y-1">
-        <!-- Current: "bg-gray-50 text-orange-600 hover:bg-white", Default: "text-gray-900 hover:text-gray-900 hover:bg-gray-50" -->
-        <h1
-          class="text-gray-900 group rounded-md px-3 py-2 flex items-center text-lg font-medium"
-        >
-          Job
-        </h1>
-        <a
-          href="/jobs/create/index"
-          use:prefetch
-          class="text-gray-900 hover:text-gray-900 hover:bg-yellow-100 group rounded-md px-3 py-2 flex items-center text-sm font-medium"
-          class:bg-yellow-100={$isActive("/jobs/create/index")}
-        >
-          <span class="truncate"> Job Details </span>
-        </a>
-
-        <a
-          href="/jobs/create/description"
-          class="text-gray-900 hover:text-gray-900 hover:bg-yellow-100 group rounded-md px-3 py-2 flex items-center text-sm font-medium"
-          class:bg-yellow-100={$isActive("/jobs/create/description")}
-          use:prefetch
-        >
-          <span class="truncate"> Job description </span>
-        </a>
-
-        <a
-          href="/jobs/create/application"
-          class:bg-yellow-100={$isActive("/jobs/create/application")}
-          use:prefetch
-          class="text-gray-900 hover:text-gray-900 hover:bg-yellow-100 group rounded-md px-3 py-2 flex items-center text-sm font-medium"
-        >
-          <span class="truncate"> Application form </span>
-        </a>
-
-        <h1
-          class="text-gray-900 group rounded-md px-3 py-2 flex items-center text-lg font-medium"
-        >
-          Settings
-        </h1>
-        <a
-          href="/jobs/create/hiringteam"
-          class:bg-yellow-100={$isActive("/jobs/create/hiringteam")}
-          use:prefetch
-          class="text-gray-900 hover:text-gray-900 hover:bg-yellow-100 group rounded-md px-3 py-2 flex items-center text-sm font-medium"
-        >
-          <span class="truncate"> Hiring team </span>
-        </a>
-
-        <a
-          href="#"
-          class="text-gray-900 hover:text-gray-900 hover:bg-yellow-100 group rounded-md px-3 py-2 flex items-center text-sm font-medium"
-        >
-          <span class="truncate"> Hiring stages </span>
-        </a>
-
-        <a
-          href="/jobs/create/confirmationemail"
-          class:bg-yellow-100={$isActive("/jobs/create/confirmationemail")}
-          use:prefetch
-          class="text-gray-900 hover:text-gray-900 hover:bg-yellow-100 group rounded-md px-3 py-2 flex items-center text-sm font-medium"
-        >
-          <span class="truncate"> Confirmation email </span>
-        </a>
-
-        <a
-          href="/jobs/create/internal"
-          class:bg-yellow-100={$isActive("/jobs/create/internal")}
-          use:prefetch
-          class="text-gray-900 hover:text-gray-900 hover:bg-yellow-100 group rounded-md px-3 py-2 flex items-center text-sm font-medium"
-        >
-          <span class="truncate"> Internal settings </span>
-        </a>
-      </nav>
-    </aside>
+    <SidebarNav {sections} activeUrl="Job details" />
 
     <slot decorator={Transistion} />
   </div>
