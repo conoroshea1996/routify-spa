@@ -189,14 +189,14 @@
 </section>
 
 <Modal bind:open={personalModal}>
-  <div slot="header">
+  <div slot="header" class="px-8">
     <h1 class="text-gray-900 text-xl font-bold py-2">Personal details</h1>
     <p class="text-gray-500 py-2">
       Select what should be included or required in the application form.
     </p>
   </div>
 
-  <div slot="content" class="flex flex-col my-2">
+  <div slot="content" class="flex flex-col my-2 px-8">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-4xl sm:px-6 lg:px-8">
         <div
@@ -309,7 +309,7 @@
     </div>
   </div>
 
-  <div slot="footer" class="flex justify-end mt-4">
+  <div slot="footer" class="flex justify-end mt-4 px-8">
     <div>
       <Button kind="white">Cancel</Button>
       <Button kind="primary">Apply changes</Button>

@@ -172,7 +172,7 @@
 </section>
 
 <Modal bind:open={editHiringTeam}>
-  <div slot="header" class="max-w-3xl">
+  <div slot="header" class="max-w-3xl px-8">
     <h1 class="text-gray-900 text-xl font-bold py-2">Manage hiring team</h1>
     <p class="text-gray-500 py-2">
       Hiring team members of this job opening have access to candidate profiles
@@ -183,7 +183,7 @@
 
   <div
     slot="content"
-    class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 max-w-3xl"
+    class="py-2 align-middle inline-block min-w-full px-8 max-w-3xl"
   >
     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
       <table class="min-w-full divide-y divide-gray-200">
@@ -336,7 +336,7 @@
     </div>
   </div>
 
-  <div slot="footer" class="flex justify-end mt-4 max-w-3xl">
+  <div slot="footer" class="flex justify-end mt-4 max-w-3xl px-8">
     <div>
       <Button kind="white" on:click={() => (editHiringTeam = false)}
         >Cancel</Button
