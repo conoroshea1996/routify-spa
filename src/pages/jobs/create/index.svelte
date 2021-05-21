@@ -1,8 +1,6 @@
 <script lang="ts">
-  import Button from "hirehive-ui/src/Button/Button.svelte";
-  import TextInput from "hirehive-ui/src/Inputs/TextInput.svelte";
+  import { Button, TextInput, Select } from "hirehive-ui";
 
-  import Select from "hirehive-ui/src/Inputs/Select.svelte";
   import { getContext } from "svelte";
 
   let { job, formErrors } = getContext("Jobs_Context");

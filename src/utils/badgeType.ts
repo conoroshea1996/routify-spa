@@ -2,7 +2,7 @@ import { userType } from "../types/roles";
 
 enum UserBadgeType {
     admin = "gray",
-    reviewer = "red",
+    reviewer = "pink",
     user = "blue",
     owner = "indigo",
 }
@@ -17,7 +17,7 @@ export const userBadgeType = (type: userType): UserBadgeType => {
             break;
         
         case userType.USER:
-            result =  UserBadgeType.owner;
+            result =  UserBadgeType.user;
             break;
 
         case userType.REVIEWER:
@@ -33,9 +33,13 @@ export const userTypeAsString = (type: userType):string => {
     let result: string = "";
     switch (type) {
         case userType.PRIMARY_ADMIN:
+            result = "Primary Admin"
+            break;
+
+        case userType.ADMIN:
             result = "Admin"
             break;
-        
+
         case userType.USER:
             result =  "User";
             break;

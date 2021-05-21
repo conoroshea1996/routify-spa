@@ -33,7 +33,7 @@
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
       email: "johncooper@gmail.com",
       following: true,
-      typeId: 3,
+      typeId: 4,
       hasPermission: true,
     },
     {
@@ -43,7 +43,7 @@
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
       email: "janecooper@gmail.com",
       following: false,
-      typeId: 5,
+      typeId: 6,
       hasPermission: true,
     },
   ];
