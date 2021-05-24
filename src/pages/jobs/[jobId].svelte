@@ -83,7 +83,9 @@
 </script>
 
 <div class="border-b bg-white  border-gray-200 w-full">
-  <div class="mx-auto  px-4 py-4  lg:flex lg:items-center lg:justify-between">
+  <div
+    class="mx-auto max-w-screen-2xl px-4 py-4  lg:flex lg:items-center lg:justify-between"
+  >
     <div class="font-medium tracking-tight text-gray-500  flex text-xl">
       <div class="flex items-start mt-2">
         <a href="/index" class="pr-6">
@@ -335,7 +337,7 @@
   </div>
 </div>
 
-<main class=" px-4 mx-auto flex flex-col">
+<main class="max-w-screen-2xl px-4 mx-auto flex flex-col">
   <div class="hidden md:flex pb-4 justify-between py-8">
     <div>
       <ChipSet bind:chipArray={activeFilters} />
@@ -512,7 +514,7 @@
 
   <h1 class="text-xs text-gray-400">Selected Ids {selectedCandidates}</h1>
 
-  <div class="absolute bottom-0 w-full  px-4 mx-auto my-4">
+  <div class="absolute bottom-0 w-full max-w-screen-2xl  mx-auto my-4">
     <Pagination numItems={jobsCandidates.length} current={1} perPage={5} />
   </div>
 </main>

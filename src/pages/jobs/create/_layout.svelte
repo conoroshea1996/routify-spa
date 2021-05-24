@@ -99,7 +99,9 @@
 </script>
 
 <div class="border-b  border-gray-200 w-full">
-  <div class="mx-auto  px-4 py-4  lg:flex lg:items-center lg:justify-between">
+  <div
+    class="mx-auto max-w-screen-2xl px-4 py-4  lg:flex lg:items-center lg:justify-between"
+  >
     <div
       class="font-medium tracking-tight text-gray-500  flex items-center text-2xl"
     >
@@ -134,7 +136,7 @@
   </div>
 </div>
 
-<main class=" px-4 mx-auto pb-10 lg:py-12">
+<main class="max-w-screen-2xl px-4 mx-auto pb-10 lg:py-12">
   <div class="lg:grid lg:grid-cols-12">
     <SidebarNav {sections} activeUrl="Job details" />
 

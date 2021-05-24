@@ -17,9 +17,9 @@
   };
 </script>
 
-<div class="flex-grow w-full bg-white mx-auto lg:flex">
+<div class="flex-grow w-full mx-auto lg:flex">
   <!-- Left sidebar & main wrapper -->
-  <div class="flex-1 min-w-0  xl:flex">
+  <div class="flex-1 min-w-0 mx-auto max-w-screen-2xl xl:flex">
     <div class="border-b border-gray-200 bg-white w-1/4 h-100vh">
       <div class="h-full border-r pt-4">
         <div class="w-4/5 px-4">

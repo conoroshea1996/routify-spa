@@ -55,7 +55,7 @@
 </script>
 
 <div class=" space-x-5 w-full border-b border-gray-200">
-  <div class=" px-4 mx-auto flex justify-between py-4">
+  <div class="max-w-screen-2xl px-4 mx-auto flex justify-between py-4">
     <div class="w-64">
       <TextInput placeholder="search jobs..." full>
         <div
@@ -103,7 +103,7 @@
   </div>
 </div>
 
-<div class=" px-4	mx-auto">
+<div class="max-w-screen-2xl px-4	mx-auto">
   <div class="my-8">
     <Jobs />
   </div>
