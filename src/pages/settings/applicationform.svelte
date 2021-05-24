@@ -1,23 +1,37 @@
 <script lang="ts">
   import { flip } from "svelte/animate";
-  import { Button, Modal, Switch, CheckBox, TextInput } from "hirehive-ui";
-  let personalDetailsModal = false;
-  let workExperienceModal = false;
-  let createFormModal = false;
-  let formModal = false;
+  import {
+    Button,
+    Modal,
+    Switch,
+    CheckBox,
+    TextInput,
+    Select,
+  } from "hirehive-ui";
   import type { FeedBackForm } from "../../types/forms";
-  import { form } from "../../types/forms";
+  import { forms } from "../../types/forms";
   import { dndzone } from "svelte-dnd-action";
   const flipDurationMs = 150;
   let errors = {
     continueForm: false,
   };
 
+  // modal statuses
+  let personalDetailsModal = false;
+  let workExperienceModal = false;
+  let createFormModal = false;
+  let formModal = false;
+  let addQuestionModal = false;
+
   let newForm: FeedBackForm = {
     name: "",
     type: 1,
     questions: [],
   };
+
+  let activeFormDetails;
+  let activeQuestionDetails;
+  let activeQuestion;
 
   const continueForm = () => {
     if (!newForm.name) {
@@ -28,17 +42,33 @@
     }
   };
 
-  let questions = $form.questions.map((q) => {
-    return { ...q, id: q };
-  });
-  function handleDragging(e: any) {
-    questions = e.detail.items;
-  }
-  function handleDrop(e: any) {
-    questions = e.detail.items;
-  }
-
   let dragDisabled = true;
+
+  let questions: Array<any> = [];
+
+  const handleDragging = (e: any) => {
+    if (activeQuestionDetails) {
+      activeQuestionDetails = e.detail.items;
+    }
+  };
+  const handleDrop = (e: any) => {
+    if (activeQuestionDetails) {
+      activeQuestionDetails = e.detail.items;
+    }
+  };
+
+  const setQuestions = (form) => {
+    if (form) {
+      activeQuestionDetails = form.questions.map((q, i) => {
+        return { ...q, id: i };
+      });
+    }
+  };
+  $: setQuestions(activeFormDetails);
+
+  const deleteQuestion = (question) => {
+    activeQuestionDetails = activeQuestionDetails.filter((q) => q !== question);
+  };
 </script>
 
 <div class="w-full px-6">
@@ -173,17 +203,73 @@
       </div>
     </li>
   </ul>
+
+  {#if $forms.length > 0}
+    <h1 class="font-bold">Additional questions</h1>
+    <ul>
+      {#each $forms as form}
+        <li class="border bg-white border-gray-200 rounded-md p-5 my-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <div
+                class="bg-yellow-100 text-yellow-400 p-2 rounded-md shadow-sm mr-4"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+              <p class="text-sm font-medium text-gray-900 truncate">
+                {form.name}
+              </p>
+            </div>
+            <button
+              class="ml-2 flex-shrink-0 flex cursor-pointer"
+              on:click={() => {
+                activeFormDetails = form;
+                formModal = true;
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 text-gray-500"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+        </li>
+      {/each}
+    </ul>
+  {/if}
 </main>
 
 <Modal bind:open={personalDetailsModal}>
-  <div slot="header">
+  <div slot="header" class="px-4">
     <h1 class="text-gray-900 text-xl font-bold py-2">Personal details</h1>
     <p class="text-gray-500 py-2">
       Select what should be included or required in the application form.
     </p>
   </div>
 
-  <div slot="content" class="flex flex-col my-2">
+  <div slot="content" class="flex flex-col my-2 px-4">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-4xl sm:px-6 lg:px-8">
         <div
@@ -296,7 +382,7 @@
     </div>
   </div>
 
-  <div slot="footer" class="flex justify-end mt-4">
+  <div slot="footer" class="flex justify-end mt-4 px-4">
     <div>
       <Button kind="white" on:click={() => (personalDetailsModal = false)}
         >Cancel</Button
@@ -472,16 +558,20 @@
 
     <Button kind="secondary">Delete form</Button>
   </div>
+
   <div slot="content" class="flex flex-col my-4 px-8">
+    {activeQuestionDetails.map((q) => q.question)}
     <ul
       class="overflow-y-auto"
-      use:dndzone={{ items: questions, flipDurationMs, dragDisabled }}
+      use:dndzone={{
+        items: activeQuestionDetails,
+        flipDurationMs,
+        dragDisabled,
+      }}
       on:finalize={handleDrop}
       on:consider={handleDragging}
     >
-      {questions.map((q) => q.question)}
-
-      {#each questions as question (question.id)}
+      {#each activeQuestionDetails as question (question.id)}
         <li
           class="border border-gray-200 rounded-md p-5 my-2"
           draggable="false"
@@ -489,7 +579,8 @@
         >
           <div class="flex items-center justify-between">
             <div class="flex items-center">
-              <button
+              <span
+                tabindex="0"
                 class="px-6 py-2  hover:cursor-move"
                 on:mouseover={() => (dragDisabled = false)}
                 on:mouseout={() => (dragDisabled = true)}
@@ -507,7 +598,7 @@
                     clip-rule="evenodd"
                   />
                 </svg>
-              </button>
+              </span>
               <div
                 class="bg-yellow-100 text-yellow-400 p-2 rounded-md shadow-sm mr-4"
               >
@@ -531,7 +622,11 @@
               </p>
             </div>
             <div class="flex space-x-8 px-8 text-gray-500">
-              <button>
+              <button
+                on:click={() => {
+                  addQuestionModal = true;
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-5 w-5 "
@@ -549,7 +644,7 @@
                 </svg>
               </button>
 
-              <button>
+              <button on:click={() => deleteQuestion(question)}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-5 w-5"
@@ -599,6 +694,39 @@
         >Cancel</Button
       >
       <Button kind="primary">Save</Button>
+    </div>
+  </div>
+</Modal>
+
+<Modal bind:open={addQuestionModal}>
+  <div
+    slot="header"
+    class="flex justify-between items-center w-screen max-w-5xl py-4 border-b border-gray-200 px-8"
+  >
+    <h1 class="text-gray-900 text-xl font-bold py-2">Add Question</h1>
+  </div>
+
+  <div slot="content" class="flex flex-col my-4 px-8">
+    <div class="my-2 flex justify-between item-center">
+      <div class="w-1/4 flex items-center">
+        <span class="font-medium text-gray-500"> Question</span>
+      </div>
+      <div class="w-3/4">
+        <TextInput full placeholder="Write your question" />
+      </div>
+    </div>
+
+    <div class="my-2 flex justify-between item-center">
+      <div class="w-1/4 flex items-center">
+        <span class="font-medium text-gray-500"> Question type</span>
+      </div>
+      <div class="w-3/4">
+        <Select
+          options={["Multiple Choice", "Single line"]}
+          full
+          placeholder="Question type"
+        />
+      </div>
     </div>
   </div>
 </Modal>
