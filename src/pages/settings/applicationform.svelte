@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import { flip } from "svelte/animate";
   import {
     Button,
@@ -8,7 +8,6 @@
     TextInput,
     Select,
   } from "hirehive-ui";
-  import type { FeedBackForm } from "../../types/forms";
   import { forms } from "../../types/forms";
   import { dndzone } from "svelte-dnd-action";
   const flipDurationMs = 150;
@@ -23,14 +22,14 @@
   let formModal = false;
   let addQuestionModal = false;
 
-  let newForm: FeedBackForm = {
+  let newForm = {
     name: "",
     type: 1,
     questions: [],
   };
 
   let activeFormDetails;
-  let activeQuestionDetails;
+  let activeQuestionDetails = [];
   let activeQuestion;
 
   const continueForm = () => {
@@ -44,14 +43,14 @@
 
   let dragDisabled = true;
 
-  let questions: Array<any> = [];
+  let questions = [];
 
-  const handleDragging = (e: any) => {
+  const handleDragging = (e) => {
     if (activeQuestionDetails) {
       activeQuestionDetails = e.detail.items;
     }
   };
-  const handleDrop = (e: any) => {
+  const handleDrop = (e) => {
     if (activeQuestionDetails) {
       activeQuestionDetails = e.detail.items;
     }
@@ -80,7 +79,6 @@
         <div class="my-2">
           <p class="flex items-center font-medium text-gray-500">
             Create questions that can be added to any job application form. <a
-              href="#"
               class="text-blue-500 ml-1"
             >
               Learn more.
@@ -560,7 +558,6 @@
   </div>
 
   <div slot="content" class="flex flex-col my-4 px-8">
-    {activeQuestionDetails.map((q) => q.question)}
     <ul
       class="overflow-y-auto"
       use:dndzone={{
