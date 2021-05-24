@@ -51,7 +51,7 @@
     if (!newForm.name) {
       errors.continueForm = true;
     } else {
-      formModal = true;
+      addForm = true;
       createFormModal = false;
     }
     activeFormDetails = {
@@ -553,34 +553,30 @@
     />
 
     <div class="mt-6">
-      <Button kind="primary" full on:click={() => (addForm = true)}
+      <Button kind="primary" full on:click={() => continueForm()}
         >Continue</Button
       >
     </div>
   </div>
 </Modal>
 
-{#if addForm}
-  <AddApplicationForm
-    bind:open={addForm}
-    formName={newForm.name}
-    on:save={(e) => {
-      $forms = [...$forms, e.detail.form];
-      createFormModal = false;
-    }}
-  />
-{/if}
+<AddApplicationForm
+  bind:open={addForm}
+  formName={newForm.name}
+  on:save={(e) => {
+    $forms = [...$forms, e.detail.form];
+    createFormModal = false;
+  }}
+/>
 
-{#if editForm}
-  <EditForm
-    bind:open={editForm}
-    form={activeFormDetails}
-    on:save={(e) => {
-      let idx = $forms.findIndex((f) => f.id === e.detail.form.id);
-      $forms[idx] = e.detail.form;
-      activeFormDetails = e.detail.form;
-      console.log($forms);
-    }}
-    on:delete={(e) => deleteForm(e)}
-  />
-{/if}
+<EditForm
+  bind:open={editForm}
+  form={activeFormDetails}
+  on:save={(e) => {
+    let idx = $forms.findIndex((f) => f.id === e.detail.form.id);
+    $forms[idx] = e.detail.form;
+    activeFormDetails = e.detail.form;
+    console.log($forms);
+  }}
+  on:delete={(e) => deleteForm(e)}
+/>

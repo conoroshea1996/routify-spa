@@ -135,6 +135,7 @@
                   on:click={() => {
                     questionToEdit = question;
                     editQuestionModal = true;
+                    open = false;
                   }}
                 >
                   <svg
@@ -180,6 +181,7 @@
           class="flex items-center text-blue-500"
           on:click={() => {
             addQuestionModal = true;
+            open = false;
           }}
         >
           <div class="p-2 mr-4">
@@ -299,6 +301,7 @@
         kind="white"
         on:click={() => {
           addQuestionModal = false;
+          open = true;
         }}>Discard</Button
       >
       <Button kind="primary" on:click={() => addNewQuestionToForm()}

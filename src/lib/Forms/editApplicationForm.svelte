@@ -8,7 +8,6 @@
   const flipDurationMs = 500;
   export let open;
   export let form;
-  let questions;
   let dragDisabled = false;
 
   const deleteForm = () => {
@@ -18,7 +17,6 @@
   };
 
   const saveForm = () => {
-    form.questions = questions;
     dispatch("save", {
       form,
     });
@@ -26,21 +24,22 @@
   };
 
   const deleteQuestion = (question) => {
-    questions = questions.filter((q) => q !== question);
+    form.questions = form.questions.filter((q) => q !== question);
   };
 
-  onMount(() => {
-    // prepare questions for dndzone;
-    questions = form.questions.map((q, i) => ({ ...q, id: i }));
+  const onOpen = (open) => {
+    if (open) {
+      form.questions = form.questions.map((q, i) => ({ ...q, id: i }));
+    }
+  };
 
-    console.log(questions);
-  });
+  $: onOpen(open);
 
   function handleDndConsider(e) {
-    questions = e.detail.items;
+    form.questions = e.detail.items;
   }
   function handleDndFinalize(e) {
-    questions = e.detail.items;
+    form.questions = e.detail.items;
   }
 
   let addQuestionModal;
@@ -54,8 +53,8 @@
   };
 
   const addNewQuestionToForm = () => {
-    newQuestion.id = questions.length;
-    questions = [...questions, newQuestion];
+    newQuestion.id = form.questions.length;
+    form.questions = [...form.questions, newQuestion];
     addQuestionModal = false;
     open = true;
     newQuestion = {};
@@ -75,18 +74,18 @@
   </div>
 
   <div slot="content" class="flex flex-col my-4 px-8">
-    {#if questions}
+    {#if form.questions}
       <ul
         class="overflow-y-auto"
         use:dndzone={{
-          items: questions,
+          items: form.questions,
           flipDurationMs,
           dragDisabled,
         }}
         on:finalize={handleDndConsider}
         on:consider={handleDndFinalize}
       >
-        {#each questions as question (question.id)}
+        {#each form.questions as question (question.id)}
           <li
             class="border border-gray-200 rounded-md p-5 my-2"
             draggable="false"
@@ -141,6 +140,7 @@
                   on:click={() => {
                     questionToEdit = question;
                     editQuestionModal = true;
+                    open = false;
                   }}
                 >
                   <svg
@@ -186,6 +186,7 @@
           class="flex items-center text-blue-500"
           on:click={() => {
             addQuestionModal = true;
+            open = false;
           }}
         >
           <div class="p-2 mr-4">
@@ -363,7 +364,8 @@
         kind="primary"
         on:click={() => {
           editQuestionModal = false;
-          questions = questions;
+          open = true;
+          form.questions = form.questions;
         }}>Edit question</Button
       >
     </div>
