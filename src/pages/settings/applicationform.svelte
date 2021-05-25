@@ -21,12 +21,6 @@
   let personalDetailsModal = false;
   let workExperienceModal = false;
   let createFormModal = false;
-  let formModal = false;
-
-  let addNewQuestionModal = false;
-
-  let editFormModal = false;
-  let editQuestionModal = false;
 
   let newForm = {
     name: "",
@@ -37,14 +31,6 @@
   let activeFormDetails = {
     name: "",
     questions: [],
-  };
-  let activeQuestions;
-  let activeQuestion;
-
-  let newQuestion = {
-    question: "",
-    typeId: null,
-    options: [],
   };
 
   const continueForm = () => {
@@ -59,16 +45,6 @@
       questions: [],
     };
     activeQuestions = [];
-  };
-
-  let dragDisabled = true;
-
-  const addNewQuestionToForm = () => {
-    newQuestion.id = activeQuestions.length;
-    activeQuestions = [...activeQuestions, newQuestion];
-    newQuestion = {};
-    addNewQuestionModal = false;
-    formModal = true;
   };
 
   const deleteForm = (e) => {

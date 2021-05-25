@@ -10,7 +10,7 @@
   let questions = [];
 
   let form = {
-    name: formName,
+    name: "",
     questions,
   };
   let dragDisabled = false;
@@ -22,10 +22,10 @@
   };
   const saveForm = () => {
     form.questions = questions;
+    form.name = formName;
     dispatch("save", {
       form,
     });
-
     open = false;
   };
 
