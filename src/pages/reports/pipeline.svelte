@@ -1,5 +1,5 @@
 <script>
-  import ReportCard from "$lib/reports/ReportCard.svelte";
+  import ReportCard from "$lib/Reports/ReportCard.svelte";
   import { CheckBox } from "hirehive-ui";
   import { pipeLine } from "../../stores/reports";
   let showUserData;

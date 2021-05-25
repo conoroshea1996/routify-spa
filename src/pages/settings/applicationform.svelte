@@ -1,5 +1,4 @@
 <script>
-  import { flip } from "svelte/animate";
   import {
     Button,
     Modal,
@@ -9,7 +8,6 @@
     Select,
   } from "hirehive-ui";
   import { forms } from "../../types/forms";
-  import { dndzone } from "svelte-dnd-action";
   import EditForm from "../../lib/Forms/editApplicationForm.svelte";
   import AddApplicationForm from "../../lib/Forms/addApplicationForm.svelte";
   const flipDurationMs = 150;
