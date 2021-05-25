@@ -19,7 +19,7 @@
     {
       name: "Reports",
       url: "/reports/index",
-      active: $isActive("/reports/index"),
+      active: $page.path.includes("/reports/"),
     },
     {
       name: "Inbox",

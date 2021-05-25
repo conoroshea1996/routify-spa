@@ -5,7 +5,6 @@
   import Tab from "hirehive-ui/src/TabsContext/Tab.svelte";
 </script>
 
-<h1>Reports tabs</h1>
 <TabsContainer>
   <TabBar>
     <Tab TabId={1} let:isActive>

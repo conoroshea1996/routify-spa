@@ -54,8 +54,10 @@
   let currentPage = 1;
 </script>
 
-<div class=" space-x-5 w-full border-b border-gray-200">
-  <div class="max-w-screen-2xl px-4 mx-auto flex justify-between py-4">
+<div class="border-b border-gray-200">
+  <div
+    class="max-w-screen-2xl px-4 py-2 sm:flex sm:items-center sm:justify-between mx-auto"
+  >
     <div class="w-64">
       <TextInput placeholder="search jobs..." full>
         <div
@@ -79,9 +81,7 @@
         </div>
       </TextInput>
     </div>
-    <div
-      class="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3"
-    >
+    <div class="mt-3 sm:mt-0 sm:ml-4">
       <Button kind="primary" href="/jobs/create/index">
         <svg
           xmlns="http://www.w3.org/2000/svg"
