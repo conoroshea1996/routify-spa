@@ -1,13 +1,12 @@
 <script>
-  import { ButtonGroup, ButtonItem } from "hirehive-ui";
   import ReportCard from "$lib/Reports/ReportCard.svelte";
-  import Chart from "svelte-frappe-charts";
   import { overView, demographics } from "../../stores/reports";
+  import PieChart from "../../lib/Reports/pieChart.svelte";
+  import TimeLineChart from "../../lib/Reports/TimeLineChart.svelte";
   let totalConversion = `${parseFloat(
     ($overView.data.totalViews / $overView.data.totalApplications) * 100
   ).toFixed(2)}%`;
 
-  let pieData = {};
   let pieChartRenderData = {
     labels: [],
     datasets: [
@@ -16,17 +15,8 @@
       },
     ],
   };
-  let pieChartColors = [];
   // build dataset
   $demographics.map((d) => {
-    var randomColor = "#000000".replace(/0/g, function () {
-      return (~~(Math.random() * 16)).toString(16);
-    });
-
-    pieData[d.sourceHostName] = {
-      count: d.count,
-      color: randomColor,
-    };
     pieChartRenderData.labels = [
       ...pieChartRenderData.labels,
       d.sourceHostName,
@@ -35,11 +25,7 @@
       ...pieChartRenderData.datasets[0].values,
       d.count,
     ];
-
-    pieChartColors = [...pieChartColors, randomColor];
   });
-
-  let pieChartElement;
 
   const lineChartDatasets = [
     {
@@ -57,23 +43,35 @@
     datasets: lineChartDatasets,
   };
 
-  const addView = (value) => {
-    const datasetToAdd = lineChartDatasets.find((d) => d.name === value);
+  let activeFilters = [];
 
-    if (lineChartData.datasets.some((d) => d.name === value)) {
-      lineChartData.datasets = lineChartData.datasets.filter(
-        (d) => d.name !== value
+  const toggleView = (value) => {
+    if (activeFilters.findIndex((f) => f === value) >= 0) {
+      activeFilters = activeFilters.filter((av) => av !== value);
+    } else {
+      activeFilters = [...activeFilters, value];
+    }
+  };
+
+  const updateTimeLineData = (activeFilters) => {
+    console.log(lineChartData, "Before");
+    if (activeFilters.length) {
+      lineChartData.datasets = lineChartDatasets.filter((d) =>
+        activeFilters.includes(d.name)
       );
     } else {
-      lineChartData.datasets = [...lineChartData.datasets, datasetToAdd];
+      lineChartData.datasets = lineChartDatasets;
     }
 
-    console.log(lineChartData);
-
     lineChartData = lineChartData;
+
+    console.log(lineChartData, "after");
   };
+
+  $: updateTimeLineData(activeFilters);
 </script>
 
+{activeFilters}
 <div class="px-1 my-8">
   <h1 class="text-xl font-bold text-gray-900">All Jobs</h1>
 
@@ -97,15 +95,17 @@
       <div>
         <button
           type="button"
-          class="inline-flex items-center px-4 py-2 border border-transparent text-sm bg-yellow-100 font-medium rounded-full shadow-sm text-white  text-gray-900"
-          on:click={() => addView("views")}
+          class="inline-flex items-center px-4 py-2 border border-transparent text-sm  font-medium rounded-full shadow-sm text-white  text-gray-900"
+          on:click={() => toggleView("views")}
+          class:bg-yellow-100={activeFilters.includes("views")}
         >
           Views
         </button>
         <button
           type="button"
           class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full shadow-sm text-white  text-gray-900"
-          on:click={() => addView("applications")}
+          on:click={() => toggleView("applications")}
+          class:bg-yellow-100={activeFilters.includes("applications")}
         >
           Applications
         </button>
@@ -137,82 +137,13 @@
 
     <div class="flex flex-1 justify-center items-center">
       <div class="w-full">
-        <Chart
-          data={lineChartData}
-          type="line"
-          colors={["#FDE68A", "#D97706"]}
-          lineOptions={{
-            regionFill: 1,
-          }}
-        />
+        <TimeLineChart data={lineChartData} />
       </div>
     </div>
   </div>
 
   <!-- Pie Chart -->
-  <div
-    class="bg-white p-20 rounded-md shadow-sm flex my-8 border border-gray-200"
-  >
-    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-      <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-        <div
-          class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
-        >
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-white">
-              <tr>
-                <th
-                  scope="col"
-                  class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Source
-                </th>
-                <th
-                  scope="col"
-                  class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Applications
-                </th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-              {#each Object.entries(pieData) as [sourceName, details]}
-                <tr class="bg-white">
-                  <td
-                    class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 flex items-center space-x-2"
-                  >
-                    <div
-                      class="h-2 w-2 rounded-full pr-2"
-                      style="background-color: {details.color};"
-                    />
-                    <span>
-                      {sourceName}
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {details.count}
-                  </td>
-                </tr>
-              {/each}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex flex-1 justify-center items-center">
-      <div class="w-3/4">
-        <Chart
-          data={pieChartRenderData}
-          type="pie"
-          height={400}
-          colors={pieChartColors}
-          maxSlices={500}
-          bind:this={pieChartElement}
-        />
-      </div>
-    </div>
-  </div>
+  <PieChart data={pieChartRenderData} />
 </div>
 
 <style global>
