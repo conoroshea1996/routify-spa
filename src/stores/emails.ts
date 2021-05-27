@@ -1,4 +1,5 @@
-import {writable} from "svelte/store";
+import {Writable, writable} from "svelte/store";
+import type { Email } from "../types/emails";
 
 export const emails = writable([
     {
@@ -27,7 +28,6 @@ export const emails = writable([
         "toList": null,
         "ccList": null,
         "formattedDate": "24 Feb 21",
-        "$$hashKey": "object:129"
     },
     {
         "id": 60,
@@ -55,7 +55,6 @@ export const emails = writable([
         "toList": null,
         "ccList": null,
         "formattedDate": "24 Feb 21",
-        "$$hashKey": "object:130"
     },
     {
         "id": 58,
@@ -83,7 +82,6 @@ export const emails = writable([
         "toList": null,
         "ccList": null,
         "formattedDate": "23 Feb 21",
-        "$$hashKey": "object:131"
     },
     {
         "id": 34,
@@ -111,7 +109,6 @@ export const emails = writable([
         "toList": null,
         "ccList": null,
         "formattedDate": "15 Jan 21",
-        "$$hashKey": "object:132"
     },
     {
         "id": 32,
@@ -139,7 +136,6 @@ export const emails = writable([
         "toList": null,
         "ccList": null,
         "formattedDate": "15 Jan 21",
-        "$$hashKey": "object:133"
     },
     {
         "id": 29,
@@ -167,7 +163,6 @@ export const emails = writable([
         "toList": null,
         "ccList": null,
         "formattedDate": "15 Jan 21",
-        "$$hashKey": "object:134"
     },
     {
         "id": 15,
@@ -195,7 +190,6 @@ export const emails = writable([
         "toList": null,
         "ccList": null,
         "formattedDate": "11 Nov 20",
-        "$$hashKey": "object:135"
     },
     {
         "id": 11,
@@ -223,433 +217,10 @@ export const emails = writable([
         "toList": null,
         "ccList": null,
         "formattedDate": "10 Nov 20",
-        "$$hashKey": "object:136"
     }
 ]);
 
 
-export const threads = writable([[
-    {
-        "id": 11,
-        "userId": 1,
-        "personCompanyId": 2,
-        "personId": 2,
-        "firstName": "conor",
-        "lastName": "o shea",
-        "subject": "Test",
-        "body": "<div>Hey  conor cv</div>",
-        "originalBody": null,
-        "email": null,
-        "fromEmail": "mail+tester_96ea6ba2159f7711@hirehive.io",
-        "incoming": false,
-        "date": "2020-11-10T11:16:37.11",
-        "applicationId": null,
-        "adminName": null,
-        "fullName": null,
-        "senderName": "Test Admin",
-        "unRead": false,
-        "threadCount": 0,
-        "delayed": false,
-        "delayedDate": null,
-        "attachments": [],
-        "toList": [
-            {
-                "userId": null,
-                "firstName": "conor",
-                "lastName": "o shea",
-                "email": "conor@conor.com",
-                "displayName": null,
-                "$$hashKey": "object:228"
-            }
-        ],
-        "ccList": [
-            {
-                "userId": 2,
-                "firstName": "Test",
-                "lastName": "Test",
-                "email": "TestHR@gmail.com",
-                "displayName": null,
-                "$$hashKey": "object:230"
-            }
-        ]
-    },
-    {
-        "id": 10,
-        "userId": 1,
-        "personCompanyId": 2,
-        "personId": 2,
-        "firstName": "conor",
-        "lastName": "o shea",
-        "subject": "Application to updatedName",
-        "body": "Dear conor,<div>Thanks again for your recent application for the role of Form at updatedName.</div><div>After careful consideration I regret to inform you that on this occasion we have decided not to progress your application any further. Thanks again for your interest in updatedName and we wish you the very best for the future.</div>",
-        "originalBody": null,
-        "email": null,
-        "fromEmail": "mail+tester_96ea6ba2159f7711@hirehive.io",
-        "incoming": false,
-        "date": "2020-11-10T11:14:20.673",
-        "applicationId": null,
-        "adminName": null,
-        "fullName": null,
-        "senderName": "Test Admin",
-        "unRead": false,
-        "threadCount": 0,
-        "delayed": false,
-        "delayedDate": null,
-        "attachments": [
-            {
-                "id": 1,
-                "fileId": 19,
-                "fileName": "250dpi.PNG",
-                "fileType": "image/png",
-                "sizeInKB": 216170
-            }
-        ],
-        "toList": [
-            {
-                "userId": null,
-                "firstName": "conor",
-                "lastName": "o shea",
-                "email": "conor@conor.com",
-                "displayName": null,
-                "$$hashKey": "object:238"
-            }
-        ],
-        "ccList": []
-    },
-    {
-        "id": 8,
-        "userId": 1,
-        "personCompanyId": 2,
-        "personId": 2,
-        "firstName": "conor",
-        "lastName": "o shea",
-        "subject": "Application to updatedName",
-        "body": "Dear test,<div>Thanks again for your recent application for the role of Not linked to a job at updatedName.</div><div>After careful consideration I regret to inform you that on this occasion we have decided not to progress your application any further. Thanks again for your interest in updatedName and we wish you the very best for the future.</div>",
-        "originalBody": null,
-        "email": null,
-        "fromEmail": "mail+tester_ec30f3fc4e9fe845@hirehive.io",
-        "incoming": true,
-        "date": "2020-11-09T16:58:10.907",
-        "applicationId": null,
-        "adminName": null,
-        "fullName": null,
-        "senderName": "conor o shea",
-        "unRead": false,
-        "threadCount": 0,
-        "delayed": false,
-        "delayedDate": null,
-        "attachments": [],
-        "toList": [
-            {
-                "userId": 1,
-                "firstName": "Test",
-                "lastName": "Admin",
-                "email": "testing123@testing.com",
-                "displayName": null,
-                "$$hashKey": "object:246"
-            }
-        ],
-        "ccList": []
-    },
-        {
-            "id": 29,
-            "userId": 1,
-            "personCompanyId": 3,
-            "personId": 4,
-            "firstName": "conor",
-            "lastName": "cv",
-            "subject": "updatedName: Additional info required",
-            "body": "<div>Hi conor,<div><br><div>In addition to your application, please complete the following questions:</div><br><div><strong>Questions :</strong> <a href=\"https://my.hirehive.io/tester/questions/85b9baae0b3396f8\" title=\"link to questions\">New Api Form</a></div><div><br>Thanks,<div><div>Test</div></div></div></div></div>",
-            "originalBody": null,
-            "email": null,
-            "fromEmail": "mail+tester_96ea6ba2159f7711@hirehive.io",
-            "incoming": false,
-            "date": "2021-01-15T11:50:34.623",
-            "applicationId": null,
-            "adminName": null,
-            "fullName": null,
-            "senderName": "Test Admin",
-            "unRead": false,
-            "threadCount": 0,
-            "delayed": false,
-            "delayedDate": null,
-            "attachments": [],
-            "toList": [
-                {
-                    "userId": null,
-                    "firstName": "conor",
-                    "lastName": "cv",
-                    "email": "conor@conor.com",
-                    "displayName": null,
-                    "$$hashKey": "object:320"
-                }
-            ],
-            "ccList": []
-        },
-        {
-            "id": 28,
-            "userId": 1,
-            "personCompanyId": 3,
-            "personId": 4,
-            "firstName": "conor",
-            "lastName": "cv",
-            "subject": "updatedName: Additional info required",
-            "body": "<div>Hi conor,<div><br><div>In addition to your application, please complete the following questions:</div><br><div><strong>Questions :</strong> <a href=\"https://my.hirehive.io/tester/questions/4e51dcd320c76baf\" title=\"link to questions\">New Api Form</a></div><div><br>Thanks,<div><div>Test</div></div></div></div></div>",
-            "originalBody": null,
-            "email": null,
-            "fromEmail": "mail+tester_96ea6ba2159f7711@hirehive.io",
-            "incoming": false,
-            "date": "2021-01-15T11:44:03.293",
-            "applicationId": null,
-            "adminName": null,
-            "fullName": null,
-            "senderName": "Test Admin",
-            "unRead": false,
-            "threadCount": 0,
-            "delayed": false,
-            "delayedDate": null,
-            "attachments": [],
-            "toList": [
-                {
-                    "userId": null,
-                    "firstName": "conor",
-                    "lastName": "cv",
-                    "email": "conor@conor.com",
-                    "displayName": null,
-                    "$$hashKey": "object:327"
-                }
-            ],
-            "ccList": []
-        },
-        {
-            "id": 14,
-            "userId": 1,
-            "personCompanyId": 3,
-            "personId": 4,
-            "firstName": "conor",
-            "lastName": "cv",
-            "subject": "Application to updatedName",
-            "body": "Dear conor,<div>Thanks very much for your interest in working with updatedName.</div><div>We’ll review your application and get back to you as soon as possible if there’s a suitable match.</div><div>If we don’t feel there’s a good match we will keep your application on file in case something more suitable comes up at a later date.</div><div>Thanks again from all of us at updatedName.</div>",
-            "originalBody": null,
-            "email": null,
-            "fromEmail": "mail+tester_96ea6ba2159f7711@hirehive.io",
-            "incoming": false,
-            "date": "2020-11-11T09:48:53.693",
-            "applicationId": null,
-            "adminName": null,
-            "fullName": null,
-            "senderName": "Test Admin",
-            "unRead": false,
-            "threadCount": 0,
-            "delayed": false,
-            "delayedDate": null,
-            "attachments": [
-                {
-                    "id": 4,
-                    "fileId": 21,
-                    "fileName": "Capture.PNG",
-                    "fileType": "image/png",
-                    "sizeInKB": 24970
-                }
-            ],
-            "toList": [
-                {
-                    "userId": null,
-                    "firstName": "conor",
-                    "lastName": "cv",
-                    "email": "conor@conor.com",
-                    "displayName": null,
-                    "$$hashKey": "object:335"
-                }
-            ],
-            "ccList": []
-        },
-],
-[
-    {
-        "id": 12,
-        "userId": 1,
-        "personCompanyId": 3,
-        "personId": 4,
-        "firstName": "conor",
-        "lastName": "cv",
-        "subject": "Test",
-        "body": "<div>Testing 123</div>",
-        "originalBody": null,
-        "email": null,
-        "fromEmail": "mail+tester_96ea6ba2159f7711@hirehive.io",
-        "incoming": false,
-        "date": "2020-11-10T15:02:05.127",
-        "applicationId": null,
-        "adminName": null,
-        "fullName": null,
-        "senderName": "Test Admin",
-        "unRead": false,
-        "threadCount": 0,
-        "delayed": false,
-        "delayedDate": null,
-        "attachments": [
-            {
-                "id": 2,
-                "fileId": 20,
-                "fileName": "Capture.PNG",
-                "fileType": "image/png",
-                "sizeInKB": 24970
-            }
-        ],
-        "toList": [
-            {
-                "userId": null,
-                "firstName": "conor",
-                "lastName": "cv",
-                "email": "conor@conor.com",
-                "displayName": null,
-                "$$hashKey": "object:345"
-            }
-        ],
-        "ccList": []
-    },
-    {
-        "id": 7,
-        "userId": 1,
-        "personCompanyId": 3,
-        "personId": 4,
-        "firstName": "conor",
-        "lastName": "cv",
-        "subject": "Testing api",
-        "body": "test testing",
-        "originalBody": null,
-        "email": null,
-        "fromEmail": "mail+tester_ec30f3fc4e9fe845@hirehive.io",
-        "incoming": true,
-        "date": "2020-11-09T16:39:36.653",
-        "applicationId": null,
-        "adminName": null,
-        "fullName": null,
-        "senderName": "conor cv",
-        "unRead": false,
-        "threadCount": 0,
-        "delayed": false,
-        "delayedDate": null,
-        "attachments": [],
-        "toList": [
-            {
-                "userId": 1,
-                "firstName": "Test",
-                "lastName": "Admin",
-                "email": "n/a",
-                "displayName": null,
-                "$$hashKey": "object:353"
-            }
-        ],
-        "ccList": []
-    },
-    {
-        "id": 6,
-        "userId": 1,
-        "personCompanyId": 3,
-        "personId": 4,
-        "firstName": "conor",
-        "lastName": "cv",
-        "subject": "Testing api",
-        "body": "test testing",
-        "originalBody": null,
-        "email": null,
-        "fromEmail": "mail+tester_ec30f3fc4e9fe845@hirehive.io",
-        "incoming": true,
-        "date": "2020-11-09T16:39:36.653",
-        "applicationId": null,
-        "adminName": null,
-        "fullName": null,
-        "senderName": "conor cv",
-        "unRead": false,
-        "threadCount": 0,
-        "delayed": false,
-        "delayedDate": null,
-        "attachments": [],
-        "toList": [
-            {
-                "userId": 1,
-                "firstName": "Test",
-                "lastName": "Admin",
-                "email": "n/a",
-                "displayName": null,
-                "$$hashKey": "object:359"
-            }
-        ],
-        "ccList": []
-    },
-],
-[
-    {
-        "id": 5,
-        "userId": 1,
-        "personCompanyId": 3,
-        "personId": 4,
-        "firstName": "conor",
-        "lastName": "cv",
-        "subject": "Testing api",
-        "body": "test testing",
-        "originalBody": null,
-        "email": null,
-        "fromEmail": "mail+tester_ec30f3fc4e9fe845@hirehive.io",
-        "incoming": true,
-        "date": "2020-11-09T16:39:36.653",
-        "applicationId": null,
-        "adminName": null,
-        "fullName": null,
-        "senderName": "conor cv",
-        "unRead": false,
-        "threadCount": 0,
-        "delayed": false,
-        "delayedDate": null,
-        "attachments": [],
-        "toList": [
-            {
-                "userId": 1,
-                "firstName": "Test",
-                "lastName": "Admin",
-                "email": "n/a",
-                "displayName": null,
-                "$$hashKey": "object:365"
-            }
-        ],
-        "ccList": []
-    },
-    {
-        "id": 3,
-        "userId": 1,
-        "personCompanyId": 3,
-        "personId": 4,
-        "firstName": "conor",
-        "lastName": "cv",
-        "subject": "Testing api",
-        "body": "test testing",
-        "originalBody": null,
-        "email": null,
-        "fromEmail": "mail+tester_ec30f3fc4e9fe845@hirehive.io",
-        "incoming": true,
-        "date": "2020-11-09T16:39:36.653",
-        "applicationId": null,
-        "adminName": null,
-        "fullName": null,
-        "senderName": "conor cv",
-        "unRead": false,
-        "threadCount": 0,
-        "delayed": false,
-        "delayedDate": null,
-        "attachments": [],
-        "toList": [
-            {
-                "userId": 1,
-                "firstName": "Test",
-                "lastName": "Admin",
-                "email": "n/a",
-                "displayName": null,
-                "$$hashKey": "object:371"
-            }
-        ],
-        "ccList": []
-    }
-]
-])
+export const threads = writable([]);
+
+

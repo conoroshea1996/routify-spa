@@ -11,10 +11,10 @@
   export let job;
 </script>
 
-<li class="my-3">
+<li class="py-2">
   <div
     href="/jobs/{job.id}"
-    class="block bg-white border border-gray-200 shadow-md rounded-md"
+    class="block bg-white border border-gray-200 rounded-md"
   >
     <div class="px-4 py-4 flex items-center sm:px-6 border-b border-gray-100">
       <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
