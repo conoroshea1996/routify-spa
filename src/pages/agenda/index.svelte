@@ -5,7 +5,12 @@
   import Eventcalendar from "../eventcalendar.svelte";
 
   let interviewModal = false;
-  let interviewDetails: any;
+  let interviewDetails: {
+    jobTitle: string;
+    startTime: string;
+    timeZone: string;
+    attendees: Array<any>;
+  };
   let selectedDate: string;
 
   const openInterviewDetails = (interview: any) => {
