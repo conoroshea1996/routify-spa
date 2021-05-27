@@ -1,7 +1,7 @@
 <script>
   import ReportCard from "$lib/Reports/ReportCard.svelte";
   import { overView, demographics } from "../../stores/reports";
-  import PieChart from "../../lib/Reports/pieChart.svelte";
+  import PieChart from "../../lib/Reports/PieChart.svelte";
   import TimeLineChart from "../../lib/Reports/TimeLineChart.svelte";
   let totalConversion = `${parseFloat(
     ($overView.data.totalViews / $overView.data.totalApplications) * 100
