@@ -1,14 +1,20 @@
-<script>
-  // Loads just component
-  import Badge from "hirehive-ui/src/Badge/Badge.svelte";
-  import Menu from "hirehive-ui/src/Inputs/Menu.svelte";
+<script lang="ts">
+  import { Menu, Badge } from "hirehive-ui";
+  import { jobBadgeType } from "../../utils/badgeType";
 
   import { slide } from "svelte/transition";
-  let publishMenu;
-  let actionMenu;
-  export let open;
+  import JobStatusPicker from "./JobStatusPicker.svelte";
+  let publishMenu: boolean;
+  let actionMenu: boolean;
 
-  export let job;
+  export let open: boolean;
+  export let job: any;
+
+  const updateJobStatus = (e: any) => {
+    // update job status
+    const newStatus = e.detail.status;
+    job.status = newStatus;
+  };
 </script>
 
 <li class="py-2">
@@ -67,42 +73,32 @@
           </div>
         </div>
         <div class="mt-4 flex flex-shrink-0 sm:mt-0 sm:ml-5">
-          <div class="ml-2 flex-shrink-0 flex pr-4">
-            <Menu position="left" bind:open={publishMenu}>
-              <button slot="menu_trigger" class="cursor-pointer z-30">
-                <Badge kind="green">
-                  {job.status}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-3 w-3"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg></Badge
+          <div class="ml-2 flex-shrink-0 flex items-center pr-4">
+            <JobStatusPicker
+              bind:open={publishMenu}
+              currentJobStatus={job.status}
+              on:updateJobStatus={(e) => updateJobStatus(e)}
+            >
+              <Badge kind={jobBadgeType(job.status)} size="large">
+                {job.status}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-3 w-3"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-              </button>
-              <div slot="menu_context">
-                <div class="bg-white shadow-md rounded-md">
-                  <button
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-                    role="menuitem">Everything is a slot</button
-                  >
-                  <button
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-                    role="menuitem">Slots</button
-                  >
-                </div>
-              </div>
-            </Menu>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </Badge>
+            </JobStatusPicker>
           </div>
-          <div class="flex overflow-hidden -space-x-1">
+          <div class="flex overflow-hidden items-center -space-x-1">
             <img
               class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
               src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -129,21 +125,26 @@
           </div>
 
           <div class="flex items-center ml-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 text-yellow-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"
-              />
-            </svg>
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 text-yellow-400"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"
+                />
+              </svg>
+            </button>
           </div>
 
           <div class="flex items-center ml-4 text-gray-400">
             <Menu position="right" bind:open={actionMenu}>
-              <button slot="menu_trigger" class="cursor-pointer z-50">
+              <button
+                slot="menu_trigger"
+                class="cursor-pointer z-50 rounded-md p-2 hover:text-gray-900 hover:bg-gray-100"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-6 w-6"
@@ -160,15 +161,28 @@
                 </svg>
               </button>
               <div slot="menu_context">
-                <div class="bg-white shadow-md rounded-md">
+                <div class="bg-white border border-gray-200 rounded-md p-2">
                   <button
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-                    role="menuitem">Everything is a slot</button
+                    on:click={() => console.log("edit")}
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left rounded-md"
+                    role="menuitem"
                   >
+                    Edit
+                  </button>
                   <button
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
-                    role="menuitem">Slots</button
+                    on:click={() => console.log("Duplicate")}
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left rounded-md"
+                    role="menuitem"
                   >
+                    Duplicate
+                  </button>
+                  <button
+                    on:click={() => console.log("Delete")}
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left rounded-md"
+                    role="menuitem"
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             </Menu>

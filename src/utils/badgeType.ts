@@ -93,3 +93,38 @@ export const candidateBadgeType = (type: CandidateStatuses) : CandidateStatusBad
     
     return result;
 } 
+
+enum JobStatusBadgeType {
+    DRAFTED = "gray",
+    PUBLISHED = "green",
+    CLOSED = "pink",
+    INTERNAL = "yellow",
+}
+export enum JobStatusType {
+    DRAFTED = "Drafted",
+    PUBLISHED = "Published",
+    CLOSED = "Closed",
+    INTERNAL = "Internal",
+}
+
+export const jobBadgeType = (type: JobStatusType) : JobStatusBadgeType => {
+    let result: JobStatusBadgeType = JobStatusBadgeType.DRAFTED;
+    switch (type) {
+        case JobStatusType.DRAFTED:
+            result = JobStatusBadgeType.DRAFTED
+            break;
+        
+        case JobStatusType.PUBLISHED:
+            result = JobStatusBadgeType.PUBLISHED ;
+            break;
+
+        case JobStatusType.CLOSED:
+            result = JobStatusBadgeType.CLOSED;
+            break;
+        case JobStatusType.INTERNAL:
+            result = JobStatusBadgeType.INTERNAL;
+            break;
+    }
+    return result;
+} 
+

@@ -72,10 +72,10 @@
     <div class="max-h-60 overflow-y-auto flex flex-col">
       {#each facets as facet}
         <button
-          class="text-gray-700 block focus:outline-transparent py-2 space-x-6 rounded-md m-2 flex items-center justify-between px-2
+          class="text-gray-700 block font-medium focus:outline-transparent py-2 space-x-6 rounded-md m-2 flex items-center justify-between px-2
           {filtersToApply.includes(facet)
             ? 'bg-blue-50'
-            : 'hover:bg-gray-100'} "
+            : 'hover:bg-gray-100 hover:text-gray-900'} "
           on:click={() => toggle(facet)}
         >
           <span class="font-normal block pl-2 text-left"> {facet} </span>
