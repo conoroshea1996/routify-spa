@@ -2,13 +2,13 @@
   import { CheckBox } from "hirehive-ui";
   import CandidateItem from "./CandidateItem.svelte";
   export let columnsToShow: string[];
-  export let jobsCandidates: any[];
+  export let candidates: any[];
   export let selectedCandidateIds: string[];
   let checkAll: boolean;
 
   const selectAll = (checkAll: boolean) => {
     if (checkAll) {
-      selectedCandidateIds = jobsCandidates.map((c: { id: string }) => c.id);
+      selectedCandidateIds = candidates.map((c: { id: string }) => c.id);
     } else {
       selectedCandidateIds = [];
     }
@@ -17,7 +17,7 @@
   $: selectAll(checkAll);
 </script>
 
-<table class="min-w-full divide-y divide-gray-200">
+<!-- <table class="min-w-full bg-white divide-y divide-gray-200">
   <thead class="bg-white w-full">
     <tr>
       <th scope="col" class="px-2">
@@ -77,9 +77,72 @@
       </th>
     </tr>
   </thead>
-  <tbody class="bg-white divide-y divide-gray-200">
-    {#each jobsCandidates as candidate}
+  {#each candidates as candidate}
+    <CandidateItem {candidate} bind:selectedCandidateIds {columnsToShow} />
+  {/each}
+</table> -->
+
+<div class="bg-white shadow overflow-hidden sm:rounded-md">
+  <ul class="divide-y divide-gray-200">
+    <li>
+      <div class="flex items-center  w-full py-2">
+        <div class="flex-1 flex">
+          <div class="items-center flex px-2">
+            <CheckBox size="medium" bind:checked={checkAll} />
+          </div>
+          <div
+            class="w-3/12 px-3 flex items-center space-x-4 text-gray-500 px-1 text-left text-xs font-medium text-gray-500  tracking-wider"
+            class:hidden={!columnsToShow.includes("Name")}
+          >
+            Name
+          </div>
+
+          <div
+            class="w-3/12 px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider col-span-2"
+            class:hidden={!columnsToShow.includes("Current title")}
+          >
+            Current title
+          </div>
+
+          <div
+            class="flex-1 px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider col-span-1"
+            class:hidden={!columnsToShow.includes("Status")}
+          >
+            Status
+          </div>
+          <div
+            class="flex-1 px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider col-span-1"
+            class:hidden={!columnsToShow.includes("Sourced")}
+          >
+            Sourced
+          </div>
+
+          <div
+            class="flex-1 px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider col-span-1"
+            class:hidden={!columnsToShow.includes("Tags")}
+          >
+            Tags
+          </div>
+
+          <div
+            class=" flex-1 px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider col-span-1"
+            class:hidden={!columnsToShow.includes("Rating")}
+          >
+            Rating
+          </div>
+
+          <div
+            class="flex-1 px-2 py-3 text-left text-xs font-medium text-gray-500  tracking-wider col-span-1"
+            class:hidden={!columnsToShow.includes("Applications")}
+          >
+            Applications
+          </div>
+        </div>
+      </div>
+    </li>
+
+    {#each candidates as candidate}
       <CandidateItem {candidate} bind:selectedCandidateIds {columnsToShow} />
     {/each}
-  </tbody>
-</table>
+  </ul>
+</div>

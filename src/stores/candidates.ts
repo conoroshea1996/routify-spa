@@ -74,14 +74,14 @@ export const candidates = writable([
         "active": true,
         "links": [],
         "objectID": "81",
-        "_snippetResult": {
+        "_snippetResult":{
             "currentLocation": {
-                "value": "9 lotamore close",
+                "value": "Mallow",
                 "matchLevel": "none"
             },
             "coverLetter": {
-                "value": "This is from the new public pages sub domains pages",
-                "matchLevel": "none"
+                "value": "Lorem Ipsum is <em class=\"highlight\">C#</em> <em class=\"highlight\"></em> text of the printing and",
+                "matchLevel": "full"
             }
         },
         "_highlightResult": {
@@ -227,14 +227,14 @@ export const candidates = writable([
         "links": [],
         "objectID": "80",
         "_snippetResult": {
-            "currentLocation": {
-                "value": "9 lotamore close",
-                "matchLevel": "none"
-            },
-            "coverLetter": {
-                "value": "This is from the new public pages sub domains pages",
-                "matchLevel": "none"
-            }
+                "currentLocation": {
+                    "value": "9 lotamore <em class=\"highlight\">c</em>lose",
+                    "matchLevel": "full"
+                },
+                "coverLetter": {
+                    "value": "<em class=\"highlight\">C</em>ompanyIdentifier fdfdfdfffddfdfffff",
+                    "matchLevel": "full"
+                }
         },
         "_highlightResult": {
             "fullName": {
@@ -359,12 +359,12 @@ export const candidates = writable([
         "objectID": "79",
         "_snippetResult": {
             "currentLocation": {
-                "value": "9 lotamore close",
-                "matchLevel": "none"
+                "value": "9 lotamore <em class=\"highlight\">c</em>lose",
+                "matchLevel": "full"
             },
             "coverLetter": {
-                "value": "This is from the new public pages sub domains pages",
-                "matchLevel": "none"
+                "value": "<em class=\"highlight\">C</em>ompanyIdentifier ",
+                "matchLevel": "full"
             }
         },
         "_highlightResult": {

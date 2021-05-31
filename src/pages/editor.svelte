@@ -118,7 +118,10 @@
   });
 </script>
 
-<div bind:this={editor} class="bg-white rounded-xl max-w-5xl mx-auto pb-0" />
+<div
+  bind:this={editor}
+  class="bg-white border border-gray-300 rounded-md max-w-5xl mx-auto pb-0"
+/>
 
 <style global>
   h2 {

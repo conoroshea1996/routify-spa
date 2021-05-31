@@ -34,7 +34,7 @@
     <div class="max-h-96 overflow-y-auto flex flex-col">
       {#each columns as column}
         <button
-          class="text-gray-700 block font-medium focus:outline-transparent py-2 space-x-6 rounded-md m-1 flex items-center justify-between px-2
+          class="text-gray-700 block font-medium focus:outline-transparent focus:bg-gray-100 focus:text-gray-900 py-2 space-x-6 rounded-md m-1 flex items-center justify-between px-2
             {activeColumns.includes(column)
             ? ''
             : 'hover:bg-gray-100 hover:text-gray-900'} "

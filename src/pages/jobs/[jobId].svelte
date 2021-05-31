@@ -44,14 +44,6 @@
   let tagsFilter = [];
   let ratingFilter = [];
   let locationFilter = [];
-  let activeColumns = [
-    "Name",
-    "Current title",
-    "Status",
-    "Sourced",
-    "Tags",
-    "Applications",
-  ];
 
   const buildChipSet = (
     statusFilter,
@@ -130,6 +122,7 @@
     "Sourced",
     "Tags",
     "Applications",
+    "Rating",
   ];
 
   let columnsToShow = allColumns;
@@ -710,7 +703,7 @@
           class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
         >
           <CandidateList
-            {jobsCandidates}
+            candidates={jobsCandidates}
             bind:selectedCandidateIds
             {columnsToShow}
           />
@@ -721,9 +714,7 @@
 
   <h1 class="text-xs text-gray-400">Selected Ids {selectedCandidateIds}</h1>
 
-  <div class="absolute bottom-0 w-full max-w-screen-2xl  mx-auto my-4">
-    <Pagination numItems={jobsCandidates.length} current={1} perPage={5} />
-  </div>
+  <Pagination numItems={jobsCandidates.length} current={1} perPage={5} />
 </main>
 
 <Sidepanel bind:open={jobSidepanel}>
