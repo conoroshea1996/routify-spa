@@ -75,7 +75,10 @@
   </td>
 </tr> -->
 
-<li class="w-full">
+<li
+  class="w-full"
+  class:bg-blue-50={selectedCandidateIds.includes(candidate.id)}
+>
   <div class="flex items-center  w-full py-2">
     <div class="flex-1 flex">
       <div class="items-center flex px-2">
@@ -86,49 +89,53 @@
         />
       </div>
       <div
-        class="w-3/12 px-2 flex items-center space-x-4 text-gray-500 px-1 text-left text-xs font-medium text-gray-500  tracking-wider"
+        class="w-3/12 px-2 flex items-center space-x-4 text-gray-500 px-1 text-left text-sm font-medium text-gray-500  tracking-wider"
         class:hidden={!columnsToShow.includes("Name")}
       >
-        {candidate.fullName}
+        <span>
+          {candidate.fullName}
+        </span>
       </div>
 
       <div
-        class="w-3/12 px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider col-span-2"
+        class="w-3/12 px-4 py-3 text-left text-sm font-medium text-gray-500  tracking-wider col-span-2"
         class:hidden={!columnsToShow.includes("Current title")}
       >
-        {candidate.currentTitle}
+        <span>
+          {candidate.currentTitle}
+        </span>
       </div>
       <div
-        class="flex-1 px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider col-span-1"
+        class="w-2/12 px-4 py-3 text-left text-sm font-medium text-gray-500  tracking-wider col-span-1"
         class:hidden={!columnsToShow.includes("Status")}
       >
-        <Badge kind={candidateBadgeType(candidate.parentStatusId)}
+        <Badge kind={candidateBadgeType(candidate.parentStatusId)} size="large"
           >{candidate.statusName}</Badge
         >
       </div>
       <div
-        class="flex-1 px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider col-span-1"
+        class="flex-1 px-4 py-3 text-left text-sm font-medium text-gray-500  tracking-wider col-span-1"
         class:hidden={!columnsToShow.includes("Sourced")}
       >
         <span>{candidate.dateApplied}</span>
       </div>
 
       <div
-        class="flex-1 px-6 py-3 text-xs font-medium text-gray-500  tracking-wider col-span-1"
+        class="flex-1  px-4 py-3 text-sm font-medium text-gray-500  tracking-wider col-span-1"
         class:hidden={!columnsToShow.includes("Tags")}
       >
-        <Badge kind="gray">Good</Badge>
+        <Badge kind="gray" size="large">Good</Badge>
       </div>
 
       <div
-        class="flex-1 px-6 py-3 text-xs font-medium text-gray-500  tracking-wider col-span-1"
+        class="flex-1 px-2 py-3 text-xs font-medium text-gray-500  tracking-wider col-span-1"
         class:hidden={!columnsToShow.includes("Rating")}
       >
         <Rating rating={candidate.rating} />
       </div>
 
       <div
-        class="flex-1 px-2 py-3 text-xs font-medium text-gray-500 tracking-wider col-span-1"
+        class="flex-1 px-1 py-3 text-xs font-medium text-gray-500 tracking-wider col-span-1"
         class:hidden={!columnsToShow.includes("Applications")}
       >
         <span>

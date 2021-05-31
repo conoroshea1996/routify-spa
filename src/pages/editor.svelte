@@ -11,11 +11,10 @@
   let unSavedChanges = false;
   let editor;
   let editorInstance;
-  let x =
-    '<h2>   New header   </h2><p>  <b> Job purpose </b>  </p><p>   Provide a brief description of the general nature of the position; an overview of why the job exists; and what the job is to accomplish.   </p><p>   The job purpose is usually no more than a few sentences long.# </p><p> <a href="https://editorjs.io/"><font color="#0070ff">Link test</font></a> </p><h2> <i>  Duties and responsibilities  </i> </h2><p>   List the primary job duties and responsibilities using headings and then give examples of the types of activities under each heading. Identify between three and eight primary duties and responsibilities for the position.   </p><ul> <li>   List the primary duties and responsibilities in order of importance   </li><li>   Begin each statement with an action verb   </li><li>   Use the present tense of verbs   </li><li>   Use gender neutral language   </li><li>   Use generic language   </li><li>   Where appropriate use qualifiers to clarify the task – where, when, why or how often – for example instead of “greet visitor to the office” use “greet visitors to the office in a professional and friendly manner”   </li> </ul><p>  <b> Qualifications </b>  </p><p>   State the minimum qualifications required to successfully perform the job.   </p><p>   Qualifications include   </p><ul> <li>   Education   </li><li>   Specialized knowledge   </li><li>   Skills   </li><li>   Abilities   </li><li>   Other characteristics such as personal characteristics   </li><li>   Professional Certification   </li><li>   Experience   </li> </ul><p>   Perks/Benefits of the role   </p>';
   onMount(async () => {
     editorInstance = new EditorJS({
       holder: editor,
+      minHeight: 100,
       hideToolbar: false,
       inlineToolbar: true,
       tools: {
@@ -102,10 +101,15 @@
     const markup = edjsParser.parse(output);
     return markup.join(" ");
   }
-  $beforeUrlChange(() => {
+  $beforeUrlChange(async () => {
     if (unSavedChanges) {
       const ok = confirm("Unsaved changes");
-      if (ok) return true;
+      if (ok) {
+        editorInstance.blocks.clear();
+        await editorInstance.save();
+        unSavedChanges = false;
+        return true;
+      }
       return false;
     }
 
@@ -120,7 +124,7 @@
 
 <div
   bind:this={editor}
-  class="bg-white border border-gray-300 rounded-md max-w-5xl mx-auto pb-0"
+  class="bg-white border border-gray-300 rounded-md mx-auto pb-0 h-full"
 />
 
 <style global>
@@ -128,7 +132,10 @@
     font-size: 24px;
     font-weight: 600;
   }
-  .codex-editor__redactor {
-    padding: 0px !important;
+
+  .ce-block__content,
+  .ce-toolbar__content {
+    @apply mx-12;
+    max-width: unset;
   }
 </style>

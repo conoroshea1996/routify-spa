@@ -91,51 +91,51 @@
             <CheckBox size="medium" bind:checked={checkAll} />
           </div>
           <div
-            class="w-3/12 px-3 flex items-center space-x-4 text-gray-500 px-1 text-left text-xs font-medium text-gray-500  tracking-wider"
+            class="w-3/12 px-3 flex items-center space-x-4 text-gray-500 px-1 text-left text-sm font-medium text-gray-500  tracking-wider"
             class:hidden={!columnsToShow.includes("Name")}
           >
-            Name
+            <span> Name </span>
           </div>
 
           <div
-            class="w-3/12 px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider col-span-2"
+            class="w-3/12 px-4 py-3 text-left text-sm font-medium text-gray-500  tracking-wider col-span-2"
             class:hidden={!columnsToShow.includes("Current title")}
           >
-            Current title
+            <span> Current title </span>
           </div>
 
           <div
-            class="flex-1 px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider col-span-1"
+            class="w-2/12 px-4 py-3 text-left text-sm font-medium text-gray-500  tracking-wider col-span-1"
             class:hidden={!columnsToShow.includes("Status")}
           >
-            Status
+            <span> Status </span>
           </div>
           <div
-            class="flex-1 px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider col-span-1"
+            class="flex-1 px-4 py-3 text-left text-sm font-medium text-gray-500  tracking-wider col-span-1"
             class:hidden={!columnsToShow.includes("Sourced")}
           >
-            Sourced
+            <span> Sourced </span>
           </div>
 
           <div
-            class="flex-1 px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider col-span-1"
+            class="flex-1 px-4 py-3 text-left text-sm font-medium text-gray-500  tracking-wider col-span-1"
             class:hidden={!columnsToShow.includes("Tags")}
           >
-            Tags
+            <span> Tags </span>
           </div>
 
           <div
-            class=" flex-1 px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider col-span-1"
+            class="flex-1 px-4 py-3 text-left text-sm font-medium text-gray-500  tracking-wider col-span-1"
             class:hidden={!columnsToShow.includes("Rating")}
           >
-            Rating
+            <span> Rating </span>
           </div>
 
           <div
-            class="flex-1 px-2 py-3 text-left text-xs font-medium text-gray-500  tracking-wider col-span-1"
+            class="flex-1 px-1 py-3 text-left text-sm font-medium text-gray-500  tracking-wider col-span-1"
             class:hidden={!columnsToShow.includes("Applications")}
           >
-            Applications
+            <span> Applications </span>
           </div>
         </div>
       </div>

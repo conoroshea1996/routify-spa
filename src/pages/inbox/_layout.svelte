@@ -60,10 +60,13 @@
 
         <TabsContainer>
           <div class="border-b border-gray-200  w-full px-4">
-            <TabBar class="-mb-px flex space-x-8" let:selectedTabId>
+            <TabBar
+              class="-mb-px flex space-x-8 focus:outline-none"
+              let:selectedTabId
+            >
               <Tab
                 TabId={1}
-                class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm {selectedTabId ===
+                class="whitespace-nowrap focus:outline-none py-4 px-1 border-b-2 font-medium text-sm {selectedTabId ===
                 1
                   ? 'border-blue-500 text-blue-500'
                   : 'border-transparent text-gray-500'}"
@@ -72,7 +75,7 @@
               </Tab>
               <Tab
                 TabId={2}
-                class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm {selectedTabId ===
+                class="whitespace-nowrap focus:outline-none py-4 px-1 border-b-2 font-medium text-sm {selectedTabId ===
                 2
                   ? 'border-blue-500 text-blue-500'
                   : 'border-transparent text-gray-500'}"
@@ -81,7 +84,7 @@
               </Tab>
               <Tab
                 TabId={3}
-                class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm {selectedTabId ===
+                class="whitespace-nowrap focus:outline-none py-4 px-1 border-b-2 font-medium text-sm {selectedTabId ===
                 3
                   ? 'border-blue-500 text-blue-500'
                   : 'border-transparent text-gray-500'}"

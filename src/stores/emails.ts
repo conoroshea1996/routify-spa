@@ -221,6 +221,129 @@ export const emails = writable([
 ]);
 
 
-export const threads = writable([]);
+export const threads = writable([
+    {
+        "id": 11,
+        "userId": 1,
+        "personCompanyId": 2,
+        "personId": 2,
+        "firstName": "conor",
+        "lastName": "o shea",
+        "subject": "Test",
+        "body": "<div>Hey  conor cv</div>",
+        "originalBody": null,
+        "email": null,
+        "fromEmail": "mail+tester_96ea6ba2159f7711@hirehive.io",
+        "incoming": false,
+        "date": "2020-11-10T11:16:37.11",
+        "applicationId": null,
+        "adminName": null,
+        "fullName": null,
+        "senderName": "Test Admin",
+        "unRead": false,
+        "threadCount": 0,
+        "delayed": false,
+        "delayedDate": null,
+        "attachments": [],
+        "toList": [
+            {
+                "userId": null,
+                "firstName": "conor",
+                "lastName": "o shea",
+                "email": "conor@conor.com",
+                "displayName": null,
+                "$$hashKey": "object:100"
+            }
+        ],
+        "ccList": [
+            {
+                "userId": 2,
+                "firstName": "Test",
+                "lastName": "Test",
+                "email": "TestHR@gmail.com",
+                "displayName": null,
+                "$$hashKey": "object:102"
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "userId": 1,
+        "personCompanyId": 2,
+        "personId": 2,
+        "firstName": "conor",
+        "lastName": "o shea",
+        "subject": "Application to updatedName",
+        "body": "Dear conor,<div>Thanks again for your recent application for the role of Form at updatedName.</div><div>After careful consideration I regret to inform you that on this occasion we have decided not to progress your application any further. Thanks again for your interest in updatedName and we wish you the very best for the future.</div>",
+        "originalBody": null,
+        "email": null,
+        "fromEmail": "mail+tester_96ea6ba2159f7711@hirehive.io",
+        "incoming": false,
+        "date": "2020-11-10T11:14:20.673",
+        "applicationId": null,
+        "adminName": null,
+        "fullName": null,
+        "senderName": "Test Admin",
+        "unRead": false,
+        "threadCount": 0,
+        "delayed": false,
+        "delayedDate": null,
+        "attachments": [
+            {
+                "id": 1,
+                "fileId": 19,
+                "fileName": "250dpi.PNG",
+                "fileType": "image/png",
+                "sizeInKB": 216170
+            }
+        ],
+        "toList": [
+            {
+                "userId": null,
+                "firstName": "conor",
+                "lastName": "o shea",
+                "email": "conor@conor.com",
+                "displayName": null,
+                "$$hashKey": "object:110"
+            }
+        ],
+        "ccList": []
+    },
+    {
+        "id": 8,
+        "userId": 1,
+        "personCompanyId": 2,
+        "personId": 2,
+        "firstName": "conor",
+        "lastName": "o shea",
+        "subject": "Application to updatedName",
+        "body": "Dear test,<div>Thanks again for your recent application for the role of Not linked to a job at updatedName.</div><div>After careful consideration I regret to inform you that on this occasion we have decided not to progress your application any further. Thanks again for your interest in updatedName and we wish you the very best for the future.</div>",
+        "originalBody": null,
+        "email": null,
+        "fromEmail": "mail+tester_ec30f3fc4e9fe845@hirehive.io",
+        "incoming": true,
+        "date": "2020-11-09T16:58:10.907",
+        "applicationId": null,
+        "adminName": null,
+        "fullName": null,
+        "senderName": "conor o shea",
+        "unRead": false,
+        "threadCount": 0,
+        "delayed": false,
+        "delayedDate": null,
+        "attachments": [],
+        "toList": [
+            {
+                "userId": 1,
+                "firstName": "Test",
+                "lastName": "Admin",
+                "email": "testing123@testing.com",
+                "displayName": null,
+                "$$hashKey": "object:118"
+            }
+        ],
+        "ccList": []
+    }
+]);
 
 

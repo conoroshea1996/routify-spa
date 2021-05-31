@@ -64,9 +64,10 @@
         {#each urls as url}
           <a
             href={url.url}
-            class="inline-flex justify-center items-center text-gray-500 font-medium border border-transparent focus:outline-none focus:ring-1  px-4 py-2 text-sm rounded-md s-3x9LSgm1QVCv"
+            class="inline-flex justify-center items-center text-gray-500 font-medium border border-transparent hover:bg-gray-100 focus:outline-none focus:ring-1  px-4 py-2 text-sm rounded-md"
             disabled="false"
-            class:button-secondary={$isActive(url.url)}
+            class:bg-blue-100={$isActive(url.url)}
+            class:text-blue-500={$isActive(url.url)}
           >
             {url.name}
           </a>

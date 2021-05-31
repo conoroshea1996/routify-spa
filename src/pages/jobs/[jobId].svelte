@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import {
     Button,
     Menu,
@@ -23,13 +23,13 @@
   import CandidateList from "../../lib/Candidates/CandidateList.svelte";
   import JobStatusPicker from "../../lib/Jobs/JobStatusPicker.svelte";
   import { writable } from "svelte/store";
-  export let jobId;
-  jobId = parseInt(jobId);
+  export let jobId: string;
+  const parsedJobId: number = parseInt(jobId);
 
   let deleteJobModal = false;
-  let job = $jobs.find((j) => j.jobId === jobId);
+  let job: any = $jobs.find((j) => j.jobId === parsedJobId);
 
-  let jobsCandidates = $candidates.filter((c) => c.jobId === jobId);
+  let jobsCandidates = $candidates.filter((c) => c.jobId === parsedJobId);
 
   let jobActionMenu = false;
   let columnMenu = false;
@@ -39,17 +39,18 @@
   let ratingsMenu = false;
   let locationsMenu = false;
 
-  let activeFilters = [];
-  let statusFilter = [];
-  let tagsFilter = [];
-  let ratingFilter = [];
-  let locationFilter = [];
+  let activeFilters: string[] = [];
+  let statusFilter: string[] = [];
+  let tagsFilter: string[] = [];
+  let ratingFilter: string[] = [];
+  let locationFilter: string[] = [];
+  let activeCandidatesOnly = false;
 
   const buildChipSet = (
-    statusFilter,
-    tagsFilter,
-    ratingFilter,
-    locationFilter
+    statusFilter: string[],
+    tagsFilter: string[],
+    ratingFilter: string[],
+    locationFilter: string[]
   ) => {
     activeFilters = [
       ...statusFilter,
@@ -61,7 +62,7 @@
 
   $: buildChipSet(statusFilter, tagsFilter, ratingFilter, locationFilter);
 
-  const removeNonActiveFilter = (activeFilters) => {
+  const removeNonActiveFilter = (activeFilters: string[]) => {
     statusFilter = statusFilter.filter((c) => activeFilters.includes(c));
     tagsFilter = tagsFilter.filter((c) => activeFilters.includes(c));
     ratingFilter = ratingFilter.filter((c) => activeFilters.includes(c));
@@ -71,7 +72,7 @@
   $: removeNonActiveFilter(activeFilters);
 
   let checkAll;
-  let selectedCandidateIds = [];
+  let selectedCandidateIds: string[] = [];
   let activeTabId = writable(1);
 
   const clearAll = () => {
@@ -108,7 +109,7 @@
     console.log(`delete job ${job.id}`);
   };
 
-  const updateJobStatus = (e) => {
+  const updateJobStatus = (e: any) => {
     const newStatus = e.detail.status;
     console.log(e, "Update Job Status");
     job.status = newStatus;
@@ -527,6 +528,26 @@
       >
         Clear all
       </button>
+
+      <Button
+        kind="white"
+        size="large"
+        on:click={() => (activeCandidatesOnly = !activeCandidatesOnly)}
+      >
+        <div class="flex items-center space-x-2">
+          <input
+            id=""
+            name=""
+            type="checkbox"
+            value=""
+            tabindex="-1"
+            checked={activeCandidatesOnly}
+            class="h-3.5 w-3.5 border-gray-300 text-blue-500 rounded-md focus:border-blue-500 focus:ring-blue-500 focus:ring-1 s--5vtRSI_rRjS"
+            aria-checked="true"
+          />
+          <span> Active only </span>
+        </div>
+      </Button>
 
       <FilterDropDown
         filterName="Status"

@@ -119,12 +119,7 @@
           >
             Category
           </th>
-          <th
-            scope="col"
-            class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-          >
-            Location
-          </th>
+
           <th
             scope="col"
             class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -179,10 +174,6 @@
               {:else}
                 <p class="text-gray-500">{user.categoryName}</p>
               {/if}
-            </td>
-
-            <td class="px-6 py-4 whitespace-nowrap">
-              <p class="text-gray-500 text-sm">Location??</p>
             </td>
 
             <td class="px-6 py-4 whitespace-nowrap">
