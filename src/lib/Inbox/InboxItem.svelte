@@ -1,8 +1,6 @@
 <script>
   export let email;
   export let isActive;
-
-  console.log(email);
 </script>
 
 <a

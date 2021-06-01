@@ -3,35 +3,54 @@
 
   import { TextInput, TabsContainer, TabBar, Tab, TabPanel } from "hirehive-ui";
   import { onMount } from "svelte";
+  import { writable } from "svelte/store";
   import InboxItem from "../../lib/Inbox/InboxItem.svelte";
 
-  import { emails, threads } from "../../stores/emails";
+  import { emails } from "../../stores/emails";
 
   let inbox = $emails.filter((e) => e.incoming);
   let outbox = $emails.filter((e) => !e.incoming);
   let unread = $emails.filter((e) => e.unRead);
+  let selectedTab = writable(1);
 
-  let emailId = 0;
-  let emailThreads = [];
-  $: getEmails(emailId);
-
-  const getEmails = (emailId) => {
-    emailThreads = $threads[emailId];
-    console.log(emailThreads, "Email Threads");
-  };
-
-  $: activeEmailId = parseInt($params.emailId);
+  let emailId;
+  $: emailId = parseInt($params.emailId);
 
   onMount(() => {
-    if (inbox.length > 0) {
+    if (emailId) {
+      const gotoEmail = $emails.find((e) => e.id === emailId);
+      $goto(`/inbox/${gotoEmail.id}`);
+      goToTab(gotoEmail);
+    } else if (inbox.length > 0) {
       $goto(`/inbox/${inbox[0].id}`);
     }
   });
+
+  const goToTab = (email) => {
+    if (email.incoming) {
+      $selectedTab = 1;
+    } else if (!email.incoming) {
+      $selectedTab = 2;
+    } else {
+      $selectedTab = 3;
+    }
+  };
+
+  const getFirstEmailForInbox = (tabId) => {
+    if (tabId === 1) {
+      $goto(`/inbox/${inbox[0].id}`);
+    } else if (tabId === 2) {
+      $goto(`/inbox/${outbox[0].id}`);
+    } else {
+      $goto(`/inbox/${unread[0].id}`);
+    }
+  };
+  $: getFirstEmailForInbox($selectedTab);
 </script>
 
 <div class="flex-grow w-full mx-auto lg:flex">
   <!-- Left sidebar & main wrapper -->
-  <div class="flex-1 min-w-0 mx-auto max-w-screen-2xl xl:flex">
+  <div class="flex-1 min-w-0 mx-auto xl:flex">
     <div class="border-b border-gray-200 bg-white w-1/4 h-100vh">
       <div class="h-full border-r pt-4">
         <div class="w-4/5 px-4">
@@ -58,7 +77,7 @@
           </TextInput>
         </div>
 
-        <TabsContainer>
+        <TabsContainer bind:selectedTab>
           <div class="border-b border-gray-200  w-full px-4">
             <TabBar
               class="-mb-px flex space-x-8 focus:outline-none"
@@ -98,7 +117,7 @@
           <TabPanel panelId={1}>
             <div>
               {#each inbox as email, i}
-                <InboxItem {email} isActive={email.id === activeEmailId} />
+                <InboxItem {email} isActive={email.id === emailId} />
               {/each}
             </div>
           </TabPanel>
@@ -107,7 +126,7 @@
           <TabPanel panelId={2}>
             <div class="divide-y divide-gray-200">
               {#each outbox as email}
-                <InboxItem {email} isActive={email.id === activeEmailId} />
+                <InboxItem {email} isActive={email.id === emailId} />
               {/each}
             </div>
           </TabPanel>
@@ -116,7 +135,7 @@
           <TabPanel panelId={3}>
             <div class="divide-y divide-gray-200">
               {#each unread as email}
-                <InboxItem {email} isActive={email.id === activeEmailId} />
+                <InboxItem {email} isActive={email.id === emailId} />
               {/each}
             </div>
           </TabPanel>

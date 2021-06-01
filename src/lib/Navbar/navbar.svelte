@@ -132,10 +132,11 @@
       <div
         class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 py-4"
       >
-        <div class="hidden sm:block">
+        <div class="hidden md:block">
           <div
             class="bg-gray-700 flex space-x-4 items-center justify-between py-4 text-white border-4 border-gray-700 px-4"
           >
+            <h1>Show on bigger than MD</h1>
             <p class="text-sm px-4">Free trail ends in 7 days</p>
             <div class="flex items-center space-x-2 px-4">
               <p class="text-sm font-bold">Upgrade</p>

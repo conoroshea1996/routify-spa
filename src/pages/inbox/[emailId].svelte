@@ -22,7 +22,39 @@
 </script>
 
 <div class=" lg:min-w-0 lg:flex-1 bg-gray-50">
-  <h1>Show thread for {emailId}</h1>
+  <div class="border-b  border-gray-200 w-full">
+    <div class="mx-auto py-6  lg:flex lg:items-center lg:justify-between">
+      <div
+        class="tracking-tight text-gray-500  flex items-start justify-between w-full px-8"
+      >
+        <div class="flex flex-col space-y-2">
+          <h1 class="text-gray-900">Jenny Wilson</h1>
+          <p class="text-gray-500">
+            Applied for Product Designer via LinkedIn, 6 days ago
+          </p>
+        </div>
+
+        <div class="flex items-start">
+          <div>
+            <Button kind="white" size="small">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 text-gray-400"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="h-full py-6 px-4 sm:px-6 lg:px-8">
     <!-- Start main area-->
