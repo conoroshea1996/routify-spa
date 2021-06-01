@@ -40,10 +40,10 @@ export const agendas = writable({
                     "$$hashKey": "object:64"
                 }
             ],
-            "startTime": "2021-05-27T16:00:00",
-            "startTimeUTC": "2021-05-27T16:00:00",
-            "endTime": "2021-05-27T16:30:00",
-            "endTimeUTC": "2021-05-27T16:30:00",
+            "startTime": "2021-06-27T16:00:00",
+            "startTimeUTC": "2021-06-27T16:00:00",
+            "endTime": "2021-06-27T16:30:00",
+            "endTimeUTC": "2021-06-27T16:30:00",
             "hasMoreInfo": false,
             "cancelled": true,
             "organiser": {
@@ -174,10 +174,10 @@ export const agendas = writable({
                     "$$hashKey": "object:78"
                 }
             ],
-            "startTime": "2021-05-27T08:30:00",
-            "startTimeUTC": "2021-05-27T08:30:00",
-            "endTime": "2021-05-27T08:00:00",
-            "endTimeUTC": "2021-05-27T08:00:00",
+            "startTime": "2021-06-27T08:30:00",
+            "startTimeUTC": "2021-06-27T08:30:00",
+            "endTime": "2021-06-27T08:00:00",
+            "endTimeUTC": "2021-06-27T08:00:00",
             "hasMoreInfo": false,
             "cancelled": false,
             "organiser": {

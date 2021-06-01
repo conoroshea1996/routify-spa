@@ -1189,3 +1189,79 @@ export const jobActivities = writable([
       "formattedDate": "19th January 2021"
   }
 ])
+
+
+export const hiringTeam = writable([
+  {
+      "id": 21197,
+      "firstName": "conor",
+      "lastName": "o shea",
+      "picUrl": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      "email": "conor@hirehive.com",
+      "typeId": 1,
+      "categoryId": null,
+      "categoryName": null,
+      "logins": [],
+      "linkedUserCandidates": []
+  },
+  {
+      "id": 24399,
+      "firstName": "conor",
+      "lastName": "admin",
+      "picUrl": null,
+      "email": "Admin@admin.com",
+      "typeId": 2,
+      "categoryId": null,
+      "categoryName": null,
+      "logins": [],
+      "linkedUserCandidates": []
+  },
+  {
+      "id": 24824,
+      "firstName": "conor",
+      "lastName": "o shea",
+      "picUrl": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      "email": "conorNewhire@test.com",
+      "typeId": 2,
+      "categoryId": null,
+      "categoryName": null,
+      "logins": [],
+      "linkedUserCandidates": []
+  },
+  {
+      "id": 24400,
+      "firstName": "conor",
+      "lastName": "test",
+      "picUrl": null,
+      "email": "conor@reviewer.com",
+      "typeId": 6,
+      "categoryId": 2490,
+      "categoryName": "Test",
+      "logins": [],
+      "linkedUserCandidates": []
+  },
+  {
+      "id": 24212,
+      "firstName": "New",
+      "lastName": "Memeber",
+      "picUrl": null,
+      "email": "conor@conor.com",
+      "typeId": 2,
+      "categoryId": 2490,
+      "categoryName": "Test",
+      "logins": [],
+      "linkedUserCandidates": []
+  },
+  {
+      "id": 24402,
+      "firstName": "test",
+      "lastName": "o shea",
+      "picUrl": null,
+      "email": "conoshea12@gmail.com",
+      "typeId": 2,
+      "categoryId": null,
+      "categoryName": null,
+      "logins": [],
+      "linkedUserCandidates": []
+  }
+])

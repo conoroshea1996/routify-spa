@@ -23,6 +23,9 @@
   import CandidateList from "../../lib/Candidates/CandidateList.svelte";
   import JobStatusPicker from "../../lib/Jobs/JobStatusPicker.svelte";
   import { writable } from "svelte/store";
+  import Avatar from "../../lib/General/Avatar.svelte";
+
+  import { hiringTeam } from "../../stores/jobs";
   export let jobId: string;
   const parsedJobId: number = parseInt(jobId);
 
@@ -213,32 +216,16 @@
         </svg>
       </div>
       <div class="flex items-center overflow-hidden -space-x-1">
-        <img
-          class="inline-block h-6 w-6 rounded-full ring-2 ring-gray-100"
-          src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-          alt="Dries Vincent"
-        />
-
-        <img
-          class="inline-block h-6 w-6 rounded-full ring-2 ring-gray-100"
-          src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-          alt="Lindsay Walton"
-        />
-
-        <img
-          class="inline-block h-6 w-6 rounded-full ring-2 ring-gray-100"
-          src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-          alt="Courtney Henry"
-        />
-
-        <img
-          class="inline-block h-6 w-6 rounded-full ring-2 ring-gray-100"
-          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-          alt="Tom Cook"
-        />
+        {#each $hiringTeam as team}
+          <Avatar
+            firstName={team.firstName}
+            lastName={team.lastName}
+            profilePic={team.picUrl}
+          />
+        {/each}
 
         <button
-          class="flex items-center justify-center h-6 w-6 rounded-full ring-2 ring-gray-100 bg-white"
+          class="flex items-center justify-center h-8 w-8 rounded-full ring-2 ring-gray-100 bg-white"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

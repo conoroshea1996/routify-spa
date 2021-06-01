@@ -1,5 +1,7 @@
 <script>
   import { isActive, page } from "@roxi/routify";
+  import { hiringTeam } from "../../stores/jobs";
+  import Avatar from "../General/Avatar.svelte";
   $: navUrls = [
     {
       name: "Jobs",
@@ -36,11 +38,13 @@
       url: "/careerpage/index",
     },
   ];
+
+  const user = $hiringTeam[3];
 </script>
 
 <nav class="bg-gray-900">
   <div class="max-w-screen-2xl px-4 mx-auto">
-    <div class="relative flex items-center justify-between h-16">
+    <div class="relative flex items-center justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
         <!-- Mobile menu button-->
         <button
@@ -96,7 +100,7 @@
           </svg>
         </button>
       </div>
-      <div class="flex-1 flex items-center justify-start sm:items-stretch ">
+      <div class="flex-1 flex items-center justify-start sm:items-stretch">
         <div class="flex-shrink-0 flex items-center">
           <img
             class="block lg:hidden h-8 w-auto"
@@ -110,13 +114,12 @@
           />
         </div>
         <div class="hidden sm:block sm:ml-6">
-          <div class="flex space-x-4 text-gray-400">
+          <div class="flex space-x-4 text-gray-400 py-3">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-
             {#each navUrls as { name, url, active }}
               <a
                 href={url}
-                class=" px-3 py-2 rounded-md text-sm font-medium"
+                class=" px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800"
                 class:bg-gray-800={active}
                 class:text-yellow-400={active}
                 aria-current="page">{name}</a
@@ -125,9 +128,35 @@
           </div>
         </div>
       </div>
+
       <div
-        class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+        class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 py-4"
       >
+        <div class="hidden sm:block">
+          <div
+            class="bg-gray-700 flex space-x-4 items-center justify-between py-4 text-white border-4 border-gray-700 px-4"
+          >
+            <p class="text-sm px-4">Free trail ends in 7 days</p>
+            <div class="flex items-center space-x-2 px-4">
+              <p class="text-sm font-bold">Upgrade</p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
         <button
           class="hover:bg-gray-800 p-2 rounded-md text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
         >
@@ -159,10 +188,10 @@
               aria-expanded="false"
               aria-haspopup="true"
             >
-              <img
-                class="h-8 w-8 rounded-full"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
+              <Avatar
+                firstName={user.firstName}
+                lastName={user.lastName}
+                profilePic={user.picUrl}
               />
               <svg
                 xmlns="http://www.w3.org/2000/svg"

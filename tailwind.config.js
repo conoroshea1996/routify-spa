@@ -37,5 +37,15 @@ module.exports = {
       800: "#1F2937",
       900: "#0E171D",
     },
+    letterSpacing: {
+      tightest: "-.15em",
+      tighter: "-.05em",
+      tight: "-.025em",
+      normal: "0",
+      wide: ".025em",
+      wider: ".05em",
+      widest: ".1em",
+      widest: ".25em",
+    },
   },
 };

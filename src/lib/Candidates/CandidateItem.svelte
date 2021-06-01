@@ -81,7 +81,7 @@
 >
   <div class="flex items-center  w-full py-2">
     <div class="flex-1 flex">
-      <div class="items-center flex px-2">
+      <div class="items-center flex px-4">
         <CheckBox
           size="medium"
           value={candidate.id}
@@ -128,14 +128,14 @@
       </div>
 
       <div
-        class="flex-1 px-2 py-3 text-xs font-medium text-gray-500  tracking-wider col-span-1"
+        class="flex-1 px-4 py-3 text-xs font-medium text-gray-500  tracking-wider col-span-1"
         class:hidden={!columnsToShow.includes("Rating")}
       >
         <Rating rating={candidate.rating} />
       </div>
 
       <div
-        class="flex-1 px-1 py-3 text-xs font-medium text-gray-500 tracking-wider col-span-1"
+        class="flex-1 px-4 py-3 text-xs font-medium text-gray-500 tracking-wider col-span-1"
         class:hidden={!columnsToShow.includes("Applications")}
       >
         <span>

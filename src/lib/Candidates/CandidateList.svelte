@@ -87,11 +87,11 @@
     <li>
       <div class="flex items-center  w-full py-2">
         <div class="flex-1 flex">
-          <div class="items-center flex px-2">
+          <div class="items-center flex px-4">
             <CheckBox size="medium" bind:checked={checkAll} />
           </div>
           <div
-            class="w-3/12 px-3 flex items-center space-x-4 text-gray-500 px-1 text-left text-sm font-medium text-gray-500  tracking-wider"
+            class="w-3/12 px-2 flex items-center space-x-4 text-gray-500 px-1 text-left text-sm font-medium text-gray-500  tracking-wider"
             class:hidden={!columnsToShow.includes("Name")}
           >
             <span> Name </span>
@@ -132,7 +132,7 @@
           </div>
 
           <div
-            class="flex-1 px-1 py-3 text-left text-sm font-medium text-gray-500  tracking-wider col-span-1"
+            class="flex-1 px-4 py-3 text-left text-sm font-medium text-gray-500  tracking-wider col-span-1"
             class:hidden={!columnsToShow.includes("Applications")}
           >
             <span> Applications </span>
