@@ -1,8 +1,9 @@
 <script lang="ts">
   import { Button } from "hirehive-ui";
-  import { threads } from "../../stores/emails";
+  import { emails, threads } from "../../stores/emails";
   import Editor from "../editor.svelte";
-  export let emailId: number;
+  export let emailId: string;
+  const parseEmaildId: number = parseInt(emailId);
 
   let attachments: File[] = [];
 
@@ -19,6 +20,14 @@
   const removeFile = (attachment: File) => {
     attachments = attachments.filter((f) => f !== attachment);
   };
+
+  let email: any;
+  const getEmail = (emailId: number) => {
+    email = $emails.find((e) => e.id === emailId);
+    console.log(email);
+  };
+
+  getEmail(parseEmaildId);
 </script>
 
 <div class=" lg:min-w-0 lg:flex-1 bg-gray-50">
@@ -28,9 +37,9 @@
         class="tracking-tight text-gray-500  flex items-start justify-between w-full px-8"
       >
         <div class="flex flex-col space-y-2">
-          <h1 class="text-gray-900">Jenny Wilson</h1>
+          <h1 class="text-gray-900">{email.fullName}</h1>
           <p class="text-gray-500">
-            Applied for Product Designer via LinkedIn, 6 days ago
+            {email.subject}, {email.formattedDate}
           </p>
         </div>
 
