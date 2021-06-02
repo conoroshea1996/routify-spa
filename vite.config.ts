@@ -3,7 +3,7 @@ import path from 'path'
 const svelte = require('@sveltejs/vite-plugin-svelte');
 const { defineConfig } = require('vite');
 const { minify } = require('html-minifier');
-
+import {join} from "path"; 
 const minifyHtml = () => {
   return {
     name: 'html-transform',
@@ -22,7 +22,13 @@ module.exports = defineConfig(({ mode }) => {
     optimizeDeps: {
       exclude: ['@roxi/routify',"@urql/svelte", "sswr"],
     },
-    plugins: [WindiCSS(), svelte(), isProduction && minifyHtml()],
+    plugins: [
+      WindiCSS({
+      scan: {
+        include:["./node_modules/hirehive-ui/src/**/*.svelte"]
+  			}
+    }),
+    svelte(), isProduction && minifyHtml()],
     build: {
       minify: isProduction,
     },
@@ -33,3 +39,14 @@ module.exports = defineConfig(({ mode }) => {
     }
   };
 });
+
+
+// WindiCSS({
+//   onOptionsResolved:(options) => {
+//     console.log(options);
+//         // options.scanOptions.include.push(join(__dirname, 'node_modules', 'hirehive-ui', "dist", "main.css"))
+//   },
+//   scan: {
+//     include: ["hirehive-ui/dist/main.css"]
+//   }
+// }),
