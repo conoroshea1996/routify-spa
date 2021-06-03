@@ -28,7 +28,7 @@
           <div class="flex">
             <button on:click={() => (open = !open)}>
               <svg
-                class="h-8 w-8 text-gray-400 transform rotate-90"
+                class="h-8 w-8 text-gray-400 transform"
                 class:open
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
@@ -190,205 +190,208 @@
         </div>
       </div>
     </div>
-    {#if open}
-      <dl class="grid grid-cols-2 gap-5 sm:grid-cols-7 py-4" transition:slide>
-        <div
-          class=" bg-white text-center overflow-hidden  border-r border-gray-100 flex flex-col justify-between"
-          class:text-gray-400={job.totalCandidates === 0}
-          class:text-gray-700={job.totalCandidates !== 0}
-        >
-          {#if job.totalCandidates === 0}
-            <dd class="mt-1 text-3xl  flex justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-3 w-3"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M18 12H6"
-                />
-              </svg>
-            </dd>
-          {:else}
-            <dd class="mt-1 text-3xl  ">{job.totalCandidates}</dd>
-          {/if}
-          <dt class="text-sm font-medium  truncate">Total</dt>
-        </div>
+    <dl
+      class="grid grid-cols-2 gap-5 sm:grid-cols-7 transition-all"
+      class:h-0={!open}
+      class:py-4={open}
+      class:h-full={open}
+    >
+      <div
+        class=" bg-white text-center overflow-hidden  border-r border-gray-100 flex flex-col justify-between"
+        class:text-gray-400={job.totalCandidates === 0}
+        class:text-gray-700={job.totalCandidates !== 0}
+      >
+        {#if job.totalCandidates === 0}
+          <dd class="mt-1 text-3xl  flex justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-3 w-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M18 12H6"
+              />
+            </svg>
+          </dd>
+        {:else}
+          <dd class="mt-1 text-3xl  ">{job.totalCandidates}</dd>
+        {/if}
+        <dt class="text-sm font-medium  truncate">Total</dt>
+      </div>
 
-        <div
-          class=" bg-white text-center overflow-hidden  border-r border-gray-100  flex flex-col justify-between"
-          class:text-gray-400={job.newCandidates.count === 0}
-          class:text-gray-700={job.newCandidates.count !== 0}
-        >
-          {#if job.newCandidates.count === 0}
-            <dd class="mt-1 text-3xl  flex justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-3 w-3"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M18 12H6"
-                />
-              </svg>
-            </dd>
-          {:else}
-            <dd class="mt-1 text-3xl  ">{job.newCandidates.count}</dd>
-          {/if}
-          <dt class="text-sm font-medium  truncate">New</dt>
-        </div>
+      <div
+        class=" bg-white text-center overflow-hidden  border-r border-gray-100  flex flex-col justify-between"
+        class:text-gray-400={job.newCandidates.count === 0}
+        class:text-gray-700={job.newCandidates.count !== 0}
+      >
+        {#if job.newCandidates.count === 0}
+          <dd class="mt-1 text-3xl  flex justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-3 w-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M18 12H6"
+              />
+            </svg>
+          </dd>
+        {:else}
+          <dd class="mt-1 text-3xl  ">{job.newCandidates.count}</dd>
+        {/if}
+        <dt class="text-sm font-medium  truncate">New</dt>
+      </div>
 
-        <div
-          class=" bg-white text-center overflow-hidden  border-r border-gray-100  flex flex-col justify-between"
-          class:text-gray-400={job.screeningCandidates.count === 0}
-          class:text-gray-700={job.screeningCandidates.count !== 0}
-        >
-          {#if job.screeningCandidates.count === 0}
-            <dd class="mt-1 text-3xl  flex justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-3 w-3"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M18 12H6"
-                />
-              </svg>
-            </dd>
-          {:else}
-            <dd class="mt-1 text-3xl  ">{job.screeningCandidates.count}</dd>
-          {/if}
-          <dt class="text-sm font-medium  truncate">Screening</dt>
-        </div>
+      <div
+        class=" bg-white text-center overflow-hidden  border-r border-gray-100  flex flex-col justify-between"
+        class:text-gray-400={job.screeningCandidates.count === 0}
+        class:text-gray-700={job.screeningCandidates.count !== 0}
+      >
+        {#if job.screeningCandidates.count === 0}
+          <dd class="mt-1 text-3xl  flex justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-3 w-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M18 12H6"
+              />
+            </svg>
+          </dd>
+        {:else}
+          <dd class="mt-1 text-3xl  ">{job.screeningCandidates.count}</dd>
+        {/if}
+        <dt class="text-sm font-medium  truncate">Screening</dt>
+      </div>
 
-        <div
-          class=" bg-white text-center overflow-hidden  border-r border-gray-100  flex flex-col justify-between"
-          class:text-gray-400={job.interviewingCandidates.count === 0}
-          class:text-gray-700={job.interviewingCandidates.count !== 0}
-        >
-          {#if job.interviewingCandidates.count === 0}
-            <dd class="mt-1 text-3xl  flex justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-3 w-3"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M18 12H6"
-                />
-              </svg>
-            </dd>
-          {:else}
-            <dd class="mt-1 text-3xl  ">{job.interviewingCandidates.count}</dd>
-          {/if}
-          <dt class="text-sm font-medium  truncate">Interviewing</dt>
-        </div>
+      <div
+        class=" bg-white text-center overflow-hidden  border-r border-gray-100  flex flex-col justify-between"
+        class:text-gray-400={job.interviewingCandidates.count === 0}
+        class:text-gray-700={job.interviewingCandidates.count !== 0}
+      >
+        {#if job.interviewingCandidates.count === 0}
+          <dd class="mt-1 text-3xl  flex justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-3 w-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M18 12H6"
+              />
+            </svg>
+          </dd>
+        {:else}
+          <dd class="mt-1 text-3xl  ">{job.interviewingCandidates.count}</dd>
+        {/if}
+        <dt class="text-sm font-medium  truncate">Interviewing</dt>
+      </div>
 
-        <div
-          class=" bg-white text-center overflow-hidden  border-r border-gray-100  flex flex-col justify-between"
-          class:text-gray-400={job.offeredCandidates.count === 0}
-          class:text-gray-700={job.offeredCandidates.count !== 0}
-        >
-          {#if job.offeredCandidates.count === 0}
-            <dd class="mt-1 text-3xl  flex justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-3 w-3"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M18 12H6"
-                />
-              </svg>
-            </dd>
-          {:else}
-            <dd class="mt-1 text-3xl  ">{job.offeredCandidates.count}</dd>
-          {/if}
-          <dt class="text-sm font-medium  truncate">Offered</dt>
-        </div>
+      <div
+        class=" bg-white text-center overflow-hidden  border-r border-gray-100  flex flex-col justify-between"
+        class:text-gray-400={job.offeredCandidates.count === 0}
+        class:text-gray-700={job.offeredCandidates.count !== 0}
+      >
+        {#if job.offeredCandidates.count === 0}
+          <dd class="mt-1 text-3xl  flex justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-3 w-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M18 12H6"
+              />
+            </svg>
+          </dd>
+        {:else}
+          <dd class="mt-1 text-3xl  ">{job.offeredCandidates.count}</dd>
+        {/if}
+        <dt class="text-sm font-medium  truncate">Offered</dt>
+      </div>
 
-        <div
-          class=" bg-white text-center overflow-hidden  border-r border-gray-100  flex flex-col justify-between"
-          class:text-gray-400={job.hiredCandidates.count === 0}
-          class:text-gray-700={job.hiredCandidates.count !== 0}
-        >
-          {#if job.hiredCandidates.count === 0}
-            <dd class="mt-1 text-3xl  flex justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-3 w-3"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M18 12H6"
-                />
-              </svg>
-            </dd>
-          {:else}
-            <dd class="mt-1 text-3xl  ">{job.hiredCandidates.count}</dd>
-          {/if}
-          <dt class="text-sm font-medium  truncate">Hired</dt>
-        </div>
+      <div
+        class=" bg-white text-center overflow-hidden  border-r border-gray-100  flex flex-col justify-between"
+        class:text-gray-400={job.hiredCandidates.count === 0}
+        class:text-gray-700={job.hiredCandidates.count !== 0}
+      >
+        {#if job.hiredCandidates.count === 0}
+          <dd class="mt-1 text-3xl  flex justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-3 w-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M18 12H6"
+              />
+            </svg>
+          </dd>
+        {:else}
+          <dd class="mt-1 text-3xl  ">{job.hiredCandidates.count}</dd>
+        {/if}
+        <dt class="text-sm font-medium  truncate">Hired</dt>
+      </div>
 
-        <div
-          class=" bg-white text-center overflow-hidden  border-r border-gray-100 text-gray-700 flex flex-col justify-between"
-          class:text-gray-400={job.rejectedCandidates.count === 0}
-          class:text-gray-700={job.rejectedCandidates.count !== 0}
-        >
-          {#if job.rejectedCandidates.count === 0}
-            <dd class="mt-1 text-3xl  flex justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-3 w-3"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M18 12H6"
-                />
-              </svg>
-            </dd>
-          {:else}
-            <dd class="mt-1 text-3xl  ">{job.rejectedCandidates.count}</dd>
-          {/if}
-          <dt class="text-sm font-medium  truncate">Rejected</dt>
-        </div>
-      </dl>
-    {/if}
+      <div
+        class=" bg-white text-center overflow-hidden  border-r border-gray-100 text-gray-700 flex flex-col justify-between"
+        class:text-gray-400={job.rejectedCandidates.count === 0}
+        class:text-gray-700={job.rejectedCandidates.count !== 0}
+      >
+        {#if job.rejectedCandidates.count === 0}
+          <dd class="mt-1 text-3xl  flex justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-3 w-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M18 12H6"
+              />
+            </svg>
+          </dd>
+        {:else}
+          <dd class="mt-1 text-3xl  ">{job.rejectedCandidates.count}</dd>
+        {/if}
+        <dt class="text-sm font-medium  truncate">Rejected</dt>
+      </div>
+    </dl>
   </div>
 </li>
 

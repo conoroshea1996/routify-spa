@@ -47,6 +47,11 @@ module.exports = {
       widest: ".1em",
       widest: ".25em",
     },
+    extend: {
+      transitionProperty: {
+        height: "height",
+      },
+    },
   },
   plugins: [require("windicss/plugin/forms")],
 };

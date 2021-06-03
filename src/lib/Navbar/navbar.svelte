@@ -119,9 +119,9 @@
             {#each navUrls as { name, url, active }}
               <a
                 href={url}
-                class=" px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800"
-                class:bg-gray-800={active}
-                class:text-yellow-400={active}
+                class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800 {active
+                  ? 'text-yellow-400 bg-gray-800'
+                  : ''}"
                 aria-current="page">{name}</a
               >
             {/each}
@@ -130,13 +130,12 @@
       </div>
 
       <div
-        class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 py-4"
+        class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
       >
         <div class="hidden md:block">
           <div
-            class="bg-gray-700 flex space-x-4 items-center justify-between py-4 text-white border-4 border-gray-700 px-4"
+            class="bg-gray-700 flex space-x-4 items-center justify-between py-3 text-white rounded-md border-gray-700"
           >
-            <h1>Show on bigger than MD</h1>
             <p class="text-sm px-4">Free trail ends in 7 days</p>
             <div class="flex items-center space-x-2 px-4">
               <p class="text-sm font-bold">Upgrade</p>

@@ -846,3 +846,134 @@ export const candidates = writable([
         "$$hashKey": "object:109"
     },  
 ])
+
+export const hired = [
+    {
+        "id": 1989590,
+        "personId": 1572001,
+        "personCompanyId": 1546481,
+        "personJobId": 1947554,
+        "fullName": "Test Test",
+        "firstName": "Test",
+        "lastName": "Test",
+        "email": "test@test.com",
+        "phone": "",
+        "currentTitle": "none",
+        "currentCompany": "none",
+        "currentLocation": "cork",
+        "country": "Ireland",
+        "countryCode": "IE",
+        "companyId": 12347,
+        "rating": 0,
+        "statusId": null,
+        "parentStatusId": 6,
+        "statusName": "Hired",
+        "dateApplied": 1575896523,
+        "coverLetter": null,
+        "curriculumVitaeId": 2312879,
+        "fileDetails": {
+            "id": 2312879,
+            "boxFileId": "704203301261",
+            "extension": "docx",
+            "name": "web_dev_cv_3.docx"
+        },
+        "jobId": 53792,
+        "jobTitle": "Testing",
+        "jobOwner": "conor o shea",
+        "jobOwnerId": 21197,
+        "tags": [],
+        "otherApplications": [],
+        "hasExtraQuestions": false,
+        "referred": false,
+        "contactId": null,
+        "contactName": null,
+        "sourceName": "Added by conor o shea",
+        "linkedInUrl": "",
+        "profileImg": null,
+        "hasInterviews": false,
+        "followerIds": [
+            21197
+        ],
+        "allowedUserIds": [
+            21197,
+            24212,
+            24399,
+            24402,
+            24824
+        ],
+        "deleted": false,
+        "lastModified": 1622737645,
+        "hasFeedback": false,
+        "recruiterId": null,
+        "recruiterName": null,
+        "potentialDuplicate": false,
+        "consentDateExpiry": null,
+        "consentRequestPending": false,
+        "active": false,
+        "links": [],
+        "resumeText": "WEB Developer Conor O’ Shea Portfolio: Github: Info: ADDRESS 9 Lotamore Close Banduff Co.Cork PHONE 087-948-6559 EMAIL conoshea12@gmail.com Hi my name is Conor a junior developer. I really enjoy making interactive layouts using all the skills I know. I am also always trying to expand my knowledge and really enjoy learning more. Skills: HTML CSS JAVASCRIPT PYTHON FIGMA TEAM PLAYER",
+        "objectID": "1989590",
+        "_snippetResult": {
+            "resumeText": {
+                "value": "Github: Info: ADDRESS 9 Lotamore <em class=\"highlight\">C</em>lose Banduff <em class=\"highlight\">C</em>o.<em class=\"highlight\">C</em>ork",
+                "matchLevel": "full"
+            }
+        },
+        "_highlightResult": {
+            "fullName": {
+                "value": "Test Test",
+                "matchLevel": "none",
+                "matchedWords": []
+            },
+            "firstName": {
+                "value": "Test",
+                "matchLevel": "none",
+                "matchedWords": []
+            },
+            "lastName": {
+                "value": "Test",
+                "matchLevel": "none",
+                "matchedWords": []
+            },
+            "email": {
+                "value": "test@test.<em class=\"highlight\">c</em>om",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": [
+                    "c"
+                ]
+            },
+            "phone": {
+                "value": "",
+                "matchLevel": "none",
+                "matchedWords": []
+            },
+            "currentTitle": {
+                "value": "none",
+                "matchLevel": "none",
+                "matchedWords": []
+            },
+            "currentCompany": {
+                "value": "none",
+                "matchLevel": "none",
+                "matchedWords": []
+            },
+            "currentLocation": {
+                "value": "<em class=\"highlight\">c</em>ork",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": [
+                    "c"
+                ]
+            },
+            "resumeText": {
+                "value": "WEB Developer <em class=\"highlight\">C</em>onor O’ Shea Portfolio: Github: Info: ADDRESS 9 Lotamore <em class=\"highlight\">C</em>lose Banduff <em class=\"highlight\">C</em>o.<em class=\"highlight\">C</em>ork PHONE 087-948-6559 EMAIL <em class=\"highlight\">c</em>onoshea12@gmail.<em class=\"highlight\">c</em>om Hi my name is <em class=\"highlight\">C</em>onor a junior developer. I really enjoy making interactive layouts using all the skills I know. I am also always trying to expand my knowledge and really enjoy learning more. Skills: HTML <em class=\"highlight\">C</em>SS JAVASCRIPT PYTHON FIGMA TEAM PLAYER",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": [
+                    "c"
+                ]
+            }
+        }
+    }
+]

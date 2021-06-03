@@ -64,10 +64,12 @@
         {#each urls as url}
           <a
             href={url.url}
-            class="inline-flex justify-center items-center text-gray-500 font-medium border border-transparent hover:bg-gray-100 focus:outline-none focus:ring-1  px-4 py-2 text-sm rounded-md"
+            class="inline-flex justify-center items-center  font-medium border border-transparent hover:bg-gray-100 focus:outline-none focus:ring-1  px-4 py-2 text-sm rounded-md
+              {$isActive(url.url)
+              ? 'bg-blue-100 text-blue-500'
+              : 'text-gray-500'}
+            "
             disabled="false"
-            class:bg-blue-100={$isActive(url.url)}
-            class:text-blue-500={$isActive(url.url)}
           >
             {url.name}
           </a>
