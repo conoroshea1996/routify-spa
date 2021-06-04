@@ -190,11 +190,11 @@
         </div>
       </div>
     </div>
+
     <dl
-      class="grid grid-cols-2 gap-5 sm:grid-cols-7 transition-all"
-      class:h-0={!open}
-      class:py-4={open}
-      class:h-full={open}
+      class="grid grid-cols-2 gap-5 sm:grid-cols-7 transition-all {open
+        ? 'h-full py-4'
+        : 'h-0'}"
     >
       <div
         class=" bg-white text-center overflow-hidden  border-r border-gray-100 flex flex-col justify-between"
@@ -219,7 +219,7 @@
             </svg>
           </dd>
         {:else}
-          <dd class="mt-1 text-3xl  ">{job.totalCandidates}</dd>
+          <dd class="mt-1 text-3xl">{job.totalCandidates}</dd>
         {/if}
         <dt class="text-sm font-medium  truncate">Total</dt>
       </div>

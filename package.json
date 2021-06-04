@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "routify -c dev:vite ",
-    "build": "svelte-check && routify -b && SET NODE_ENV=production && vite build",
+    "build": "svelte-check && routify -b && vite build",
     "dev:vite": "vite",
     "serve": "vite preview"
   },
@@ -32,7 +32,7 @@
     "editorjs-html": "^3.0.5",
     "editorjs-text-color-plugin": "^1.1.22",
     "frappe-charts": "^1.6.1",
-    "hirehive-ui": "^1.0.71",
+    "hirehive-ui": "^1.0.72",
     "sswr": "^1.2.0",
     "svelte-dnd-action": "^0.9.8",
     "tributejs": "^5.1.3",

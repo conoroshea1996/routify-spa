@@ -1,6 +1,8 @@
 <script>
   import { isActive, page } from "@roxi/routify";
+  import { Menu } from "hirehive-ui";
   import { hiringTeam } from "../../stores/jobs";
+  import { companies, currentUser } from "../../stores/user";
   import Avatar from "../General/Avatar.svelte";
   $: navUrls = [
     {
@@ -40,6 +42,8 @@
   ];
 
   const user = $hiringTeam[3];
+
+  let accountsMenu = false;
 </script>
 
 <nav class="bg-gray-900">
@@ -181,31 +185,107 @@
         <!-- Profile dropdown -->
         <div class="ml-3 relative">
           <div>
-            <button
-              type="button"
-              class="hover:bg-gray-800 hover:text-white p-1 flex items-center text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-              id="user-menu-button"
-              aria-expanded="false"
-              aria-haspopup="true"
-            >
-              <Avatar
-                firstName={user.firstName}
-                lastName={user.lastName}
-                profilePic={user.picUrl}
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
+            <Menu position="right" bind:open={accountsMenu} menuWidth="w-72">
+              <button
+                slot="menu_trigger"
+                type="button"
+                class="hover:bg-gray-800 hover:text-white p-1 flex items-center text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                class:bg-gray-800={accountsMenu}
+                class:text-white={accountsMenu}
               >
-                <path
-                  fill-rule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
+                <Avatar
+                  firstName={user.firstName}
+                  lastName={user.lastName}
+                  profilePic={user.picUrl}
                 />
-              </svg>
-            </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <div
+                slot="menu_context"
+                let:open
+                class="bg-white rounded-md border border-gray-200"
+              >
+                {#each currentUser.accounts as account}
+                  <div class="border-gray-100 border-b">
+                    <div class="px-2 py-2">
+                      <button
+                        on:click={() => (accountsMenu = false)}
+                        class="rounded-md flex items-center justify-between px-4 py-2 my-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left focus:outline-none focus:bg-gray-100"
+                        role="menuitem"
+                      >
+                        <div class="flex flex-col">
+                          <span class="text-gray-900 font-bold">
+                            {companies.find((c) => c.id === account.id).name}
+                          </span>
+                          <span>
+                            {currentUser.given_name}
+                            {currentUser.family_name}
+                          </span>
+                        </div>
+                        {#if companies.find((c) => c.id === account.id).current}
+                          <span>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="h-5 w-5 text-gray-900"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
+                          </span>
+                        {/if}
+                      </button>
+                    </div>
+                  </div>
+                {/each}
+
+                <div class="border-gray-100 border-b">
+                  <div class="px-2 py-1">
+                    <button
+                      on:click={() => (accountsMenu = false)}
+                      class="rounded-md flex items-center justify-between px-4 py-2 my-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left focus:outline-none focus:bg-gray-100"
+                      role="menuitem"
+                    >
+                      Settings
+                    </button>
+                  </div>
+                  <div class="px-2 py-1">
+                    <button
+                      on:click={() => (accountsMenu = false)}
+                      class="rounded-md flex items-center justify-between px-4 py-2 my-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left focus:outline-none focus:bg-gray-100"
+                      role="menuitem"
+                    >
+                      Support
+                    </button>
+                  </div>
+                </div>
+
+                <div class="px-2 py-1">
+                  <button
+                    on:click={() => (accountsMenu = false)}
+                    class="rounded-md flex items-center justify-between px-4 py-2 my-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left focus:outline-none focus:bg-gray-100"
+                    role="menuitem"
+                  >
+                    Sign out
+                  </button>
+                </div>
+              </div>
+            </Menu>
           </div>
         </div>
       </div>

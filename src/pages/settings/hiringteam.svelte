@@ -634,8 +634,8 @@
             {/if}
           </div>
 
-          <div class="border-t border-gray-200 flex justify-end py-4">
-            <div class="flex space-x-4 pb-8 px-6">
+          <div class="border-t border-gray-200 flex justify-end py-4 bg-white">
+            <div class="flex space-x-4 px-6">
               <Button kind="white" on:click={() => close()}>Back</Button>
               <Button kind="primary">Done</Button>
             </div>
