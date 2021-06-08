@@ -35,6 +35,7 @@
     "hirehive-ui": "^1.0.76",
     "sswr": "^1.2.0",
     "svelte-dnd-action": "^0.9.8",
+    "svelte-tags-input": "^2.7.1",
     "tributejs": "^5.1.3",
     "tui-calendar": "^1.13.0"
   }
