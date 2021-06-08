@@ -7,7 +7,7 @@
   href="/inbox/{email.id}"
   class="py-4 px-4 block border-b border-gray-100"
   class:bg-yellow-100={isActive}
-  class:bg-gray-50={!email.unRead}
+  class:bg-gray-50={!email.unRead && !isActive}
 >
   <div class="flex items-center space-x-4">
     <div class="flex-1 min-w-0">

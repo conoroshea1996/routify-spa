@@ -48,8 +48,8 @@
 </script>
 
 <nav class="bg-gray-900 flex-shrink-0">
-  <div class="max-w-screen-2xl px-4 mx-auto">
-    <div class="relative flex items-center justify-between">
+  <div class="max-w-screen-2xl mx-auto px-4">
+    <div class="relative flex items-center justify-between h-16">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
         <!-- Mobile menu button-->
         <button
@@ -105,7 +105,9 @@
           </svg>
         </button>
       </div>
-      <div class="flex-1 flex items-center justify-start sm:items-stretch">
+      <div
+        class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
+      >
         <div class="flex-shrink-0 flex items-center">
           <img
             class="block lg:hidden h-8 w-auto"
@@ -119,52 +121,53 @@
           />
         </div>
         <div class="hidden sm:block sm:ml-6">
-          <div class="flex space-x-4 text-gray-400 py-3">
-            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            {#each navUrls as { name, url, active }}
-              <a
-                href={url}
-                class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800 {active
-                  ? 'text-yellow-400 bg-gray-800'
-                  : ''}"
-                aria-current="page">{name}</a
-              >
-            {/each}
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
-      >
-        <div class="hidden md:block">
-          <div
-            class="bg-gray-700 flex space-x-4 items-center justify-between py-3 text-white rounded-md border-gray-700"
-          >
-            <p class="text-sm px-4">Free trail ends in 7 days</p>
-            <div class="flex items-center space-x-2 px-4">
-              <p class="text-sm font-bold">Upgrade</p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
+          <div class="flex space-x-4">
+            <div class="hidden sm:block sm:ml-6">
+              <div class="flex space-x-4 text-gray-400 py-3">
+                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                {#each navUrls as { name, url, active }}
+                  <a
+                    href={url}
+                    class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800 {active
+                      ? 'text-yellow-400 bg-gray-800'
+                      : ''}"
+                    aria-current="page">{name}</a
+                  >
+                {/each}
+              </div>
             </div>
           </div>
         </div>
-
-        <button
-          class="hover:bg-gray-800 p-2 rounded-md text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+      </div>
+      <div
+        class="absolute inset-y-0 space-x-6 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+      >
+        <div
+          class="bg-gray-700 hidden xl:flex space-x-4 items-center justify-between py-3 text-white rounded-md border-gray-700"
         >
+          <p class="text-sm px-4">Free trail ends in 7 days</p>
+          <div class="flex items-center space-x-2 px-4">
+            <p class="text-sm font-bold">Upgrade</p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </div>
+        </div>
+        <button
+          class="p-1 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none "
+        >
+          <span class="sr-only">View notifications</span>
           <!-- Heroicon name: outline/bell -->
           <svg
             class="h-6 w-6"
@@ -185,111 +188,109 @@
 
         <!-- Profile dropdown -->
         <div class="ml-3 relative">
-          <div>
-            <Menu position="right" bind:open={accountsMenu} menuWidth="w-72">
-              <button
-                slot="menu_trigger"
-                type="button"
-                class="text-gray-400 hover:bg-gray-800 hover:text-white p-1 flex items-center text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                class:bg-gray-800={accountsMenu}
-                class:text-white={accountsMenu}
+          <Menu position="right" bind:open={accountsMenu} menuWidth="w-72">
+            <button
+              slot="menu_trigger"
+              type="button"
+              class="text-gray-400 hover:bg-gray-800 hover:text-white p-1 flex items-center text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+              class:bg-gray-800={accountsMenu}
+              class:text-white={accountsMenu}
+            >
+              <span class="px-2">
+                {companies.find((c) => c.current === true).name}
+              </span>
+              <Avatar
+                firstName={user.firstName}
+                lastName={user.lastName}
+                profilePic={user.picUrl}
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
               >
-                <span class="px-2">
-                  {companies.find((c) => c.current === true).name}
-                </span>
-                <Avatar
-                  firstName={user.firstName}
-                  lastName={user.lastName}
-                  profilePic={user.picUrl}
+                <path
+                  fill-rule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
                 />
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </button>
-              <div
-                slot="menu_context"
-                class="bg-white rounded-md border border-gray-200"
-              >
-                {#each currentUser.accounts as account}
-                  <div class="border-gray-100 border-b">
-                    <div class="px-2 py-2">
-                      <button
-                        on:click={() => (accountsMenu = false)}
-                        class="rounded-md flex items-center justify-between px-4 py-2 my-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left focus:outline-none focus:bg-gray-100"
-                        role="menuitem"
-                      >
-                        <div class="flex flex-col">
-                          <span class="text-gray-900 font-bold">
-                            {companies.find((c) => c.id === account.id).name}
-                          </span>
-                          <span>
-                            {currentUser.given_name}
-                            {currentUser.family_name}
-                          </span>
-                        </div>
-                        {#if companies.find((c) => c.id === account.id).current}
-                          <span>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              class="h-5 w-5 text-gray-900"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                clip-rule="evenodd"
-                              />
-                            </svg>
-                          </span>
-                        {/if}
-                      </button>
-                    </div>
-                  </div>
-                {/each}
-
+              </svg>
+            </button>
+            <div
+              slot="menu_context"
+              class="bg-white rounded-md border border-gray-200"
+            >
+              {#each currentUser.accounts as account}
                 <div class="border-gray-100 border-b">
-                  <div class="px-2 py-1">
+                  <div class="px-2 py-2">
                     <button
                       on:click={() => (accountsMenu = false)}
                       class="rounded-md flex items-center justify-between px-4 py-2 my-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left focus:outline-none focus:bg-gray-100"
                       role="menuitem"
                     >
-                      Settings
-                    </button>
-                  </div>
-                  <div class="px-2 py-1">
-                    <button
-                      on:click={() => (accountsMenu = false)}
-                      class="rounded-md flex items-center justify-between px-4 py-2 my-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left focus:outline-none focus:bg-gray-100"
-                      role="menuitem"
-                    >
-                      Support
+                      <div class="flex flex-col">
+                        <span class="text-gray-900 font-bold">
+                          {companies.find((c) => c.id === account.id).name}
+                        </span>
+                        <span>
+                          {currentUser.given_name}
+                          {currentUser.family_name}
+                        </span>
+                      </div>
+                      {#if companies.find((c) => c.id === account.id).current}
+                        <span>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 text-gray-900"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                      {/if}
                     </button>
                   </div>
                 </div>
+              {/each}
 
+              <div class="border-gray-100 border-b">
                 <div class="px-2 py-1">
                   <button
                     on:click={() => (accountsMenu = false)}
                     class="rounded-md flex items-center justify-between px-4 py-2 my-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left focus:outline-none focus:bg-gray-100"
                     role="menuitem"
                   >
-                    Sign out
+                    Settings
+                  </button>
+                </div>
+                <div class="px-2 py-1">
+                  <button
+                    on:click={() => (accountsMenu = false)}
+                    class="rounded-md flex items-center justify-between px-4 py-2 my-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left focus:outline-none focus:bg-gray-100"
+                    role="menuitem"
+                  >
+                    Support
                   </button>
                 </div>
               </div>
-            </Menu>
-          </div>
+
+              <div class="px-2 py-1">
+                <button
+                  on:click={() => (accountsMenu = false)}
+                  class="rounded-md flex items-center justify-between px-4 py-2 my-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left focus:outline-none focus:bg-gray-100"
+                  role="menuitem"
+                >
+                  Sign out
+                </button>
+              </div>
+            </div>
+          </Menu>
         </div>
       </div>
     </div>
@@ -297,31 +298,16 @@
 
   <!-- Mobile menu, show/hide based on menu state. -->
   <div class="sm:hidden" id="mobile-menu">
-    <div class="px-2 pt-2 pb-3 space-y-1">
-      <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-      <a
-        href="#"
-        class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
-        aria-current="page">Dashboard</a
-      >
-
-      <a
-        href="#"
-        class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-        >Team</a
-      >
-
-      <a
-        href="#"
-        class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-        >Projects</a
-      >
-
-      <a
-        href="#"
-        class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-        >Calendar</a
-      >
+    <div class="px-2 pt-2 pb-3 space-y-1 flex flex-col text-gray-400">
+      {#each navUrls as { name, url, active }}
+        <a
+          href={url}
+          class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800 {active
+            ? 'text-yellow-400 bg-gray-800'
+            : ''}"
+          aria-current="page">{name}</a
+        >
+      {/each}
     </div>
   </div>
 </nav>

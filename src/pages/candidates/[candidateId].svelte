@@ -7,10 +7,12 @@
     Tab,
     TabPanel,
   } from "hirehive-ui";
+  import Activities from "../../lib/Activites/Activities.svelte";
+  import CandidateStatusPicker from "../../lib/Candidates/CandidateStatusPicker.svelte";
+  import EmailSender from "../../lib/Inbox/EmailSender.svelte";
   import RatingFull from "../../lib/Rating/RatingFull.svelte";
-  import TabsOne from "../../lib/Tabs/TabsOne.svelte";
 
-  import { candidates } from "../../stores/candidates";
+  import { candidates, activities } from "../../stores/candidates";
 
   export let candidateId: string;
   const parsedCandidateId = parseInt(candidateId);
@@ -18,6 +20,7 @@
   const candidate: any = $candidates.find((c) => c.id === parsedCandidateId);
 
   let otherApplications: any[] = candidate.otherApplications;
+  let candidateStatusMenu = false;
 
   const activeApplication = {
     jobId: candidate.jobId,
@@ -32,6 +35,8 @@
   };
 
   otherApplications = [...otherApplications, activeApplication];
+
+  console.log(candidate);
 </script>
 
 <!-- 3 column wrapper -->
@@ -185,25 +190,33 @@
                     </span>
                   </Button>
 
-                  <Button kind="primary">
-                    <span class="mx-1">Stage: Interviewing</span>
-                    <span class="mx-1">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                    </span>
-                  </Button>
+                  <CandidateStatusPicker
+                    bind:open={candidateStatusMenu}
+                    on:updateCandidateStatus={(e) => console.log(e)}
+                    currentCandidateStatus={candidate.statusName}
+                  >
+                    <Button kind="primary">
+                      <span class="mx-1 capitalize">
+                        Stage: {candidate.statusName}
+                      </span>
+                      <span class="mx-1">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </span>
+                    </Button>
+                  </CandidateStatusPicker>
 
                   <Button kind="white" size="small">
                     <span class="mx-1">
@@ -327,23 +340,49 @@
                         </TabBar>
 
                         <TabPanel panelId={1}>
-                          <div
-                            class="my-2 mx-auto sm:px-6 lg:px-8 border border-dashed border-gray-400 h-32"
-                          >
-                            <h1 class="text-xl text-gray-500">
-                              Application Panel
-                            </h1>
+                          <div class="flex flex-col space-y-6">
+                            {#if candidate.coverLetter}
+                              <div
+                                class="bg-white border border-gray-200 p-5 rounded-md"
+                              >
+                                <h1 class="text-gray-900 font-bold py-2">
+                                  Cover Letter
+                                </h1>
+
+                                <p class="text-gray-400 py-4">
+                                  {@html candidate.coverLetter}
+                                </p>
+
+                                <button class="text-blue-500">
+                                  Read More
+                                </button>
+                              </div>
+                            {/if}
+
+                            {#if candidate.coverLetter}
+                              <div
+                                class="bg-white border border-gray-200 p-5 rounded-md"
+                              >
+                                <h1 class="text-gray-900 font-bold py-2">
+                                  CV/ Resume
+                                </h1>
+
+                                <p class="text-gray-400 py-4">
+                                  {@html candidate.coverLetter}
+                                </p>
+
+                                <button class="text-blue-500">
+                                  Read More
+                                </button>
+                              </div>
+                            {/if}
                           </div>
                         </TabPanel>
 
                         <TabPanel panelId={2}>
                           <div
                             class=" my-2 mx-auto sm:px-6 lg:px-8 border border-dashed border-gray-400 h-32"
-                          >
-                            <h1 class="text-xl text-gray-500">
-                              Follow Up questions
-                            </h1>
-                          </div>
+                          />
                         </TabPanel>
 
                         <TabPanel panelId={3}>
@@ -356,9 +395,9 @@
 
                         <TabPanel panelId={4}>
                           <div
-                            class=" my-2 mx-auto sm:px-6 lg:px-8 border border-dashed border-gray-400 h-32"
+                            class=" bg-white p-4 rounded-md border border-gray-200"
                           >
-                            <h1 class="text-xl text-gray-500">Activity</h1>
+                            <Activities activites={activities} />
                           </div>
                         </TabPanel>
                         <TabPanel panelId={5}>
@@ -370,9 +409,11 @@
                         </TabPanel>
                         <TabPanel panelId={6}>
                           <div
-                            class=" my-2 mx-auto sm:px-6 lg:px-8 border border-dashed border-gray-400 h-32"
+                            class=" bg-white p-4 rounded-md border border-gray-200"
                           >
-                            <h1 class="text-xl text-gray-500">Email</h1>
+                            <EmailSender
+                              on:fileUploaded={(e) => console.log(e)}
+                            />
                           </div>
                         </TabPanel>
                       </TabsContainer>

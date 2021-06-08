@@ -536,112 +536,112 @@
         </div>
       </div>
     </div>
+  </Sidepanel>
+{/if}
 
-    {#if openSearchCandidate}
-      <Sidepanel bind:open={openSearchCandidate} let:close>
-        <div class="h-full w-screen flex flex-col max-w-lg bg-gray-100">
-          <div class="p-6">
-            <div class="flex items-start justify-between">
-              <button class="flex items-center space-x-4">
+{#if openSearchCandidate}
+  <Sidepanel bind:open={openSearchCandidate} let:close>
+    <div class="h-full w-screen flex flex-col max-w-lg bg-gray-100">
+      <div class="p-6">
+        <div class="flex items-start justify-between">
+          <button class="flex items-center space-x-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 text-gray-500"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <p class="text-lg font-medium text-gray-900">
+              Search candidate to link
+            </p>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex-1 flex flex-col space-y-6 mt-6 px-8">
+        <div>
+          <TextInput
+            full
+            label="Name"
+            placeholder="Search hired candidate......"
+          >
+            <div
+              slot="leading"
+              class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none text-gray-400"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
+
+            <div
+              slot="trailing"
+              class="absolute inset-y-0 right-0 flex items-center pointer-events-none rounded-full"
+            >
+              <div class="p-0.5 bg-gray-100 rounded-full mx-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5 text-gray-500"
+                  class="h-4 w-4 text-gray-400"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
                   <path
                     fill-rule="evenodd"
-                    d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                     clip-rule="evenodd"
                   />
                 </svg>
-                <p class="text-lg font-medium text-gray-900">
-                  Search candidate to link
-                </p>
-              </button>
+              </div>
             </div>
-          </div>
+          </TextInput>
+        </div>
 
-          <div class="flex-1 flex flex-col space-y-6 mt-6 px-8">
-            <div>
-              <TextInput
-                full
-                label="Name"
-                placeholder="Search hired candidate......"
-              >
-                <div
-                  slot="leading"
-                  class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none text-gray-400"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                </div>
-
-                <div
-                  slot="trailing"
-                  class="absolute inset-y-0 right-0 flex items-center pointer-events-none rounded-full"
-                >
-                  <div class="p-0.5 bg-gray-100 rounded-full mx-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-4 w-4 text-gray-400"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
+        {#if hired}
+          <ul class="divide-y divide-gray-200">
+            {#each hired as result}
+              <li class="p-4 bg-white rounded-md border border-gray-200">
+                <div class="flex items-center space-x-4">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-md font-medium text-gray-900 truncate">
+                      {result.fullName}
+                    </p>
+                    <p class="text-md text-gray-500 truncate">
+                      {result.email}
+                    </p>
+                  </div>
+                  <div>
+                    <Button kind="secondary">Link</Button>
                   </div>
                 </div>
-              </TextInput>
-            </div>
+              </li>
+            {/each}
+          </ul>
+        {/if}
+      </div>
 
-            {#if hired}
-              <ul class="divide-y divide-gray-200">
-                {#each hired as result}
-                  <li class="p-4 bg-white rounded-md border border-gray-200">
-                    <div class="flex items-center space-x-4">
-                      <div class="flex-1 min-w-0">
-                        <p class="text-md font-medium text-gray-900 truncate">
-                          {result.fullName}
-                        </p>
-                        <p class="text-md text-gray-500 truncate">
-                          {result.email}
-                        </p>
-                      </div>
-                      <div>
-                        <Button kind="secondary">Link</Button>
-                      </div>
-                    </div>
-                  </li>
-                {/each}
-              </ul>
-            {/if}
-          </div>
-
-          <div class="border-t border-gray-200 flex justify-end py-4 bg-white">
-            <div class="flex space-x-4 px-6">
-              <Button kind="white" on:click={() => close()}>Back</Button>
-              <Button kind="primary">Done</Button>
-            </div>
-          </div>
+      <div class="border-t border-gray-200 flex justify-end py-4 bg-white">
+        <div class="flex space-x-4 px-6">
+          <Button kind="white" on:click={() => close()}>Back</Button>
+          <Button kind="primary">Done</Button>
         </div>
-      </Sidepanel>
-    {/if}
+      </div>
+    </div>
   </Sidepanel>
 {/if}
