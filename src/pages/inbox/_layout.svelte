@@ -156,65 +156,68 @@
   </div>
 </div>
 
-<Sidepanel bind:open={userDetailsSidePanel}>
-  <div class="h-full flex flex-col max-w-xl">
-    <!-- Main -->
-    <div>
-      <div class="pb-1 sm:pb-6">
-        <div>
-          <div class="mt-6 px-4 sm:mt-8 sm:flex sm:items-end sm:px-6">
-            <div class="sm:flex-1">
-              <div>
-                <div class="flex items-center">
-                  <h3 class="font-bold text-xl text-gray-900 sm:text-2xl">
-                    Render Anything inside
-                  </h3>
-                  <span
-                    class="ml-2.5 bg-green-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"
-                  >
-                    <span class="sr-only">Slot</span>
-                  </span>
+{#if userDetailsSidePanel}
+  <Sidepanel bind:open={userDetailsSidePanel}>
+    <div class="h-full flex flex-col max-w-xl">
+      <!-- Main -->
+      <div>
+        <div class="pb-1 sm:pb-6">
+          <div>
+            <div class="mt-6 px-4 sm:mt-8 sm:flex sm:items-end sm:px-6">
+              <div class="sm:flex-1">
+                <div>
+                  <div class="flex items-center">
+                    <h3 class="font-bold text-xl text-gray-900 sm:text-2xl">
+                      Render Anything inside
+                    </h3>
+                    <span
+                      class="ml-2.5 bg-green-400 flex-shrink-0 inline-block h-2 w-2 rounded-full"
+                    >
+                      <span class="sr-only">Slot</span>
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div
-                class="mt-5 flex flex-wrap space-y-3 sm:space-y-0 sm:space-x-3"
-              >
-                <button
-                  type="button"
-                  class="flex-shrink-0 w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:flex-1"
+                <div
+                  class="mt-5 flex flex-wrap space-y-3 sm:space-y-0 sm:space-x-3"
                 >
-                  Message
-                </button>
-                <button
-                  type="button"
-                  class="flex-1 w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  Call
-                </button>
+                  <button
+                    type="button"
+                    class="flex-shrink-0 w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:flex-1"
+                  >
+                    Message
+                  </button>
+                  <button
+                    type="button"
+                    class="flex-1 w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Call
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="px-4 pt-5 pb-5 sm:px-0 sm:pt-0">
-        <dl class="space-y-8 px-4 sm:px-6 sm:space-y-6">
-          <div>
-            <dt
-              class="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0"
-            >
-              Bio
-            </dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
-              <p>
-                Enim feugiat ut ipsum, neque ut. Tristique mi id elementum
-                praesent. Gravida in tempus feugiat netus enim aliquet a, quam
-                scelerisque. Dictumst in convallis nec in bibendum aenean arcu.
-              </p>
-            </dd>
-          </div>
-          <div />
-        </dl>
+        <div class="px-4 pt-5 pb-5 sm:px-0 sm:pt-0">
+          <dl class="space-y-8 px-4 sm:px-6 sm:space-y-6">
+            <div>
+              <dt
+                class="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0"
+              >
+                Bio
+              </dt>
+              <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
+                <p>
+                  Enim feugiat ut ipsum, neque ut. Tristique mi id elementum
+                  praesent. Gravida in tempus feugiat netus enim aliquet a, quam
+                  scelerisque. Dictumst in convallis nec in bibendum aenean
+                  arcu.
+                </p>
+              </dd>
+            </div>
+            <div />
+          </dl>
+        </div>
       </div>
     </div>
-  </div>
-</Sidepanel>
+  </Sidepanel>
+{/if}

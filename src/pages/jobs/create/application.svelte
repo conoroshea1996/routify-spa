@@ -144,7 +144,7 @@
           <li class="border border-gray-200 rounded-md p-5 my-2">
             <div class="flex items-center justify-between">
               <div class="flex items-center">
-                <CheckBox size="medium" />
+                <CheckBox size="large" />
                 <div class="ml-2">
                   <p class="font-medium text-gray-900 truncate">
                     Legal
@@ -280,7 +280,7 @@
                 <td
                   class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex items-center justify-end"
                 >
-                  <CheckBox size="medium" />
+                  <CheckBox size="large" />
                   <span class="text-gray-500 pl-3"> Required </span>
                 </td>
               </tr>
@@ -298,7 +298,7 @@
                 <td
                   class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex items-center justify-end"
                 >
-                  <CheckBox size="medium" />
+                  <CheckBox size="large" />
                   <span class="text-gray-500 pl-3"> Required </span>
                 </td>
               </tr></tbody

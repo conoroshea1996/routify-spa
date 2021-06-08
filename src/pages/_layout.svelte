@@ -2,8 +2,10 @@
   import Navbar from "$lib/Navbar/navbar.svelte";
 </script>
 
-<Navbar />
+<div class="relative min-h-screen flex flex-col">
+  <Navbar />
 
-<main>
-  <slot />
-</main>
+  <main class="flex-grow flex flex-col">
+    <slot />
+  </main>
+</div>

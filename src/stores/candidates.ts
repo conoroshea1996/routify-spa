@@ -17,7 +17,7 @@ export const candidates = writable([
         "country": "No Country Selected",
         "countryCode": "--",
         "companyId": 1,
-        "rating": 0,
+        "rating": 4,
         "statusId": 13,
         "parentStatusId": 2,
         "statusName": "new",
@@ -753,6 +753,14 @@ export const candidates = writable([
         "jobOwnerId": 1,
         "tags": [],
         "otherApplications": [
+            {
+                "personApplicationId": 81,
+                "jobId": 34,
+                "jobTitle": "Sample 1",
+                "parentStatusId": 5,
+                "date": "27th Jan 2021",
+                "statusName": "new"
+            },
             {
                 "personApplicationId": 81,
                 "jobId": 34,

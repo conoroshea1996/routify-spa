@@ -71,9 +71,11 @@
   import Transistion from "../../lib/Transistion.svelte";
 </script>
 
-<main class="max-w-screen-2xl	px-4 mx-auto pb-10 lg:py-12">
-  <div class="lg:grid lg:grid-cols-12">
-    <SidebarNav {sections} activeUrl="My Profile" />
-    <slot decorator={Transistion} />
-  </div>
-</main>
+<div>
+  <main class="max-w-screen-2xl	px-4 mx-auto pb-10 lg:py-12">
+    <div class="lg:grid lg:grid-cols-12">
+      <SidebarNav {sections} activeUrl="My Profile" />
+      <slot decorator={Transistion} />
+    </div>
+  </main>
+</div>

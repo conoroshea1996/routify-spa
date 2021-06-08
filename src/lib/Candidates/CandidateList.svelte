@@ -88,7 +88,7 @@
       <div class="flex items-center  w-full py-2">
         <div class="flex-1 flex">
           <div class="items-center flex px-4">
-            <CheckBox size="medium" bind:checked={checkAll} />
+            <CheckBox size="large" bind:checked={checkAll} />
           </div>
           <div
             class="w-3/12 px-2 flex items-center space-x-4 text-gray-500 px-1 text-left text-sm font-medium text-gray-500  tracking-wider"

@@ -193,7 +193,7 @@
               scope="col"
               class="py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center justify-center"
             >
-              <CheckBox size="medium" bind:checked={checkAll} />
+              <CheckBox size="large" bind:checked={checkAll} />
             </th>
             <th
               scope="col"
@@ -223,7 +223,7 @@
                 class="px-2 py-4 whitespace-nowrap flex items-center justify-center"
               >
                 <div class="flex items-center">
-                  <CheckBox size="medium" bind:checked={user.hasPermission} />
+                  <CheckBox size="large" bind:checked={user.hasPermission} />
                 </div>
               </td>
 

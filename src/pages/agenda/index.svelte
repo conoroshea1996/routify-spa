@@ -28,165 +28,38 @@
   // $agendas.interviews = [];
 </script>
 
-<div class="max-w-screen-2xl mx-auto my-4 px-4 flex space-x-6">
-  <div class="flex-1 flex flex-col items-stretch w-3/5">
-    <div>
-      <div class="text-gray-900">
-        <h1>{selectedDate}</h1>
-      </div>
-      <TabsContainer>
-        <TabBar>
-          <Tab TabId={1} let:isActive>
-            <div
-              class="inline-flex justify-center items-center text-gray-500 font-medium border border-transparent focus:outline-none focus:ring-1 px-4 py-2 text-sm rounded-md s-3x9LSgm1QVCv"
-              class:button-secondary={isActive}
-            >
-              My Agenda
-            </div>
-          </Tab>
-          <Tab TabId={2} let:isActive>
-            <div
-              class="inline-flex justify-center items-center text-gray-500 font-medium border border-transparent focus:outline-none focus:ring-1  px-4 py-2 text-sm rounded-md s-3x9LSgm1QVCv"
-              class:button-secondary={isActive}
-            >
-              Company Agenda
-            </div>
-          </Tab>
-        </TabBar>
+<div>
+  <div class="max-w-screen-2xl mx-auto my-4 px-4 flex space-x-6">
+    <div class="flex-1 flex flex-col items-stretch w-3/5">
+      <div>
+        <div class="text-gray-900">
+          <h1>{selectedDate}</h1>
+        </div>
+        <TabsContainer>
+          <TabBar>
+            <Tab TabId={1} let:isActive>
+              <div
+                class="inline-flex justify-center items-center text-gray-500 font-medium border border-transparent focus:outline-none focus:ring-1 px-4 py-2 text-sm rounded-md s-3x9LSgm1QVCv"
+                class:button-secondary={isActive}
+              >
+                My Agenda
+              </div>
+            </Tab>
+            <Tab TabId={2} let:isActive>
+              <div
+                class="inline-flex justify-center items-center text-gray-500 font-medium border border-transparent focus:outline-none focus:ring-1  px-4 py-2 text-sm rounded-md s-3x9LSgm1QVCv"
+                class:button-secondary={isActive}
+              >
+                Company Agenda
+              </div>
+            </Tab>
+          </TabBar>
 
-        <TabPanel panelId={1}>
-          <div class="shadow overflow-hidden sm:rounded-md mt-6">
-            <ul class="divide-y divide-gray-200">
-              {#if $agendas.interviews.length > 0}
-                {#each $agendas.interviews as interview}
-                  <li
-                    class={hasPast(interview)
-                      ? "bg-gray-100 opacity-70"
-                      : "bg-white"}
-                  >
-                    <div class="block hover:bg-gray-50">
-                      <div class="flex items-center px-4 py-4 sm:px-6">
-                        <div class="min-w-0 flex-1 flex items-center">
-                          <div class="flex-shrink-0">
-                            <p
-                              class="text-sm font-medium text-gray-900 truncate"
-                            >
-                              {interview.startTime.split("T")[1]} - {interview.endTime.split(
-                                "T"
-                              )[1]}
-                            </p>
-                            <p
-                              class="text-sm font-medium text-gray-400 truncate"
-                            >
-                              {interview.timeZone}
-                            </p>
-                          </div>
-                          <div
-                            class="min-w-0 flex-1 px-10 md:grid md:grid-cols-5 md:gap-4"
-                          >
-                            <div class="col-span-2 ">
-                              {#if interview.cancelled}
-                                <p class="text-sm font-medium text-gray-900">
-                                  Cancelled: <span class="line-through">
-                                    Interview for {interview.jobTitle}
-                                  </span>
-                                </p>
-                              {:else}
-                                <p class="text-sm font-medium text-gray-900">
-                                  Interview for {interview.jobTitle}
-                                </p>
-                              {/if}
-                            </div>
-                            <div class="block flex space-x-4 col-span-3">
-                              <img
-                                class="h-8 w-8 rounded-full"
-                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt=""
-                              />
-                              <div>
-                                <p class="text-sm text-gray-900">Onsite</p>
-                                <p
-                                  class="text-sm text-gray-400 flex items-center"
-                                >
-                                  {interview.organiser.fullName} and {interview.candidateName}
-                                  <svg
-                                    class="flex-shrink-0 ml-1.5 h-5 w-5 text-green-400"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                    fill="currentColor"
-                                    aria-hidden="true"
-                                  >
-                                    <path
-                                      fill-rule="evenodd"
-                                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                      clip-rule="evenodd"
-                                    />
-                                  </svg>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <button
-                            on:click={() => openInterviewDetails(interview)}
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              class="h-6 w-6 text-gray-400"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                {/each}
-              {:else}
-                <div class="block rounded-md border border-gray-200">
-                  <div class="flex items-center px-4 py-4 sm:px-6 space-x-5">
-                    <span class="bg-white p-2 rounded-full text-gray-500">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                        />
-                      </svg>
-                    </span>
-
-                    <p class="text-gray-900 font-medium">
-                      There are no events to show here today.
-                    </p>
-                  </div>
-                </div>
-              {/if}
-            </ul>
-          </div>
-        </TabPanel>
-
-        <TabPanel panelId={2}>
-          <div class="bg-white shadow overflow-hidden sm:rounded-md mt-6">
-            <ul class="divide-y divide-gray-200">
-              <div class="shadow overflow-hidden sm:rounded-md mt-6">
-                <ul class="divide-y divide-gray-200">
-                  {#each $agendas.interviews.slice(0, 1) as interview}
+          <TabPanel panelId={1}>
+            <div class="shadow overflow-hidden sm:rounded-md mt-6">
+              <ul class="divide-y divide-gray-200">
+                {#if $agendas.interviews.length > 0}
+                  {#each $agendas.interviews as interview}
                     <li
                       class={hasPast(interview)
                         ? "bg-gray-100 opacity-70"
@@ -279,17 +152,150 @@
                       </div>
                     </li>
                   {/each}
-                </ul>
-              </div>
-            </ul>
-          </div>
-        </TabPanel>
-      </TabsContainer>
-    </div>
-  </div>
+                {:else}
+                  <div class="block rounded-md border border-gray-200">
+                    <div class="flex items-center px-4 py-4 sm:px-6 space-x-5">
+                      <span class="bg-white p-2 rounded-full text-gray-500">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                          />
+                        </svg>
+                      </span>
 
-  <div class="w-2/5  space-x-3   justify-center">
-    <Eventcalendar bind:selectedDate />
+                      <p class="text-gray-900 font-medium">
+                        There are no events to show here today.
+                      </p>
+                    </div>
+                  </div>
+                {/if}
+              </ul>
+            </div>
+          </TabPanel>
+
+          <TabPanel panelId={2}>
+            <div class="bg-white shadow overflow-hidden sm:rounded-md mt-6">
+              <ul class="divide-y divide-gray-200">
+                <div class="shadow overflow-hidden sm:rounded-md mt-6">
+                  <ul class="divide-y divide-gray-200">
+                    {#each $agendas.interviews.slice(0, 1) as interview}
+                      <li
+                        class={hasPast(interview)
+                          ? "bg-gray-100 opacity-70"
+                          : "bg-white"}
+                      >
+                        <div class="block hover:bg-gray-50">
+                          <div class="flex items-center px-4 py-4 sm:px-6">
+                            <div class="min-w-0 flex-1 flex items-center">
+                              <div class="flex-shrink-0">
+                                <p
+                                  class="text-sm font-medium text-gray-900 truncate"
+                                >
+                                  {interview.startTime.split("T")[1]} - {interview.endTime.split(
+                                    "T"
+                                  )[1]}
+                                </p>
+                                <p
+                                  class="text-sm font-medium text-gray-400 truncate"
+                                >
+                                  {interview.timeZone}
+                                </p>
+                              </div>
+                              <div
+                                class="min-w-0 flex-1 px-10 md:grid md:grid-cols-5 md:gap-4"
+                              >
+                                <div class="col-span-2 ">
+                                  {#if interview.cancelled}
+                                    <p
+                                      class="text-sm font-medium text-gray-900"
+                                    >
+                                      Cancelled: <span class="line-through">
+                                        Interview for {interview.jobTitle}
+                                      </span>
+                                    </p>
+                                  {:else}
+                                    <p
+                                      class="text-sm font-medium text-gray-900"
+                                    >
+                                      Interview for {interview.jobTitle}
+                                    </p>
+                                  {/if}
+                                </div>
+                                <div class="block flex space-x-4 col-span-3">
+                                  <img
+                                    class="h-8 w-8 rounded-full"
+                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=xXgW2TD4yE&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                    alt=""
+                                  />
+                                  <div>
+                                    <p class="text-sm text-gray-900">Onsite</p>
+                                    <p
+                                      class="text-sm text-gray-400 flex items-center"
+                                    >
+                                      {interview.organiser.fullName} and {interview.candidateName}
+                                      <svg
+                                        class="flex-shrink-0 ml-1.5 h-5 w-5 text-green-400"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                        aria-hidden="true"
+                                      >
+                                        <path
+                                          fill-rule="evenodd"
+                                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                          clip-rule="evenodd"
+                                        />
+                                      </svg>
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <button
+                                on:click={() => openInterviewDetails(interview)}
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  class="h-6 w-6 text-gray-400"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+                                  />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    {/each}
+                  </ul>
+                </div>
+              </ul>
+            </div>
+          </TabPanel>
+        </TabsContainer>
+      </div>
+    </div>
+
+    <div class="w-2/5  space-x-3   justify-center">
+      <Eventcalendar bind:selectedDate />
+    </div>
   </div>
 </div>
 <Modal bind:open={interviewModal}>

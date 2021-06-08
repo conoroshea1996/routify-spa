@@ -6,21 +6,21 @@
 </script>
 
 <TabsContainer>
-  <TabBar>
+  <TabBar class="w-full">
     <Tab TabId={1} let:isActive>
       <span
-        class="inline-flex justify-center items-center font-medium border border-transparent focus:outline-none focus:ring-1 px-4 py-2 text-sm rounded-md"
-        type="button"
+        class="inline-flex justify-center items-center  font-medium border border-transparent hover:bg-gray-100 focus:outline-none focus:ring-1  px-4 py-2 text-sm rounded-md
+        {isActive ? 'bg-blue-100 text-blue-500' : 'text-gray-500'}"
         class:button-secondary={isActive}
         ><div class="inline-flex items-center">Overview</div>
       </span>
     </Tab>
     <Tab TabId={2} let:isActive>
       <span
-        class="inline-flex text-gray-500 justify-center items-center font-medium border border-transparent focus:outline-none focus:ring-1  px-4 py-2 text-sm rounded-md"
-        type="button"
+        class="inline-flex justify-center items-center  font-medium border border-transparent hover:bg-gray-100 focus:outline-none focus:ring-1  px-4 py-2 text-sm rounded-md
+      {isActive ? 'bg-blue-100 text-blue-500' : 'text-gray-500'}"
         class:button-secondary={isActive}
-        ><div class="inline-flex items-center">Pipeline</div>
+        ><div class="inline-flex items-center">Overview</div>
       </span>
     </Tab>
     <Tab TabId={3} let:isActive>

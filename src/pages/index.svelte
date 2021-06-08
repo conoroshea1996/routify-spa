@@ -189,24 +189,26 @@
   </div>
 </div>
 
-<div class="max-w-screen-2xl mx-auto ">
-  <div class="py-2 grid grid-cols-6 px-2">
-    <div class="col-span-5">
-      <ChipSet bind:chipArray={activeFilters} />
+<div>
+  <div class="max-w-screen-2xl mx-auto">
+    <div class="py-2 grid grid-cols-6 px-2">
+      <div class="col-span-5">
+        <ChipSet bind:chipArray={activeFilters} />
+      </div>
+      <div
+        class="text-gray-500 px-2 col-span-1 flex items-start justify-end px-4"
+      >
+        <p class="py-2">3 out of 23 results</p>
+      </div>
     </div>
-    <div
-      class="text-gray-500 px-2 col-span-1 flex items-start justify-end px-4"
-    >
-      <p class="py-2">3 out of 23 results</p>
+    <div class="px-4">
+      <ul>
+        {#each $jobs as job}
+          <JobItem {job} open={job.status === "Published"} />
+        {/each}
+      </ul>
     </div>
-  </div>
-  <div class="px-4">
-    <ul>
-      {#each $jobs as job}
-        <JobItem {job} open={job.status === "Published"} />
-      {/each}
-    </ul>
-  </div>
 
-  <Pagination bind:current={currentPage} numItems={50} perPage={3} />
+    <Pagination bind:current={currentPage} numItems={50} perPage={3} />
+  </div>
 </div>

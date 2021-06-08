@@ -13,7 +13,8 @@
     {
       name: "Candidates",
       url: "/candidates/index",
-      active: $isActive("/candidates/index"),
+      active:
+        $isActive("candidates/index") || $page.path.includes("/candidates/"),
     },
     {
       name: "Referrals",
@@ -46,7 +47,7 @@
   let accountsMenu = false;
 </script>
 
-<nav class="bg-gray-900">
+<nav class="bg-gray-900 flex-shrink-0">
   <div class="max-w-screen-2xl px-4 mx-auto">
     <div class="relative flex items-center justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -189,10 +190,13 @@
               <button
                 slot="menu_trigger"
                 type="button"
-                class="hover:bg-gray-800 hover:text-white p-1 flex items-center text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                class="text-gray-400 hover:bg-gray-800 hover:text-white p-1 flex items-center text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                 class:bg-gray-800={accountsMenu}
                 class:text-white={accountsMenu}
               >
+                <span class="px-2">
+                  {companies.find((c) => c.current === true).name}
+                </span>
                 <Avatar
                   firstName={user.firstName}
                   lastName={user.lastName}
@@ -213,7 +217,6 @@
               </button>
               <div
                 slot="menu_context"
-                let:open
                 class="bg-white rounded-md border border-gray-200"
               >
                 {#each currentUser.accounts as account}
