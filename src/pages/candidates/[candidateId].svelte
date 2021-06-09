@@ -9,8 +9,10 @@
   } from "hirehive-ui";
   import Activities from "../../lib/Activites/Activities.svelte";
   import CandidateStatusPicker from "../../lib/Candidates/CandidateStatusPicker.svelte";
+  import Tags from "../../lib/Candidates/Tags.svelte";
   import EmailSender from "../../lib/Inbox/EmailSender.svelte";
   import RatingFull from "../../lib/Rating/RatingFull.svelte";
+  import { candidateTags } from "../../stores/tags";
 
   import { candidates, activities } from "../../stores/candidates";
 
@@ -36,7 +38,9 @@
 
   otherApplications = [...otherApplications, activeApplication];
 
-  console.log(candidate);
+  let tagsMenu = false;
+
+  let tags: any[] = [];
 </script>
 
 <!-- 3 column wrapper -->
@@ -141,8 +145,37 @@
                       {candidate.currentLocation}
                     </div>
 
+                    <div class=" flex items-center text-sm text-gray-500">
+                      {tags}
+                      <Tags
+                        bind:open={tagsMenu}
+                        autoComplete={candidateTags}
+                        autoCompleteKey={"name"}
+                        onlyAutocomplete={false}
+                        bind:tags
+                      >
+                        <button
+                          class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700
+                          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                          Large
+                        </button>
+                      </Tags>
+                    </div>
                     <div
-                      class="flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 items-end"
+                      class="flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 items-center"
                     >
                       <RatingFull
                         rating={candidate.rating}

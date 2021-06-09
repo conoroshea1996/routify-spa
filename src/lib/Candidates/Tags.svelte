@@ -1,6 +1,7 @@
 <script>
-  import { Badge } from "hirehive-ui";
+  import { Badge, clickOutside } from "hirehive-ui";
   import { createEventDispatcher } from "svelte";
+  import { getRandomBadgeColor } from "../../utils/badgeType";
   const dispatch = createEventDispatcher();
   let tag = "";
   let arrelementsmatch = [];
@@ -39,6 +40,9 @@
     else if (input.key === "ArrowUp" && autoComplete) {
       event.preventDefault();
       dropDownElement.querySelector("li:last-child").focus();
+    } else if (input.key === "Escape") {
+      event.preventDefault();
+      open = false;
     }
   };
   function addTag(currentTag) {
@@ -52,14 +56,14 @@
     tags.push(currentTag);
     tags = tags;
     tag = "";
-    dispatch("tags", {
-      tags: tags,
+    dispatch("tagAdded", {
+      tag: currentTag,
     });
 
     // Hide autocomplete list
     // Focus on svelte tags input
     arrelementsmatch = [];
-    inputElement.focus();
+    open = false;
   }
 
   async function getMatchElements(input) {
@@ -93,18 +97,15 @@
     if (onlyUnique === true && !autoCompleteKey) {
       matchs = matchs.filter((tag) => !tags.includes(tag.label));
     }
+
     arrelementsmatch = matchs;
   }
-  function navigateAutoComplete(
-    autoCompleteIndex,
-    autoCompleteLength,
-    autoCompleteElement
-  ) {
+  function navigateAutoComplete(autoCompleteIndex, autoCompleteLength, tag) {
     if (!autoComplete) return;
     event.preventDefault();
     if (event.key === "ArrowDown") {
       // Last element on the list ? Go to the first
-      if (autoCompleteIndex + 1 === autoCompleteLength) {
+      if (autoCompleteIndex === autoCompleteLength) {
         dropDownElement.querySelector("li:first-child").focus();
         return;
       }
@@ -118,73 +119,115 @@
       dropDownElement.querySelectorAll("li")[autoCompleteIndex - 1].focus();
     } else if (event.key === "Enter") {
       // Enter
-      addTag(autoCompleteElement[autoCompleteKey]);
+      addTag(tag);
     } else if (event.key === "Escape") {
       // Escape
       arrelementsmatch = [];
       inputElement.focus();
     }
   }
+
+  const autoFocus = (open) => {
+    if (open) {
+      inputElement.focus();
+    }
+  };
+
+  $: autoFocus(open);
 </script>
 
-<h1 class="text-green-600 text-4xl">{tags}</h1>
-
-<div class="relative inline-block text-left">
-  <button on:click={() => (open = true)}>
+<div
+  class="relative inline-block text-left z-20"
+  use:clickOutside={() => (open = false)}
+>
+  <span on:click={() => (open = true)}>
     <slot />
-  </button>
-
-  <!--
-      Dropdown menu, show/hide based on menu state.
-  
-      Entering: "transition ease-out duration-100"
-        From: "transform opacity-0 scale-95"
-        To: "transform opacity-100 scale-100"
-      Leaving: "transition ease-in duration-75"
-        From: "transform opacity-100 scale-100"
-        To: "transform opacity-0 scale-95"
-    -->
+  </span>
   <div
-    class="origin-top-right absolute transition ease duration-100 left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none
+    class="origin-top-right absolute transition ease duration-100 left-0 mt-2 w-56 rounded-md 
+     border border-gray-200 bg-white focus:outline-none
     {open ? 'transform opacity-100 scale-100' : 'transform opacity-0 scale-95'}"
     role="menu"
     aria-orientation="vertical"
     aria-labelledby="menu-button"
     tabindex="-1"
   >
-    <div>
-      <input
-        type="text"
-        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-        bind:this={inputElement}
-        {name}
-        bind:value={tag}
-        on:keydown={setTag}
-        on:keyup={getMatchElements}
-        placeholder="Find an option"
-      />
-    </div>
+    <input
+      type="text"
+      class="placeholder-gray-400 text-sm focus:text-md focus:ring-transparent focus:border-transparent block w-full border-transparent rounded-md text-gray-900 font-bold"
+      bind:this={inputElement}
+      {name}
+      bind:value={tag}
+      on:keydown={setTag}
+      on:keyup={getMatchElements}
+      placeholder="Find an option"
+    />
 
-    {#if autoComplete && arrelementsmatch.length > 0}
-      <div>
-        <ul bind:this={dropDownElement}>
-          {#each arrelementsmatch as element, index}
-            <li
-              tabindex="-1"
-              on:keydown={() =>
-                navigateAutoComplete(
-                  index,
-                  arrelementsmatch.length,
-                  element.label
-                )}
-              class="focus:bg-red-200"
-              on:click={() => addTag(element.label[autoCompleteKey])}
+    <ul bind:this={dropDownElement} class="space-y-2">
+      {#if autoComplete && arrelementsmatch.length > 0}
+        {#each arrelementsmatch as element, index}
+          <li
+            tabindex="-1"
+            on:keydown={() =>
+              navigateAutoComplete(
+                index,
+                arrelementsmatch.length,
+                element.label[autoCompleteKey]
+              )}
+            class="focus:bg-gray-50 focus:outline-none px-2 py-1 cursor-pointer hover:bg-gray-50"
+            on:click={() => addTag(element.label[autoCompleteKey])}
+          >
+            <Badge size="large" kind={getRandomBadgeColor()}>
+              <span class="mx-0.5">{@html element.search}</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-3 w-3 mx-0.5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </Badge>
+          </li>
+        {/each}
+      {/if}
+
+      {#if tag.length > 0}
+        <li
+          class="bg-gray-50 text-gray-500 focus:bg-gray-100"
+          tabindex="-1"
+          on:keydown={() =>
+            navigateAutoComplete(
+              arrelementsmatch.length,
+              arrelementsmatch.length,
+              tag
+            )}
+        >
+          <button
+            type="button"
+            on:click={() => addTag(tag)}
+            class="w-full inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-bold rounded-md"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
             >
-              <Badge kind="gray">{@html element.search}</Badge>
-            </li>
-          {/each}
-        </ul>
-      </div>
-    {/if}
+              <path
+                fill-rule="evenodd"
+                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            Create new tag {tag}
+          </button>
+        </li>
+      {/if}
+    </ul>
   </div>
 </div>
