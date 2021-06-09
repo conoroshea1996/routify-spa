@@ -742,54 +742,57 @@
     <Pagination numItems={jobsCandidates.length} current={1} perPage={5} />
   </main>
 </div>
+
 {#if jobSidepanel}
   <Sidepanel bind:open={jobSidepanel}>
-    <div class="w-screen max-w-2xl h-full">
-      <TabsContainer bind:selectedTab={activeTabId}>
-        <div class="border-b border-gray-200 w-full px-4">
-          <TabBar class="-mb-px flex space-x-8">
-            <Tab
-              TabId={1}
-              class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm {$activeTabId ===
-              1
-                ? 'border-blue-500 text-blue-500'
-                : 'border-transparent text-gray-500'}"
-            >
-              Notes
-            </Tab>
-            <Tab
-              TabId={2}
-              class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm {$activeTabId ===
-              2
-                ? 'border-blue-500 text-blue-500'
-                : 'border-transparent text-gray-500'}"
-            >
-              Activity
-            </Tab>
-            <Tab
-              TabId={3}
-              class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm {$activeTabId ===
-              3
-                ? 'border-blue-500 text-blue-500'
-                : 'border-transparent text-gray-500'}"
-            >
-              Share
-            </Tab>
-            <Tab
-              TabId={4}
-              class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm {$activeTabId ===
-              4
-                ? 'border-blue-500 text-blue-500'
-                : 'border-transparent text-gray-500'}"
-            >
-              Referral rewards
-            </Tab>
-          </TabBar>
-        </div>
+    <TabsContainer bind:selectedTab={activeTabId}>
+      <div class="w-screen max-w-2xl h-screen">
+        <TabBar class="flex space-x-8 px-4">
+          <Tab
+            TabId={1}
+            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm {$activeTabId ===
+            1
+              ? 'border-blue-500 text-blue-500'
+              : 'border-transparent text-gray-500'}"
+          >
+            Notes
+          </Tab>
+          <Tab
+            TabId={2}
+            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm {$activeTabId ===
+            2
+              ? 'border-blue-500 text-blue-500'
+              : 'border-transparent text-gray-500'}"
+          >
+            Activity
+          </Tab>
+          <Tab
+            TabId={3}
+            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm {$activeTabId ===
+            3
+              ? 'border-blue-500 text-blue-500'
+              : 'border-transparent text-gray-500'}"
+          >
+            Share
+          </Tab>
+          <Tab
+            TabId={4}
+            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm {$activeTabId ===
+            4
+              ? 'border-blue-500 text-blue-500'
+              : 'border-transparent text-gray-500'}"
+          >
+            Referral rewards
+          </Tab>
+        </TabBar>
 
         <!-- Notes -->
-        <TabPanel panelId={1} class="h-full relative">
-          <ul class="space-y-3 h-3/4 overflow-y-auto py-2 px-4 bg-gray-50">
+        <TabPanel
+          panelId={1}
+          class="flex-1 grid grid-rows-4"
+          style="height:94%;"
+        >
+          <ul class="space-y-3 row-span-3 overflow-y-auto py-2 px-4 bg-gray-50">
             {#each $jobNotes as jobNote}
               <li class="bg-white px-4 py-6">
                 <article>
@@ -852,9 +855,10 @@
               </li>
             {/each}
           </ul>
-
-          <div class="bg-white right-0 bottom-0 border-t border-gray-200 px-4">
-            <form action="#" tabindex="-1">
+          <div
+            class="bg-white flex-2 row-span-1 border-t border-gray-200 px-4 py-6"
+          >
+            <form action="#" tabindex="-1" class="h-full">
               <div>
                 <TextArea
                   full
@@ -1076,8 +1080,8 @@
         </TabPanel>
 
         <TabPanel panelId={4} />
-      </TabsContainer>
-    </div>
+      </div>
+    </TabsContainer>
   </Sidepanel>
 {/if}
 
