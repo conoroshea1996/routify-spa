@@ -750,12 +750,16 @@
         <TabBar class="flex space-x-8 px-4">
           <Tab
             TabId={1}
-            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm {$activeTabId ===
+            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center {$activeTabId ===
             1
               ? 'border-blue-500 text-blue-500'
               : 'border-transparent text-gray-500'}"
           >
             Notes
+            <span
+              class="bg-blue-100 text-blue-500 h-5 w-5 rounded-full text-xs flex justify-center items-center mx-1"
+              >5
+            </span>
           </Tab>
           <Tab
             TabId={2}
