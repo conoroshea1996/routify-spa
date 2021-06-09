@@ -21,6 +21,7 @@ module.exports = defineConfig(({ mode }) => {
   return {
     optimizeDeps: {
       exclude: ['@roxi/routify',"@urql/svelte", "sswr"],
+      include: ['clipboard-copy']
     },
     plugins: [
       WindiCSS({

@@ -16,12 +16,14 @@
     alt="{firstName}{lastName}"
   />
 {:else}
-  <div
-    class="h-8 w-8 rounded-full {randomColor()} flex justify-center items-center"
+  <span
+    class="inline-flex items-center justify-center h-8 w-8 rounded-full {randomColor()}"
   >
-    <p class="text-white text-xs tracking-tightest capitalize font-medium">
+    <span
+      class="text-xs font-medium leading-none text-white capitalize tracking-tightest"
+    >
       {firstName.charAt(0)}
       {lastName.charAt(0)}
-    </p>
-  </div>
+    </span>
+  </span>
 {/if}
