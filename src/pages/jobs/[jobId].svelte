@@ -28,6 +28,7 @@
 
   import { hiringTeam } from "../../stores/jobs";
   import Activities from "../../lib/Activites/Activities.svelte";
+  import Mention from "../../lib/General/Mention.svelte";
   export let jobId: string;
   const parsedJobId: number = parseInt(jobId);
 
@@ -869,17 +870,10 @@
               </li>
             {/each}
           </ul>
-          <div
-            class="bg-white flex-2 row-span-1 border-t border-gray-200 px-4 py-6"
-          >
+          <div class="bg-white flex-2 row-span-1 border-t border-gray-200 p-4">
             <form action="#" tabindex="-1" class="h-full">
-              <div>
-                <TextArea
-                  full
-                  placeholder="Add a note, @mention users in notes..."
-                  rows="4"
-                  value="TODO ADD ACTION FOR @MENTIONS"
-                />
+              <div class="h-32 my-2">
+                <Mention />
               </div>
               <div class=" flex items-center justify-between">
                 <div class="flex items-center space-x-2">
