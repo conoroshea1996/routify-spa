@@ -49,6 +49,7 @@
   let tagsFilter: string[] = [];
   let ratingFilter: string[] = [];
   let locationFilter: string[] = [];
+  let searchQuery: string = "";
   let activeCandidatesOnly = false;
 
   const buildChipSet = (
@@ -85,6 +86,7 @@
     tagsFilter = [];
     ratingFilter = [];
     locationFilter = [];
+    searchQuery = "";
   };
 
   const unSelectCandidates = () => {
@@ -144,6 +146,16 @@
     }
     newTrackable = "";
   };
+
+  let hasSearch: boolean;
+  const hasActiveSearch = (
+    activeFilters: string[],
+    searchQuery: string
+  ): boolean => {
+    return activeFilters.length > 0 || searchQuery.length > 0;
+  };
+
+  $: hasSearch = hasActiveSearch(activeFilters, searchQuery);
 </script>
 
 <div>
@@ -501,7 +513,7 @@
   >
     {#if selectedCandidateIds.length === 0}
       <div class="w-64">
-        <TextInput placeholder="search jobs..." full>
+        <TextInput placeholder="search jobs..." full bind:value={searchQuery}>
           <div
             slot="leading"
             class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none text-gray-400"
@@ -724,22 +736,20 @@
     <div class="flex flex-col">
       <div class="overflow-x-auto">
         <div class="py-2 align-middle inline-block min-w-full px-4">
-          <div
-            class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
-          >
-            <CandidateList
-              candidates={jobsCandidates}
-              bind:selectedCandidateIds
-              {columnsToShow}
-            />
-          </div>
+          <CandidateList
+            candidates={jobsCandidates}
+            bind:selectedCandidateIds
+            {hasSearch}
+            on:clearFilters={() => clearAll()}
+            {columnsToShow}
+          />
         </div>
       </div>
     </div>
 
-    <h1 class="text-xs text-gray-400">Selected Ids {selectedCandidateIds}</h1>
-
-    <Pagination numItems={jobsCandidates.length} current={1} perPage={5} />
+    {#if jobsCandidates.length > 0}
+      <Pagination numItems={jobsCandidates.length} current={1} perPage={30} />
+    {/if}
   </main>
 </div>
 

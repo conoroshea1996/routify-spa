@@ -104,6 +104,18 @@
   ];
 
   let columnsToShow = allColumns;
+
+  let hasSearch: boolean;
+  let searchQuery: string = "";
+
+  const hasActiveSearch = (
+    activeFilters: string[],
+    searchQuery: string
+  ): boolean => {
+    return activeFilters.length > 0 || searchQuery.length > 0;
+  };
+
+  $: hasSearch = hasActiveSearch(activeFilters, searchQuery);
 </script>
 
 <div>
@@ -112,7 +124,7 @@
   >
     {#if selectedCandidateIds.length === 0}
       <div class="w-64">
-        <TextInput placeholder="search jobs..." full>
+        <TextInput placeholder="search jobs..." full bind:value={searchQuery}>
           <div
             slot="leading"
             class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none text-gray-400"
@@ -320,20 +332,18 @@
     <div class="flex flex-col">
       <div class="overflow-x-auto">
         <div class="py-2 align-middle inline-block min-w-full px-4">
-          <div
-            class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
-          >
-            <CandidateList
-              candidates={$candidates}
-              bind:selectedCandidateIds
-              {columnsToShow}
-            />
-          </div>
+          <CandidateList
+            candidates={$candidates}
+            bind:selectedCandidateIds
+            {hasSearch}
+            {columnsToShow}
+            on:clearFilters={() => clearAll()}
+          />
         </div>
       </div>
     </div>
-
-    <h1 class="text-xs text-gray-400">Selected Ids {selectedCandidateIds}</h1>
   </main>
-  <Pagination numItems={$candidates.length} current={1} perPage={30} />
+  {#if $candidates.length > 0}
+    <Pagination numItems={$candidates.length} current={1} perPage={30} />
+  {/if}
 </div>
