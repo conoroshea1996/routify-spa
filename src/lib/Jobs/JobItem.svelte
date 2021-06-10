@@ -19,59 +19,59 @@
 
 <li class="py-2">
   <div
-    href="/jobs/{job.id}"
-    class="block bg-white border border-gray-200 rounded-md"
+    class="block bg-white border border-gray-200 rounded-md hover:border-blue-300"
   >
     <div class="px-4 py-4 flex items-center sm:px-6 border-b border-gray-100">
       <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
-        <div class="truncate">
-          <div class="flex">
-            <button on:click={() => (open = !open)}>
-              <svg
-                class="h-8 w-8 text-gray-400 transform"
-                class:open
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </button>
-
-            <a
-              href="/jobs/{job.id}"
-              class="font-medium text-gray-900 truncate font-bold ml-4"
+        <div class="flex items-start h-12">
+          <button
+            class="focus:outline-none p-0.5 text-gray-400 hover:bg-gray-50 hover:text-gray-700 focus:ring-1 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-300 rounded-md"
+            on:click={() => (open = !open)}
+          >
+            <svg
+              class="h-6 w-6 transform"
+              class:open
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
             >
+              <path
+                fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+        <a href="/jobs/{job.id}" class="truncate flex-1">
+          <div class="flex flex-col">
+            <h1 class="font-medium text-gray-900 truncate font-bold ml-4">
               {job.title}
-            </a>
-          </div>
-          <div class="mt-2 flex ml-10">
-            <div class="flex items-center text-sm text-gray-500">
-              <!-- Heroicon name: solid/location-marker -->
-              <svg
-                class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              <p class="capitalize">
-                {job.location}, {job.country} | {job.category}
-              </p>
+            </h1>
+            <div class="mt-2 flex ml-3">
+              <div class="flex items-center text-sm text-gray-500">
+                <!-- Heroicon name: solid/location-marker -->
+                <svg
+                  class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <p class="capitalize">
+                  {job.location}, {job.country} | {job.category}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        </a>
         <div class="mt-4 flex flex-shrink-0 sm:mt-0 sm:ml-5">
           <div class="ml-2 flex-shrink-0 flex items-center pr-4">
             <JobStatusPicker
