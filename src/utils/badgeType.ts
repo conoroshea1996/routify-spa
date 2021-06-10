@@ -7,7 +7,7 @@ enum UserBadgeType {
     owner = "indigo",
 }
 
-
+export type allBadgeTypes = "gray" | "red" | "yellow" | "green" | "blue" | "indigo" | "purple" | "pink" | undefined;
 
 export const userBadgeType = (type: userType): UserBadgeType => {
     let result : UserBadgeType = UserBadgeType.admin;
@@ -128,7 +128,8 @@ export const jobBadgeType = (type: JobStatusType) : JobStatusBadgeType => {
     return result;
 } 
 
-export const getRandomBadgeColor = () : string => {
+export const getRandomBadgeColor = () : allBadgeTypes => {
    const colors = ["green" , "gray" , "red" , "yellow" , "blue" , "indigo" , "purple" , "pink"]
-   return colors[Math.floor(Math.random() * colors.length)];
+   const value = colors[Math.floor(Math.random() * colors.length)] as allBadgeTypes
+   return value;
 }
