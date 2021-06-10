@@ -1,6 +1,7 @@
 <script>
-  import { isActive, page } from "@roxi/routify";
+  import { beforeUrlChange, isActive, page } from "@roxi/routify";
   import { Menu } from "hirehive-ui";
+  import { slide } from "svelte/transition";
   import { hiringTeam } from "../../stores/jobs";
   import { companies, currentUser } from "../../stores/user";
   import Avatar from "../General/Avatar.svelte";
@@ -43,6 +44,14 @@
   ];
 
   const user = $hiringTeam[3];
+  let mobileMenuActive = false;
+
+  $beforeUrlChange(() => {
+    if (mobileMenuActive) {
+      mobileMenuActive = false;
+    }
+    return true;
+  });
 
   let accountsMenu = false;
 </script>
@@ -56,53 +65,41 @@
           type="button"
           class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
           aria-controls="mobile-menu"
-          aria-expanded="false"
+          aria-expanded={mobileMenuActive}
+          on:click={() => (mobileMenuActive = !mobileMenuActive)}
         >
-          <span class="sr-only">Open main menu</span>
-          <!--
-            Icon when menu is closed.
-
-            Heroicon name: outline/menu
-
-            Menu open: "hidden", Menu closed: "block"
-          -->
-          <svg
-            class="block h-6 w-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-          <!--
-            Icon when menu is open.
-
-            Heroicon name: outline/x
-
-            Menu open: "block", Menu closed: "hidden"
-          -->
-          <svg
-            class="hidden h-6 w-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
+          {#if mobileMenuActive}
+            <svg
+              class="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          {:else}
+            <svg
+              class=" h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>{/if}
         </button>
       </div>
       <div
@@ -140,7 +137,7 @@
         </div>
       </div>
       <div
-        class="absolute inset-y-0 space-x-6 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+        class="absolute inset-y-0 sm:space-x-6 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
       >
         <div
           class="bg-gray-700 hidden xl:flex space-x-4 items-center justify-between py-3 text-white rounded-md border-gray-700"
@@ -187,7 +184,7 @@
         </button>
 
         <!-- Profile dropdown -->
-        <div class="ml-3 relative">
+        <div class="relative">
           <Menu position="right" bind:open={accountsMenu} menuWidth="w-72">
             <button
               slot="menu_trigger"
@@ -196,7 +193,7 @@
               class:bg-gray-800={accountsMenu}
               class:text-white={accountsMenu}
             >
-              <span class="px-2">
+              <span class="px-1 hidden sm:block">
                 {companies.find((c) => c.current === true).name}
               </span>
               <Avatar
@@ -297,17 +294,19 @@
   </div>
 
   <!-- Mobile menu, show/hide based on menu state. -->
-  <div class="sm:hidden" id="mobile-menu">
-    <div class="px-2 pt-2 pb-3 space-y-1 flex flex-col text-gray-400">
-      {#each navUrls as { name, url, active }}
-        <a
-          href={url}
-          class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800 {active
-            ? 'text-yellow-400 bg-gray-800'
-            : ''}"
-          aria-current="page">{name}</a
-        >
-      {/each}
+  {#if mobileMenuActive}
+    <div transition:slide id="mobile-menu">
+      <div class="px-2 pt-2 pb-3 space-y-1 flex flex-col text-gray-400">
+        {#each navUrls as { name, url, active }}
+          <a
+            href={url}
+            class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800 {active
+              ? 'text-yellow-400 bg-gray-800'
+              : ''}"
+            aria-current="page">{name}</a
+          >
+        {/each}
+      </div>
     </div>
-  </div>
+  {/if}
 </nav>
