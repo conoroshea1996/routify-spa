@@ -33,7 +33,7 @@
     "editorjs-html": "^3.0.5",
     "editorjs-text-color-plugin": "^1.1.22",
     "frappe-charts": "^1.6.1",
-    "hirehive-ui": "^1.0.81",
+    "hirehive-ui": "^1.0.90",
     "sswr": "^1.2.0",
     "svelte-dnd-action": "^0.9.8",
     "svelte-tags-input": "^2.7.1",

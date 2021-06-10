@@ -128,7 +128,7 @@ export const jobBadgeType = (type: JobStatusType) : JobStatusBadgeType => {
     return result;
 } 
 
-export const getRandomBadgeColor = () => {
+export const getRandomBadgeColor = () : string => {
    const colors = ["green" , "gray" , "red" , "yellow" , "blue" , "indigo" , "purple" , "pink"]
    return colors[Math.floor(Math.random() * colors.length)];
 }

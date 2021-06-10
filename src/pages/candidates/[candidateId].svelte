@@ -15,6 +15,8 @@
   import { candidateTags } from "../../stores/tags";
 
   import { candidates, activities } from "../../stores/candidates";
+  import { getContext } from "svelte";
+  import { getRandomBadgeColor } from "../../utils/badgeType";
 
   export let candidateId: string;
   const parsedCandidateId = parseInt(candidateId);
@@ -41,6 +43,15 @@
   let tagsMenu = false;
 
   let tags: any[] = [];
+  const toast: any = getContext("HH_TOASTS");
+
+  const candidateStatusChange = (e: any) => {
+    toast.push({
+      title: `Moved to ${e.detail.status}`,
+      showCloseButton: true,
+      type: "success",
+    });
+  };
 </script>
 
 <!-- 3 column wrapper -->
@@ -146,7 +157,13 @@
                     </div>
 
                     <div class=" flex items-center text-sm text-gray-500">
-                      {tags}
+                      <div class="flex items-center space-x-2 mx-1">
+                        {#each tags as tag}
+                          <Badge size="large" kind={getRandomBadgeColor()}
+                            >{tag}</Badge
+                          >
+                        {/each}
+                      </div>
                       <Tags
                         bind:open={tagsMenu}
                         autoComplete={candidateTags}
@@ -170,7 +187,7 @@
                               clip-rule="evenodd"
                             />
                           </svg>
-                          Large
+                          Add Tag
                         </button>
                       </Tags>
                     </div>
@@ -225,7 +242,7 @@
 
                   <CandidateStatusPicker
                     bind:open={candidateStatusMenu}
-                    on:updateCandidateStatus={(e) => console.log(e)}
+                    on:updateCandidateStatus={(e) => candidateStatusChange(e)}
                     currentCandidateStatus={candidate.statusName}
                   >
                     <Button kind="primary">
