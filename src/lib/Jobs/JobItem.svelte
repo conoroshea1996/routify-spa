@@ -21,9 +21,9 @@
   <div
     class="block bg-white border border-gray-200 rounded-md hover:border-blue-300"
   >
-    <div class="px-4 py-4 flex items-center sm:px-6 border-b border-gray-100">
+    <div class="py-4 flex items-center sm:px-6 border-b border-gray-100">
       <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
-        <div class="flex items-start h-12">
+        <div class="hidden sm:flex items-start h-12">
           <button
             class="focus:outline-none p-0.5 text-gray-400 hover:bg-gray-50 hover:text-gray-700 focus:ring-1 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-300 rounded-md"
             on:click={() => (open = !open)}
@@ -44,7 +44,10 @@
             </svg>
           </button>
         </div>
-        <a href="/jobs/{job.id}" class="truncate flex-1">
+        <a
+          href="/jobs/{job.id}"
+          class="truncate flex justify-between flex-1 px-4"
+        >
           <div class="flex flex-col">
             <h1 class="font-medium text-gray-900 truncate font-bold ml-4">
               {job.title}
@@ -71,8 +74,19 @@
               </div>
             </div>
           </div>
+
+          <div class="bg-gray-50 px-2 rounded-md text-gray-800 sm:hidden">
+            <h1 class="font-bold text-center text-sm">
+              {job.totalCandidates}
+            </h1>
+            <span class="text-gray-500 text-sm font-medium text-center"
+              >Total</span
+            >
+          </div>
         </a>
-        <div class="mt-4 flex flex-shrink-0 sm:mt-0 sm:ml-5">
+        <div
+          class="mt-4 flex flex-shrink-0 sm:mt-0 sm:ml-5 justify-end sm:justify-center border-t sm:border-none border-gray-200"
+        >
           <div class="ml-2 flex-shrink-0 flex items-center pr-4">
             <JobStatusPicker
               bind:open={publishMenu}
@@ -192,7 +206,7 @@
     </div>
 
     <dl
-      class="grid grid-cols-2 gap-5 sm:grid-cols-7 transition-all {open
+      class="hidden sm:grid grid-cols-2 gap-5 sm:grid-cols-7 transition-all {open
         ? 'h-full py-4'
         : 'h-0'}"
     >
