@@ -25,7 +25,7 @@
   };
 </script>
 
-<div class="bg-white  border border-gray-200 rounded-md my-6">
+<div class="bg-white border border-gray-200 rounded-md">
   <div class="flex items-center py-8 border-b border-gray-200 px-8">
     <div class="flex items-center space-x-4">
       <p class="text-gray-500">CC:</p>
@@ -66,7 +66,7 @@
     <Editor />
   </div>
 
-  <div class=" flex items-center justify-between px-8 py-2">
+  <div class="flex items-center justify-between px-8 py-2">
     <div class="flex items-center justify-between space-x-2">
       <div class="flex text-sm text-gray-600">
         <label

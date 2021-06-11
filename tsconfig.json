@@ -9,6 +9,7 @@
     "jsx": "preserve",
     "allowJs": true,
     "sourceMap": true,
+    "noImplicitAny": false,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
@@ -22,6 +23,7 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.svelte",
-    "src/main.js"
+    "src/main.js",
+    "typings"
   ]
 }

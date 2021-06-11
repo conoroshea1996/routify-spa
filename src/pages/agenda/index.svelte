@@ -2,7 +2,8 @@
   import { TabsContainer, TabBar, Tab, TabPanel, Modal } from "hirehive-ui";
   import { agendas } from "../../stores/agenda";
   import { InterviewStatus } from "../../types/interviewStatus";
-  import Eventcalendar from "../eventcalendar.svelte";
+  import { DatePicker } from "svelte-inclusive-datepicker";
+  import DateFnsAdapter from "@date-io/date-fns";
 
   let interviewModal = false;
   let interviewDetails: {
@@ -26,6 +27,13 @@
   };
 
   // $agendas.interviews = [];
+
+  const dateFnsAdapter = new DateFnsAdapter();
+
+  let value = dateFnsAdapter.date();
+  function handleSelectDay(e: any) {
+    value = e.detail;
+  }
 </script>
 
 <div>
@@ -294,7 +302,11 @@
     </div>
 
     <div class="w-2/5  space-x-3   justify-center">
-      <Eventcalendar bind:selectedDate />
+      <DatePicker
+        {value}
+        dateAdapter={dateFnsAdapter}
+        on:selectDay={handleSelectDay}
+      />
     </div>
   </div>
 </div>

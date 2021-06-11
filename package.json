@@ -19,6 +19,7 @@
     "windicss": "^2.5.14"
   },
   "dependencies": {
+    "@date-io/date-fns": "^2.10.11",
     "@editorjs/editorjs": "^2.21.0",
     "@editorjs/header": "^2.6.1",
     "@editorjs/list": "^1.6.2",
@@ -30,12 +31,14 @@
     "@event-calendar/resource-time-grid": "^0.1.1",
     "@event-calendar/time-grid": "^0.1.1",
     "clipboard-copy": "^4.0.1",
+    "date-fns": "^2.22.1",
     "editorjs-html": "^3.0.5",
     "editorjs-text-color-plugin": "^1.1.22",
     "frappe-charts": "^1.6.1",
     "hirehive-ui": "^1.0.91",
     "sswr": "^1.2.0",
     "svelte-dnd-action": "^0.9.8",
+    "svelte-inclusive-datepicker": "github:hirehive/svelte-datepicker#main",
     "svelte-tags-input": "^2.7.1",
     "tributejs": "^5.1.3",
     "tui-calendar": "^1.13.0"

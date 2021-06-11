@@ -136,8 +136,8 @@
   </div>
 </div>
 
-<main class="max-w-screen-2xl px-4 mx-auto pb-10 lg:py-12">
-  <div class="lg:grid lg:grid-cols-12">
+<main class="w-full px-4 mx-auto pb-10 lg:py-12">
+  <div class="lg:grid lg:grid-cols-12 max-w-screen-2xl mx-auto px-4">
     <SidebarNav {sections} activeUrl="Job details" />
 
     <slot decorator={Transistion} />

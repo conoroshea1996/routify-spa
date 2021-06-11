@@ -31,7 +31,7 @@
   getEmail(parseEmaildId);
 </script>
 
-<div class=" lg:min-w-0 lg:flex-1 bg-gray-50">
+<div class="lg:min-w-0 lg:flex-1 bg-gray-50 flex flex-col">
   <div class="border-b  border-gray-200 w-full">
     <div class="mx-auto py-6  lg:flex lg:items-center lg:justify-between">
       <div
@@ -66,10 +66,10 @@
     </div>
   </div>
 
-  <div class="h-full py-6 px-4 sm:px-6 lg:px-8">
+  <div class="flex-1 flex flex-col px-4 sm:px-6 lg:px-8">
     <!-- Start main area-->
     <ul
-      class="bg-white  border border-gray-200 rounded-md p-8 overflow-y-auto h-80 emailThread"
+      class="bg-white  border border-gray-200 rounded-md p-8 overflow-y-auto h-80 emailThread my-4"
     >
       {#each $threads as thread}
         <li>
@@ -164,7 +164,9 @@
       {/each}
     </ul>
 
-    <EmailSender />
+    <div class="flex-1">
+      <EmailSender />
+    </div>
   </div>
 </div>
 

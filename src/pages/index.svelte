@@ -2,7 +2,6 @@
   import { createCustomArrayStore, customSet } from "../stores/Todo";
   import { useSWR, createSWR } from "sswr";
   import { readable } from "svelte/store";
-
   import { jobs } from "../stores/jobs";
   import TextInput from "hirehive-ui/src/Inputs/TextInput.svelte";
   import FilterDropDown from "../lib/Filters/FilterDropDown.svelte";

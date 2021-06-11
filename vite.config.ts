@@ -26,8 +26,10 @@ module.exports = defineConfig(({ mode }) => {
     plugins: [
       WindiCSS({
       scan: {
-        include:["./node_modules/hirehive-ui/src/**/*.svelte"]
-  			}
+        include:["./node_modules/hirehive-ui/src/**/*.svelte",
+                "./node_modules/svelte-inclusive-datepicker/src/**/*.svelte"
+              ]
+  		  }
     }),
     svelte(), isProduction && minifyHtml()],
     build: {
