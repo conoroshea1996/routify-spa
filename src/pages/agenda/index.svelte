@@ -12,7 +12,6 @@
     timeZone: string;
     attendees: Array<any>;
   };
-  let selectedDate: string;
 
   const openInterviewDetails = (interview: any) => {
     interviewModal = true;
@@ -30,9 +29,9 @@
 
   const dateFnsAdapter = new DateFnsAdapter();
 
-  let value = dateFnsAdapter.date();
+  let selectedDate: Date = dateFnsAdapter.date();
   function handleSelectDay(e: any) {
-    value = e.detail;
+    selectedDate = e.detail;
   }
 </script>
 
@@ -47,16 +46,16 @@
           <TabBar>
             <Tab TabId={1} let:isActive>
               <div
-                class="inline-flex justify-center items-center text-gray-500 font-medium border border-transparent focus:outline-none focus:ring-1 px-4 py-2 text-sm rounded-md s-3x9LSgm1QVCv"
-                class:button-secondary={isActive}
+                class="inline-flex justify-center items-center  font-medium border border-transparent hover:bg-gray-100 focus:outline-none focus:ring-1  px-4 py-2 text-sm rounded-md
+                {isActive ? 'bg-blue-100 text-blue-500' : 'text-gray-500'}"
               >
                 My Agenda
               </div>
             </Tab>
             <Tab TabId={2} let:isActive>
               <div
-                class="inline-flex justify-center items-center text-gray-500 font-medium border border-transparent focus:outline-none focus:ring-1  px-4 py-2 text-sm rounded-md s-3x9LSgm1QVCv"
-                class:button-secondary={isActive}
+                class="inline-flex justify-center items-center  font-medium border border-transparent hover:bg-gray-100 focus:outline-none focus:ring-1  px-4 py-2 text-sm rounded-md
+                {isActive ? 'bg-blue-100 text-blue-500' : 'text-gray-500'}"
               >
                 Company Agenda
               </div>
@@ -303,7 +302,7 @@
 
     <div class="w-2/5  space-x-3   justify-center">
       <DatePicker
-        {value}
+        value={selectedDate}
         dateAdapter={dateFnsAdapter}
         on:selectDay={handleSelectDay}
       />
