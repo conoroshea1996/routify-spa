@@ -9,9 +9,30 @@
 
   onMount(() => {
     calendarInstance = new Calendar(calendarElement, {
-      defaultView: "month",
+      defaultView: "week",
       useCreationPopup: true,
       useDetailPopup: true,
+      disableDblClick: true,
+      taskView: false,
+      scheduleView: ["allday", "time"],
+      template: {
+        //allday: function(schedule) {
+        //    return schedule.title + ' <i class="fa fa-refresh"></i>';
+        //},
+        //alldayTitle: function() {
+        //    return "All Day";
+        //}
+      },
+      month: {
+        workweek: false,
+        narrowWeekend: true,
+      },
+      week: {
+        workweek: false,
+        hourStart: 6,
+        hourEnd: 22,
+        narrowWeekend: true,
+      },
     });
 
     calendarInstance.createSchedules([

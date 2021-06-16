@@ -6,6 +6,9 @@
     TabBar,
     Tab,
     TabPanel,
+    Modal,
+    Switch,
+    Select,
   } from "hirehive-ui";
   import Activities from "../../lib/Activites/Activities.svelte";
   import CandidateStatusPicker from "../../lib/Candidates/CandidateStatusPicker.svelte";
@@ -17,6 +20,9 @@
   import { candidates, activities } from "../../stores/candidates";
   import { getContext } from "svelte";
   import { getRandomBadgeColor } from "../../utils/badgeType";
+  import TuiCalendar from "../../lib/General/TuiCalendar.svelte";
+  import Calendars from "../../lib/General/Calendars.svelte";
+  import Calendar from "tui-calendar";
 
   export let candidateId: string;
   const parsedCandidateId = parseInt(candidateId);
@@ -52,6 +58,8 @@
       type: "success",
     });
   };
+
+  let scheduleInterviewModal = false;
 </script>
 
 <!-- 3 column wrapper -->
@@ -220,7 +228,10 @@
                     <span class="mx-1">Reject</span>
                   </Button>
 
-                  <Button kind="secondary">
+                  <Button
+                    kind="secondary"
+                    on:click={() => (scheduleInterviewModal = true)}
+                  >
                     <span class="mx-1">Schedule interview</span>
                     <span class="mx-1">
                       <svg
@@ -299,12 +310,36 @@
                 <div class="h-full pl-4 pr-6 py-6 sm:pl-6 lg:pl-8 xl:pl-0">
                   <!-- Start left column area -->
                   <div class="h-full relative" style="min-height: 12rem;">
-                    <div class="absolute inset-0">
+                    <div class="absolute inset-0 flex flex-col">
                       <div>
                         <h1 class="font-bold text-gray-900">Notes</h1>
                         <div class="bg-white">
                           <div class="px-4 py-12">
                             <!-- Content goes here -->
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="my-6">
+                        <div class="flex justify-between">
+                          <h1 class="font-bold text-gray-900">
+                            Past applications
+                          </h1>
+                          <div>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="h-6 w-6 text-gray-500"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 9l-7 7-7-7"
+                              />
+                            </svg>
                           </div>
                         </div>
                       </div>
@@ -479,3 +514,9 @@
     </div>
   </div>
 </div>
+
+<Modal bind:open={scheduleInterviewModal}>
+  <div slot="content" class="h-full w-screen max-w-screen-2xl bg-gray-50">
+    <Calendars />
+  </div>
+</Modal>

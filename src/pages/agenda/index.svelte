@@ -28,11 +28,24 @@
   // $agendas.interviews = [];
 
   const dateFnsAdapter = new DateFnsAdapter();
-
   let selectedDate: Date = dateFnsAdapter.date();
+  let selectedDatesEvents: any[] = [];
+
+  const getEventsForDate = (selectedDate) => {
+    selectedDatesEvents = $agendas.interviews.filter((i) => {
+      let date = new Date(i.startTime);
+      let is = dateFnsAdapter.isSameDay(date, selectedDate);
+      return is;
+    });
+  };
+
   function handleSelectDay(e: any) {
     selectedDate = e.detail;
+
+    getEventsForDate(selectedDate);
   }
+
+  getEventsForDate(selectedDate);
 </script>
 
 <div>
@@ -65,8 +78,8 @@
           <TabPanel panelId={1}>
             <div class="shadow overflow-hidden sm:rounded-md mt-6">
               <ul class="divide-y divide-gray-200">
-                {#if $agendas.interviews.length > 0}
-                  {#each $agendas.interviews as interview}
+                {#if selectedDatesEvents.length > 0}
+                  {#each selectedDatesEvents as interview}
                     <li
                       class={hasPast(interview)
                         ? "bg-gray-100 opacity-70"
@@ -304,6 +317,7 @@
       <DatePicker
         value={selectedDate}
         dateAdapter={dateFnsAdapter}
+        events={$agendas.events}
         on:selectDay={handleSelectDay}
       />
     </div>
@@ -312,7 +326,7 @@
 <Modal bind:open={interviewModal}>
   <div
     slot="header"
-    class="px-8 flex justify-start flex-col items-start max-w-xl"
+    class="px-8 flex justify-start flex-col items-start max-w-xl py-4"
   >
     <div>
       <div
@@ -435,13 +449,13 @@
     </div>
   </div>
 
-  <div slot="footer" class="px-8 max-w-xl pt-4">
+  <div slot="footer" class="px-8 max-w-xl py-4">
     <div class="text-center text-gray-400">
       <p>
         Need to make a change?
-        <span>Reshedule</span>
+        <button>Reshedule</button>
         or
-        <span>cancel</span>
+        <button>Cancel</button>
       </p>
     </div>
   </div>

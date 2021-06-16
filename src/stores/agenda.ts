@@ -40,7 +40,7 @@ export const agendas = writable({
                     "$$hashKey": "object:64"
                 }
             ],
-            "startTime": "2021-06-27T16:00:00",
+            "startTime": "2021-06-26T14:30:00Z",
             "startTimeUTC": "2021-06-27T16:00:00",
             "endTime": "2021-06-27T16:30:00",
             "endTimeUTC": "2021-06-27T16:30:00",
@@ -107,7 +107,7 @@ export const agendas = writable({
                     "$$hashKey": "object:78"
                 }
             ],
-            "startTime": "2021-05-27T15:30:00",
+            "startTime": "2021-06-26T14:30:00Z",
             "startTimeUTC": "2021-05-27T14:30:00",
             "endTime": "2021-05-27T16:00:00",
             "endTimeUTC": "2021-05-27T15:00:00",
@@ -174,7 +174,7 @@ export const agendas = writable({
                     "$$hashKey": "object:78"
                 }
             ],
-            "startTime": "2021-06-27T08:30:00",
+            "startTime": "2021-06-26T14:30:00Z",
             "startTimeUTC": "2021-06-27T08:30:00",
             "endTime": "2021-06-27T08:00:00",
             "endTimeUTC": "2021-06-27T08:00:00",
@@ -210,7 +210,7 @@ export const agendas = writable({
             "calendarId": null,
             "name": "Interviews Agenda",
             "title": null,
-            "start": null,
+            "start": "2021-06-26T14:30:00Z",
             "end": null,
             "category": null,
             "dueDateClass": null,
@@ -241,7 +241,7 @@ export const agendas = writable({
             "calendarId": "HireHive Interviews",
             "name": null,
             "title": "Interview with Conor O Shea",
-            "start": "2021-05-26T14:30:00Z",
+            "start": "2021-06-26T14:30:00Z",
             "end": "2021-05-26T15:00:00Z",
             "category": "time",
             "dueDateClass": null,
@@ -270,7 +270,7 @@ export const agendas = writable({
             "calendarId": "HireHive Interviews",
             "name": null,
             "title": "Interview with Conor O Shea",
-            "start": "2021-05-28T08:20:00Z",
+            "start": "2021-06-26T14:30:00Z",
             "end": "2021-05-28T16:00:00Z",
             "category": "time",
             "dueDateClass": null,
@@ -299,7 +299,7 @@ export const agendas = writable({
             "calendarId": "HireHive Interviews",
             "name": null,
             "title": "Interview with Conor O Shea",
-            "start": "2021-05-27T12:45:00Z",
+            "start": "2021-06-26T14:30:00Z",
             "end": "2021-05-27T13:15:00Z",
             "category": "time",
             "dueDateClass": null,
@@ -328,8 +328,8 @@ export const agendas = writable({
             "calendarId": "HireHive Interviews",
             "name": null,
             "title": "Interview with Micky Joe",
-            "start": "2021-05-26T11:00:00Z",
-            "end": "2021-05-26T11:30:00Z",
+            "start": "2021-06-26T14:30:00Z",
+            "end": "2021-06-26T11:30:00Z",
             "category": "time",
             "dueDateClass": null,
             "location": null,
@@ -354,3 +354,56 @@ export const agendas = writable({
         }
     ]
 })
+
+export let otherApplications = [
+    {
+        "jobId": 33,
+        "personApplicationId": 76,
+        "jobTitle": "Sample 1",
+        "parentStatusId": 2,
+        "date": "27th Jan 2021",
+        "statusName": "New",
+        "canView": true,
+        "$$hashKey": "object:176"
+    },
+    {
+        "jobId": 33,
+        "personApplicationId": 77,
+        "jobTitle": "Sample 1",
+        "parentStatusId": 2,
+        "date": "27th Jan 2021",
+        "statusName": "New",
+        "canView": true,
+        "$$hashKey": "object:175"
+    },
+    {
+        "jobId": 33,
+        "personApplicationId": 78,
+        "jobTitle": "Sample 1",
+        "parentStatusId": 2,
+        "date": "27th Jan 2021",
+        "statusName": "New",
+        "canView": true,
+        "$$hashKey": "object:174"
+    },
+    {
+        "jobId": 33,
+        "personApplicationId": 79,
+        "jobTitle": "Sample 1",
+        "parentStatusId": 2,
+        "date": "27th Jan 2021",
+        "statusName": "New",
+        "canView": true,
+        "$$hashKey": "object:173"
+    },
+    {
+        "jobId": 33,
+        "personApplicationId": 80,
+        "jobTitle": "Sample 1",
+        "parentStatusId": 2,
+        "date": "27th Jan 2021",
+        "statusName": "New",
+        "canView": true,
+        "$$hashKey": "object:172"
+    }
+]

@@ -137,7 +137,7 @@
 </script>
 
 <div
-  class="relative inline-block text-left z-20"
+  class="relative inline-block text-left z-10"
   use:clickOutside={() => (open = false)}
 >
   <span on:click={() => (open = true)}>

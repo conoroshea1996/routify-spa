@@ -258,13 +258,14 @@
 
               <div class="border-gray-100 border-b">
                 <div class="px-2 py-1">
-                  <button
+                  <a
+                    href="/settings"
                     on:click={() => (accountsMenu = false)}
                     class="rounded-md flex items-center justify-between px-4 py-2 my-1 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left focus:outline-none focus:bg-gray-100"
                     role="menuitem"
                   >
                     Settings
-                  </button>
+                  </a>
                 </div>
                 <div class="px-2 py-1">
                   <button
