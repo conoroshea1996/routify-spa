@@ -431,11 +431,11 @@
     }
 
     await tick();
-    const { y, x } = newEventNode.getBoundingClientRect();
+    const { x, y } = newEventNode.getBoundingClientRect();
 
     dateConfirmOpen.open = true;
-    dateConfirmOpen.x = x - 420;
-    dateConfirmOpen.y = y - 260;
+    dateConfirmOpen.x = x - 580;
+    dateConfirmOpen.y = y - 275;
   };
 
   let timeSlotOptions: Date[];
