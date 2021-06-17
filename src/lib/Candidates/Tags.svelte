@@ -16,6 +16,8 @@
   export let name;
   export let minChars;
   export let onlyAutocomplete;
+  export let placeholder = "Find an option";
+  export let loadAll = false;
 
   $: tags = tags || [];
   $: onlyUnique = onlyUnique || true;
@@ -30,8 +32,9 @@
   const setTag = (input) => {
     const currentTag = input.target.value;
 
+    event.stopPropagation();
     if (input.key === "Enter") {
-      addTag(currentTag);
+      addTag(currentTag, false);
     }
     if (input.key === "ArrowDown" && autoComplete) {
       event.preventDefault();
@@ -45,8 +48,7 @@
       open = false;
     }
   };
-  function addTag(currentTag) {
-    console.log(currentTag);
+  function addTag(currentTag, fromOptions) {
     currentTag = currentTag.trim();
 
     if (currentTag == "") return;
@@ -56,8 +58,22 @@
     tags.push(currentTag);
     tags = tags;
     tag = "";
+    if (fromOptions) {
+      console.log(currentTag);
+      const selectedOption = autoComplete.find(
+        (c) => c[autoCompleteKey].toLowerCase() === currentTag.toLowerCase()
+      );
+
+      console.log(selectedOption);
+
+      currentTag = selectedOption;
+    }
+
+    console.log(currentTag, "TAG");
+
     dispatch("tagAdded", {
       tag: currentTag,
+      selectedFromOptions: fromOptions,
     });
 
     // Hide autocomplete list
@@ -99,13 +115,15 @@
     }
 
     arrelementsmatch = matchs;
+    console.log(arrelementsmatch, "Element match");
   }
   function navigateAutoComplete(autoCompleteIndex, autoCompleteLength, tag) {
     if (!autoComplete) return;
     event.preventDefault();
+    event.stopPropagation();
     if (event.key === "ArrowDown") {
       // Last element on the list ? Go to the first
-      if (autoCompleteIndex === autoCompleteLength) {
+      if (autoCompleteIndex === autoCompleteLength - 1) {
         dropDownElement.querySelector("li:first-child").focus();
         return;
       }
@@ -119,7 +137,7 @@
       dropDownElement.querySelectorAll("li")[autoCompleteIndex - 1].focus();
     } else if (event.key === "Enter") {
       // Enter
-      addTag(tag);
+      addTag(tag, true);
     } else if (event.key === "Escape") {
       // Escape
       arrelementsmatch = [];
@@ -134,6 +152,21 @@
   };
 
   $: autoFocus(open);
+
+  const getELementsOnLoad = () => {
+    var matchs = autoComplete.map((matchTag) => {
+      return {
+        label: matchTag,
+        search: matchTag[autoCompleteKey],
+      };
+    });
+
+    arrelementsmatch = matchs;
+  };
+
+  if (loadAll) {
+    getELementsOnLoad();
+  }
 </script>
 
 <div
@@ -160,10 +193,10 @@
       bind:value={tag}
       on:keydown={setTag}
       on:keyup={getMatchElements}
-      placeholder="Find an option"
+      {placeholder}
     />
 
-    <ul bind:this={dropDownElement} class="space-y-2">
+    <ul bind:this={dropDownElement} class="space-y-2 max-h-56 overflow-y-auto">
       {#if autoComplete && arrelementsmatch.length > 0}
         {#each arrelementsmatch as element, index}
           <li
@@ -175,7 +208,7 @@
                 element.label[autoCompleteKey]
               )}
             class="focus:bg-gray-50 focus:outline-none px-2 py-1 cursor-pointer hover:bg-gray-50"
-            on:click={() => addTag(element.label[autoCompleteKey])}
+            on:click={() => addTag(element.label[autoCompleteKey], true)}
           >
             <Badge size="large" kind={getRandomBadgeColor()}>
               <span class="mx-0.5">{@html element.search}</span>
@@ -209,7 +242,7 @@
         >
           <button
             type="button"
-            on:click={() => addTag(tag)}
+            on:click={() => addTag(tag, false)}
             class="w-full inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-bold rounded-md"
           >
             <svg

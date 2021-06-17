@@ -178,6 +178,7 @@
                         autoCompleteKey={"name"}
                         onlyAutocomplete={false}
                         bind:tags
+                        loadAll={true}
                       >
                         <button
                           class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700
@@ -517,6 +518,6 @@
 
 <Modal bind:open={scheduleInterviewModal}>
   <div slot="content" class="h-full w-screen max-w-screen-2xl bg-gray-50">
-    <Calendars />
+    <Calendars {candidate}/>
   </div>
 </Modal>

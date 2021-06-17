@@ -4,15 +4,92 @@
   import DayGrid from "@event-calendar/day-grid";
 
   import { Switch, Select, TextInput, Button, trapFocus } from "hirehive-ui";
-  import { getDate, getDay, format, addMinutes, isBefore } from "date-fns";
+  import {
+    getDate,
+    getDay,
+    format,
+    addMinutes,
+    isBefore,
+    eachMinuteOfInterval,
+    isAfter,
+    subMinutes,
+  } from "date-fns";
 
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
   import { fade } from "svelte/transition";
 
+  const TODAY = new Date();
   import { calendars } from "../../stores/calendar";
-
+  import { attendees } from "../../stores/tags";
+  import Tags from "../Candidates/Tags.svelte";
+  import FilterDropDown from "../Filters/FilterDropDown.svelte";
+  import { isToday } from "date-fns/esm";
+  import Menu from "hirehive-ui/src/Inputs/Menu.svelte";
+  import { isScrolledIntoView } from "../../utils/domUtils";
+  let x = {
+    attendees: [
+      {
+        userId: 100302,
+        applicationId: 81,
+        firstName: "Conor",
+        lastName:
+          'O Shea <span class="optional-text pos--rel z-0">(Candidate)</span>',
+        email: "conor@hirehive.com",
+        fullName:
+          'Conor O Shea <span class="optional-text pos--rel z-0">(Candidate)</span>',
+        color: "#f4f4f5",
+      },
+      {
+        fullName:
+          'Test Admin <span class="optional-text pos--rel z-0">(You)</span>',
+        userId: 1,
+        firstName: "Test",
+        lastName: 'Admin <span class="optional-text pos--rel z-0">(You)</span>',
+        email: "admin@hirehive.com",
+        color: "#564737",
+        calendarTypes: [1, 2],
+        loading: false,
+      },
+      {
+        fullName: "svelte dev",
+        userId: 47,
+        firstName: "svelte",
+        lastName: "dev",
+        email: "svelteDev@svelte.com",
+        color: "#0AD139",
+        calendarTypes: [],
+        loading: false,
+      },
+    ],
+    type: 1,
+    personCompanyId: 46,
+    personApplicationId: 81,
+    jobId: 33,
+    candidateName: "Conor O Shea",
+    noteForCandidate: null,
+    noteForAdmins: null,
+    title: "Interview with Conor O Shea",
+    timezone: "Europe/London",
+    timezoneLabel: "Europe/London",
+    jobTitle: "Sample 1",
+    startTimeUTC: "2021-06-16T12:30:00.000Z",
+    startTime: "2021-06-16T12:30:00.000Z",
+    startHour: 13,
+    startMinute: 30,
+    endTimeUTC: "2021-06-16T13:10:00.000Z",
+    endTime: "2021-06-16T13:10:00.000Z",
+    endHour: 14,
+    endMinute: 10,
+    formattedTime: "01:30 pm - Wednesday, 16th June 2021",
+    duration: 30,
+    durationLabel: "40 Minute Meeting",
+    start: "2021-06-16T12:30:00.000Z",
+    end: "2021-06-16T13:10:00.000Z",
+  };
+  let allowedUsers: any[] = attendees;
   let plugins = [TimeGrid, DayGrid];
 
+  export let candidate;
   let userCalendars = calendars;
   const sorter = {
     0: "sun", // << if sunday is first day of week
@@ -26,17 +103,17 @@
 
   const theme = {
     calendar: "ec",
-    header: "ec-header h-16",
+    header: "ec-header h-16 rounded-t-md",
     withScroll: "ec-with-scroll",
     hiddenScroll: "ec-hidden-scroll",
-    body: "ec-body",
+    body: "ec-body rounded-b-md",
     week: "ec-week",
     compact: "ec-compact",
     toolbar: "ec-toolbar",
     sidebar: "ec-sidebar",
     content: "ec-content",
     lines: "ec-lines",
-    line: "ec-line border-opacity-0",
+    line: "ec-line",
     days: "ec-days",
     day: "ec-day cursor-pointer text-gray-700 whitespace-pre-line font-medium capitalize",
     dayHead: "ec-day-head",
@@ -70,7 +147,7 @@
 
   let newEvent;
 
-  let handleEvent = (timeInfo) => {
+  let handleEvent = async (timeInfo) => {
     if (dateConfirmOpen.open) {
       const endTime = addMinutes(timeInfo.date, defaultInMins);
 
@@ -86,6 +163,9 @@
         title: "Interview with Conor O Shea ",
         color: "#FEF3C7",
         id: "newEvent",
+        extendedProps: {
+          isNewEvent: true,
+        },
       };
 
       calendar.addEvent(event);
@@ -96,14 +176,11 @@
   let cancellNewEvent = () => {
     dateConfirmOpen.open = false;
     calendar.removeEvent(newEvent.id);
-    newEvent = null;
-    console.log(calendar);
   };
 
   let events;
 
   const getCalendarData = () => {
-    console.log("fetch");
     events = userCalendars.events.map((c, id) => {
       let event = {
         start: c.start,
@@ -117,11 +194,10 @@
 
       return event;
     });
+    console.log(events);
   };
 
   let draggabble = true;
-
-  let date = new Date();
 
   onMount(() => {
     calendar = new Calendar({
@@ -138,10 +214,14 @@
             center: "",
             end: "dayGridMonth,timeGridWeek,timeGridDay, prev,next",
           },
-          date,
-          dayHeaderFormat: (x) => {
-            const dayHeader = `${sorter[getDay(x)]} \n ${getDate(x)}`;
+          date: TODAY,
+          dayHeaderFormat: (info) => {
+            const dayHeader = `${sorter[getDay(info)]} \n ${getDate(info)}`;
             return dayHeader;
+          },
+          titleFormat: (info) => {
+            const formattedDate = format(TODAY, "PPPP");
+            return `Today, ${formattedDate}`;
           },
           eventDragStart: (info) => {
             // console.log(info);
@@ -160,10 +240,11 @@
           },
           eventContent: (eventInfo) => {
             // console.log(eventInfo);
-            // return string or object
-
-            return `<a class="text-gray-500 truncate block h-full w-full pointer-events-none"> 
-                <div class="h-full w-full z-20 block">  
+            const isNewEvent = eventInfo.event.extendedProps.isNewEvent;
+            return `<a  ${
+              isNewEvent ? "id='EVENT'" : ""
+            } class="text-gray-500 block h-full w-full flex items-center justify-center pointer-events-none"> 
+                <div class="z-20 block truncate">  
                   ${eventInfo.event.title}
                 </div>
               </a>`;
@@ -171,13 +252,19 @@
           eventDragStop: (info) => {
             // console.log(info);
           },
-          dateClick: (dateClickInfo) => {
+          dateClick: async (dateClickInfo) => {
             // clicked date thats passed
-            // should make types for this
             const activeView = calendar.getOption("view");
-
-            console.log(date);
+            // should make types for this
             if (activeView === "dayGridMonth") {
+              if (
+                isBefore(dateClickInfo.date, TODAY) &&
+                !isToday(dateClickInfo.date)
+              ) {
+                alert("date passed");
+                return;
+              }
+
               // hack as calendar doesn't offer change view function;
               // tried calendar.setOption("view", "the view we want") but doesn't work
               const dayButton = document.getElementsByClassName(
@@ -187,19 +274,15 @@
               dayButton.click();
               return;
             } else {
-              if (isBefore(dateClickInfo.date, new Date())) {
+              if (isBefore(dateClickInfo.date, TODAY)) {
                 alert("date passed");
                 return;
               }
               handleEvent(dateClickInfo);
-              const target: HTMLElement = dateClickInfo.jsEvent.target;
-              dateConfirmOpen.x = target.offsetLeft;
-              dateConfirmOpen.y = dateClickInfo.jsEvent.layerY;
-              dateConfirmOpen.open = true;
 
-              if (popup) {
-                popup.focus();
-              }
+              await tick();
+              await movePopup();
+              setTimeSlotOptions(dateClickInfo.date);
             }
           },
           slotDuration: "00:15:00",
@@ -266,15 +349,115 @@
       } else {
         getCalendarData();
 
-        events.map((event) => calendar.addEvent(event));
+        calendar.setOption("events", events);
       }
     }
   };
   $: toggleOverlayCalendar(overlayCalendar);
 
-  let popup;
+  let addAttendMenu;
 
+  let tags;
+  let interviewModel: any = {
+    attendees: [],
+    type: 1,
+    personCompanyId: candidate.personCompanyId,
+    personApplicationId: candidate.id,
+    jobId: candidate.jobId,
+    candidateName: `${candidate.firstName} ${candidate.lastName}`,
+    noteForCandidate: null,
+    noteForAdmins: null,
+    title: `Interview with ${candidate.firstName} ${candidate.lastName}`,
+    timezone: "Europe/London",
+    timezoneLabel: "Europe/London",
+    jobTitle: `${candidate.jobTitle}`,
+  };
+
+  let selectedAttendeeIds = [1, 100164];
+
+  $: interviewModel.attendees = allowedUsers.filter((c) =>
+    selectedAttendeeIds.includes(c.userId)
+  );
+
+  const addTags = (e) => {
+    const details = e.detail;
+
+    if (details.selectedFromOptions) {
+      selectedAttendeeIds = [...selectedAttendeeIds, details.tag.userId];
+    } else {
+      const randomId = Math.floor(Math.random() * (500 - 1 + 1)) + 111105353;
+      let externalUser: any = {
+        firstName: details.tag,
+        externalEmail: details.tag,
+        external: true,
+        email: details.tag,
+        fullName: details.tag,
+        userId: randomId,
+      };
+      allowedUsers = [...allowedUsers, externalUser];
+      selectedAttendeeIds = [...selectedAttendeeIds, randomId];
+    }
+  };
+
+  const updateTimes = async (time, type: "start" | "end") => {
+    if (type === "start") {
+      let settingTimeAfter = isBefore(newEvent.end, time);
+      if (settingTimeAfter) {
+        newEvent.end = addMinutes(time, 30);
+      }
+      newEvent.start = time;
+    } else {
+      let settingTimeAfter = isAfter(newEvent.start, time);
+      if (settingTimeAfter) {
+        newEvent.start = subMinutes(time, 30);
+      }
+      newEvent.end = time;
+    }
+    calendar.updateEvent(newEvent);
+
+    await movePopup();
+  };
+
+  const movePopup = async () => {
+    await tick();
+    const newEventNode: HTMLElement = document.getElementById(
+      "EVENT"
+    ) as HTMLElement;
+
+    const isInView = isScrolledIntoView(newEventNode);
+
+    if (!isInView) {
+      newEventNode.scrollIntoView();
+    }
+
+    await tick();
+    const { y, x } = newEventNode.getBoundingClientRect();
+
+    dateConfirmOpen.open = true;
+    dateConfirmOpen.x = x - 420;
+    dateConfirmOpen.y = y - 260;
+  };
+
+  let timeSlotOptions: Date[];
+
+  const setTimeSlotOptions = (date: Date) => {
+    var copiedDate = new Date(date.getTime());
+    timeSlotOptions = eachMinuteOfInterval(
+      {
+        start: copiedDate.setHours(6, 0, 0, 0),
+        end: copiedDate.setHours(23, 0, 0, 0),
+      },
+      { step: 15 }
+    );
+  };
+
+  setTimeSlotOptions(TODAY);
   getCalendarData();
+
+  let startTimeMenu;
+  let endTimeMenu;
+
+  let popup;
 </script>
 
 <div class="px-4 py-4 border-b border-gray-200 sm:px-6">
@@ -345,18 +528,34 @@
         />
       </div>
 
+      {#if interviewType === "Onsite"}
+        <div class="flex flex-col my-4">
+          <p class="text-gray-700 font-medium">Where</p>
+          <TextInput full />
+        </div>
+      {/if}
+
       <div class="flex flex-col my-4">
         <p class="text-gray-700 font-medium">Attendees</p>
 
         <ul
-          class="divide-y divide-gray-200 border border-gray-200 rounded-md overflow-hidden"
+          class="divide-y divide-gray-200 border border-gray-200 rounded-t-md overflow-hidden"
         >
-          {#each ["Candidate Name", "You"] as name}
+          {#each allowedUsers.filter( (a) => selectedAttendeeIds.includes(a.userId) ) as attendee}
             <li
               class="bg-white text-gray-700 flex items-center justify-between p-3 font-medium"
             >
-              <span class="truncate"> {name} </span>
-              <button>
+              <span class="truncate">
+                {@html attendee.fullName}
+                {#if attendee.external} (External) {/if}</span
+              >
+              <button
+                on:click={() => {
+                  selectedAttendeeIds = selectedAttendeeIds.filter(
+                    (id) => id !== attendee.userId
+                  );
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-5 w-5 text-gray-500"
@@ -372,8 +571,20 @@
               </button>
             </li>
           {/each}
-          <li
-            class="bg-white text-gray-700 flex items-center justify-between p-3 font-medium"
+        </ul>
+        <div
+          class="bg-white  border-l border-r border-b border-gray-200 rounded-b-md text-gray-700 flex items-center justify-between p-3 font-medium"
+        >
+          <Tags
+            bind:open={addAttendMenu}
+            autoComplete={attendees}
+            autoCompleteKey={"email"}
+            onlyAutocomplete={false}
+            placeholder="Search team members"
+            minChars={0}
+            loadAll={true}
+            on:tagAdded={addTags}
+            bind:tags
           >
             <button class="flex items-center space-x-1">
               <svg
@@ -394,32 +605,70 @@
                 Add another attendee
               </span>
             </button>
-          </li>
-        </ul>
+          </Tags>
+        </div>
       </div>
 
-      {#if interviewType === "Onsite"}
-        <div class="flex flex-col my-4">
-          <p class="text-gray-700 font-medium">Where</p>
-          <TextInput full />
-        </div>
-      {/if}
+      <div class="flex flex-col my-4">
+        <p class="text-gray-700 font-medium py-2">Settings</p>
+
+        <nav class="space-y-1" aria-label="Sidebar">
+          <a
+            href="#"
+            class="text-gray-700 flex items-center px-3 py-2 text-sm font-medium rounded-md space-x-2"
+            aria-current="page"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"
+              />
+            </svg>
+            <span class="truncate"> Add hiring team </span>
+          </a>
+          <a
+            href="#"
+            class="text-gray-700 flex items-center px-3 py-2 text-sm font-medium rounded-md space-x-2"
+            aria-current="page"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <span class="truncate"> Manage connected calendars </span>
+          </a>
+        </nav>
+      </div>
     </div>
   </aside>
 </main>
 
 {#if dateConfirmOpen.open}
   <div
-    use:trapFocus
+    use:trapFocus={{
+      allowOutsideClick: true,
+      clickOutsideDeactivates: false,
+      escapeDeactivates: false,
+    }}
     transition:fade
     on:keydown={(e) => handleKey(e)}
-    class="hidden sm:block fixed z-40 transition-all left-0 top-0 h-96 w-96"
+    class="flex fixed z-40 transition-all left-0 top-0 px-12 h-72 w-96"
     style="left: {dateConfirmOpen.x}px; top:{dateConfirmOpen.y}px;"
   >
     <div
-      class="absolute left-0 top-0 right-0 bg-white rounded-xl shadow-popover max-h-full overflow-y-auto"
-      bind:this={popup}
-      tabindex="-1"
+      class="absolute left-0 top-0 right-0 bg-white rounded-xl shadow-popover h-full  w-full flex-1"
     >
       <div class="p-6">
         <div class="flex items-center pb-6">
@@ -448,34 +697,96 @@
                   y1="6"
                   x2="18"
                   y2="18"
-                /></svg
-              >
+                />
+              </svg>
             </div>
           </button>
         </div>
 
-        <div class="px-4">
-          <div class="py-2 flex space-x-6 text-sm font-medium">
-            <p class="text-gray-500">What</p>
-            <p class="text-gray-700">Interview for Product Designer</p>
+        {#if newEvent && newEvent.start && newEvent.end}
+          <div class="px-4">
+            <div class="py-2 flex space-x-6 text-sm font-medium">
+              <p class="text-gray-500">What</p>
+              <p class="text-gray-700">Interview for Product Designer</p>
+            </div>
+            <div class="py-2 space-x-6 flex text-sm font-medium">
+              <p class="text-gray-500">Who</p>
+              <p class="text-gray-700">Candidate name</p>
+            </div>
+
+            <div class="py-2 flex space-x-6 text-sm font-medium">
+              <p class="text-gray-500">When</p>
+              <p class="text-gray-700">
+                {format(newEvent.start, "PPPP")}
+                <br />
+
+                <Menu bind:open={startTimeMenu}>
+                  <button
+                    type="button"
+                    slot="menu_trigger"
+                    class="font-medium text-gray-700"
+                    bind:this={popup}
+                  >
+                    {format(newEvent.start, "p")}
+                  </button>
+                  <div
+                    slot="menu_context"
+                    class="z-50 h-60 overflow-y-auto rounded-md border border-gray-200 bg-white"
+                  >
+                    {#each timeSlotOptions as timeSlot}
+                      <button
+                        on:click={() => {
+                          startTimeMenu = false;
+                          updateTimes(timeSlot, "start");
+                          popup.focus();
+                        }}
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+                        role="menuitem"
+                      >
+                        {format(timeSlot, "p")}
+                      </button>
+                    {/each}
+                  </div>
+                </Menu>
+                -
+                <Menu bind:open={endTimeMenu}>
+                  <button
+                    type="button"
+                    slot="menu_trigger"
+                    class="font-medium text-gray-700"
+                  >
+                    {format(newEvent.end, "p")}
+                  </button>
+                  <div
+                    slot="menu_context"
+                    class="z-50 h-60 overflow-y-auto rounded-md border border-gray-200 bg-white"
+                  >
+                    {#each timeSlotOptions.slice(2) as timeSlot}
+                      <button
+                        on:click={() => {
+                          endTimeMenu = false;
+                          updateTimes(timeSlot, "end");
+                          popup.focus();
+                        }}
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+                        role="menuitem"
+                      >
+                        {format(timeSlot, "p")}
+                      </button>
+                    {/each}
+                  </div>
+                </Menu>
+                (GMT +1 Dublin)
+              </p>
+            </div>
           </div>
-          <div class="py-2 space-x-6 flex text-sm font-medium">
-            <p class="text-gray-500">Who</p>
-            <p class="text-gray-700">Candidate name</p>
-          </div>
-          <div class="py-2 flex space-x-6 text-sm font-medium">
-            <p class="text-gray-500">When</p>
-            <p class="text-gray-700">
-              Wed, April 17, 2021
-              <br />
-              1pm - 2pm (GMT +1 Dublin)
-            </p>
-          </div>
-        </div>
+        {/if}
 
         <div class="flex justify-end py-1">
           <div class="flex items-center">
-            <Button kind="primary">Schedule</Button>
+            <Button kind="primary" on:click={() => console.log(interviewModel)}>
+              Schedule
+            </Button>
           </div>
         </div>
       </div>
@@ -484,15 +795,7 @@
 {/if}
 
 <style global>
-  .x {
-    pointer-events: none !important;
-  }
-
-  .ec-line::after:nth-child(3n) {
-    border-color: blue !important;
-  }
-
   .ec-body:not(.ec-compact) .ec-line:nth-child(even):after {
-    border-bottom-style: none;
+    border: none !important;
   }
 </style>
