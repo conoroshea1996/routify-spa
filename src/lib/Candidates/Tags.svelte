@@ -28,11 +28,12 @@
 
   let dropDownElement;
   let inputElement;
+  let triggerElement;
 
   const setTag = (input) => {
     const currentTag = input.target.value;
-
     event.stopPropagation();
+
     if (input.key === "Enter") {
       addTag(currentTag, false);
     }
@@ -46,6 +47,9 @@
     } else if (input.key === "Escape") {
       event.preventDefault();
       open = false;
+
+      console.log("TriggerElement");
+      triggerElement.focus();
     }
   };
   function addTag(currentTag, fromOptions) {
@@ -59,18 +63,11 @@
     tags = tags;
     tag = "";
     if (fromOptions) {
-      console.log(currentTag);
       const selectedOption = autoComplete.find(
         (c) => c[autoCompleteKey].toLowerCase() === currentTag.toLowerCase()
       );
-
-      console.log(selectedOption);
-
       currentTag = selectedOption;
     }
-
-    console.log(currentTag, "TAG");
-
     dispatch("tagAdded", {
       tag: currentTag,
       selectedFromOptions: fromOptions,
@@ -117,13 +114,22 @@
     arrelementsmatch = matchs;
     console.log(arrelementsmatch, "Element match");
   }
-  function navigateAutoComplete(autoCompleteIndex, autoCompleteLength, tag) {
+  function navigateAutoComplete(
+    autoCompleteIndex,
+    autoCompleteLength,
+    tag,
+    isOption
+  ) {
     if (!autoComplete) return;
+
+    autoCompleteLength =
+      tag.length > 0 ? autoCompleteLength : autoCompleteLength - 1;
+
     event.preventDefault();
     event.stopPropagation();
     if (event.key === "ArrowDown") {
       // Last element on the list ? Go to the first
-      if (autoCompleteIndex === autoCompleteLength - 1) {
+      if (autoCompleteIndex === autoCompleteLength) {
         dropDownElement.querySelector("li:first-child").focus();
         return;
       }
@@ -131,13 +137,13 @@
     } else if (event.key === "ArrowUp") {
       // First element on the list ? Go to the last
       if (autoCompleteIndex === 0) {
-        dropDownElement.querySelector("li:last-child").focus();
+        inputElement.focus();
         return;
       }
       dropDownElement.querySelectorAll("li")[autoCompleteIndex - 1].focus();
     } else if (event.key === "Enter") {
       // Enter
-      addTag(tag, true);
+      addTag(tag, isOption);
     } else if (event.key === "Escape") {
       // Escape
       arrelementsmatch = [];
@@ -164,16 +170,21 @@
     arrelementsmatch = matchs;
   };
 
-  if (loadAll) {
-    getELementsOnLoad();
-  }
+  const shouldLoadAllWhenOpen = (loadAll, open) => {
+    if (!loadAll || !open) return;
+    if (open) {
+      getELementsOnLoad();
+    }
+  };
+
+  $: shouldLoadAllWhenOpen(loadAll, open);
 </script>
 
 <div
   class="relative inline-block text-left z-10"
   use:clickOutside={() => (open = false)}
 >
-  <span on:click={() => (open = true)}>
+  <span on:click={() => (open = true)} bind:this={triggerElement} tabindex="-1">
     <slot />
   </span>
   <div
@@ -196,7 +207,7 @@
       {placeholder}
     />
 
-    <ul bind:this={dropDownElement} class="space-y-2 max-h-56 overflow-y-auto">
+    <ul bind:this={dropDownElement} class="space-y-2 max-h-52 overflow-y-auto">
       {#if autoComplete && arrelementsmatch.length > 0}
         {#each arrelementsmatch as element, index}
           <li
@@ -205,9 +216,10 @@
               navigateAutoComplete(
                 index,
                 arrelementsmatch.length,
-                element.label[autoCompleteKey]
+                element.label[autoCompleteKey],
+                true
               )}
-            class="focus:bg-gray-50 focus:outline-none px-2 py-1 cursor-pointer hover:bg-gray-50"
+            class="focus:bg-red-200 focus:outline-none px-2 py-1 cursor-pointer hover:bg-gray-50"
             on:click={() => addTag(element.label[autoCompleteKey], true)}
           >
             <Badge size="large" kind={getRandomBadgeColor()}>
@@ -231,13 +243,14 @@
 
       {#if tag.length > 0}
         <li
-          class="bg-gray-50 text-gray-500 focus:bg-gray-100"
+          class="bg-red-200 text-gray-500 focus:bg-gray-100"
           tabindex="-1"
           on:keydown={() =>
             navigateAutoComplete(
               arrelementsmatch.length,
               arrelementsmatch.length,
-              tag
+              tag,
+              false
             )}
         >
           <button
