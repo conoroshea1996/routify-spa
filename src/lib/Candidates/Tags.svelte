@@ -1,6 +1,6 @@
 <script>
   import { Badge, clickOutside } from "hirehive-ui";
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, tick } from "svelte";
   import { getRandomBadgeColor } from "../../utils/badgeType";
   const dispatch = createEventDispatcher();
   let tag = "";
@@ -86,7 +86,9 @@
     autoCompleteValues = autoComplete;
 
     var value = input.target.value;
-
+    if (value === "") {
+      return;
+    }
     // Escape
     if (value == "" || input.key === "Escape" || value.length < minChars) {
       arrelementsmatch = [];
@@ -120,19 +122,31 @@
     tag,
     isOption
   ) {
+    if (!open) {
+      document.activeElement.blur();
+      return;
+    }
     if (!autoComplete) return;
 
-    autoCompleteLength =
-      tag.length > 0 ? autoCompleteLength : autoCompleteLength - 1;
+    const createNewIsShowing = inputElement.value.length > 0;
 
     event.preventDefault();
     event.stopPropagation();
     if (event.key === "ArrowDown") {
       // Last element on the list ? Go to the first
-      if (autoCompleteIndex === autoCompleteLength) {
-        dropDownElement.querySelector("li:first-child").focus();
+      if (createNewIsShowing) {
+        if (autoCompleteIndex === autoCompleteLength) {
+          inputElement.focus();
+          return;
+        }
+        dropDownElement.querySelectorAll("li")[autoCompleteIndex + 1].focus();
         return;
       }
+      if (autoCompleteIndex === autoCompleteLength - 1) {
+        inputElement.focus();
+        return;
+      }
+
       dropDownElement.querySelectorAll("li")[autoCompleteIndex + 1].focus();
     } else if (event.key === "ArrowUp") {
       // First element on the list ? Go to the last
@@ -151,9 +165,14 @@
     }
   }
 
-  const autoFocus = (open) => {
+  const autoFocus = async (open) => {
+    await tick();
     if (open) {
       inputElement.focus();
+    }
+
+    if (loadAll) {
+      getELementsOnLoad();
     }
   };
 
@@ -169,111 +188,113 @@
 
     arrelementsmatch = matchs;
   };
-
-  const shouldLoadAllWhenOpen = (loadAll, open) => {
-    if (!loadAll || !open) return;
-    if (open) {
-      getELementsOnLoad();
-    }
-  };
-
-  $: shouldLoadAllWhenOpen(loadAll, open);
 </script>
 
 <div
   class="relative inline-block text-left z-10"
   use:clickOutside={() => (open = false)}
 >
-  <span on:click={() => (open = true)} bind:this={triggerElement} tabindex="-1">
-    <slot />
-  </span>
-  <div
-    class="origin-top-right absolute transition ease duration-100 left-0 mt-2 w-56 rounded-md 
-     border border-gray-200 bg-white focus:outline-none
-    {open ? 'transform opacity-100 scale-100' : 'transform opacity-0 scale-95'}"
-    role="menu"
-    aria-orientation="vertical"
-    aria-labelledby="menu-button"
+  <button
+    on:click|stopPropagation={() => (open = true)}
+    bind:this={triggerElement}
     tabindex="-1"
   >
-    <input
-      type="text"
-      class="placeholder-gray-400 text-sm focus:text-md focus:ring-transparent focus:border-transparent block w-full border-transparent rounded-md text-gray-900 font-bold"
-      bind:this={inputElement}
-      {name}
-      bind:value={tag}
-      on:keydown={setTag}
-      on:keyup={getMatchElements}
-      {placeholder}
-    />
+    <slot />
+  </button>
+  {#if open}
+    <div
+      class="origin-top-right absolute transition ease duration-100 left-0 mt-2 w-72 rounded-md 
+     border border-gray-200 bg-white focus:outline-none
+    {open ? 'transform opacity-100 scale-100' : 'transform opacity-0 scale-95'}"
+      role="menu"
+      aria-orientation="vertical"
+      aria-labelledby="menu-button"
+      tabindex="-1"
+    >
+      <input
+        type="text"
+        class="placeholder-gray-400 text-sm focus:text-md focus:ring-transparent focus:border-transparent block w-full border-transparent rounded-md text-gray-900 font-bold"
+        bind:this={inputElement}
+        {name}
+        bind:value={tag}
+        on:keydown={setTag}
+        on:keyup={getMatchElements}
+        {placeholder}
+      />
 
-    <ul bind:this={dropDownElement} class="space-y-2 max-h-52 overflow-y-auto">
-      {#if autoComplete && arrelementsmatch.length > 0}
-        {#each arrelementsmatch as element, index}
+      <ul
+        bind:this={dropDownElement}
+        class="space-y-2 max-h-48 overflow-y-auto"
+      >
+        {#if autoComplete && arrelementsmatch.length > 0}
+          {#each arrelementsmatch as element, index}
+            <li
+              tabindex="-1"
+              on:keydown={() =>
+                navigateAutoComplete(
+                  index,
+                  arrelementsmatch.length,
+                  element.label[autoCompleteKey],
+                  true
+                )}
+              class="focus:bg-gray-50 focus:outline-none px-2 py-1 cursor-pointer hover:bg-gray-50"
+              on:click={() => addTag(element.label[autoCompleteKey], true)}
+            >
+              <Badge size="large" kind={getRandomBadgeColor()}>
+                <span class="mx-0.5">{@html element.search}</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-3 w-3 mx-0.5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </Badge>
+            </li>
+          {/each}
+        {/if}
+
+        {#if tag.length > 0}
           <li
+            class="bg-gray-50 text-gray-500 focus:bg-gray-100"
             tabindex="-1"
             on:keydown={() =>
               navigateAutoComplete(
-                index,
                 arrelementsmatch.length,
-                element.label[autoCompleteKey],
-                true
+                arrelementsmatch.length,
+                tag,
+                false
               )}
-            class="focus:bg-red-200 focus:outline-none px-2 py-1 cursor-pointer hover:bg-gray-50"
-            on:click={() => addTag(element.label[autoCompleteKey], true)}
           >
-            <Badge size="large" kind={getRandomBadgeColor()}>
-              <span class="mx-0.5">{@html element.search}</span>
+            <button
+              type="button"
+              on:click={() => addTag(tag, false)}
+              class="w-full inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-bold rounded-md"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-3 w-3 mx-0.5"
+                class="h-5 w-5"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
                 <path
                   fill-rule="evenodd"
-                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                   clip-rule="evenodd"
                 />
               </svg>
-            </Badge>
+              <slot name="create" value={tag}>
+                Create {tag}
+              </slot>
+            </button>
           </li>
-        {/each}
-      {/if}
-
-      {#if tag.length > 0}
-        <li
-          class="bg-red-200 text-gray-500 focus:bg-gray-100"
-          tabindex="-1"
-          on:keydown={() =>
-            navigateAutoComplete(
-              arrelementsmatch.length,
-              arrelementsmatch.length,
-              tag,
-              false
-            )}
-        >
-          <button
-            type="button"
-            on:click={() => addTag(tag, false)}
-            class="w-full inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-bold rounded-md"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                clip-rule="evenodd"
-              />
-            </svg>
-            Create new tag {tag}
-          </button>
-        </li>
-      {/if}
-    </ul>
-  </div>
+        {/if}
+      </ul>
+    </div>
+  {/if}
 </div>

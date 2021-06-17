@@ -198,6 +198,10 @@
                           </svg>
                           Add Tag
                         </button>
+
+                        <span slot="create" let:value>
+                          Create new tag {value}
+                        </span>
                       </Tags>
                     </div>
                     <div
@@ -517,7 +521,7 @@
 </div>
 
 <Modal bind:open={scheduleInterviewModal}>
-  <div slot="content" class="h-full w-screen max-w-screen-2xl bg-gray-50">
-    <Calendars {candidate}/>
+  <div slot="content" class="h-full w-screen max-w-screen-2xl bg-gray-50 p-4">
+    <Calendars {candidate} />
   </div>
 </Modal>

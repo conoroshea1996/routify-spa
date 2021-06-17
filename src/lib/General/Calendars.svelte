@@ -428,14 +428,18 @@
 
     if (!isInView) {
       newEventNode.scrollIntoView();
+      await tick();
     }
 
-    await tick();
-    const { x, y } = newEventNode.getBoundingClientRect();
+    const { x, y, top } = newEventNode.getBoundingClientRect();
 
+    // if its clicked high up in calendar lower postion more;
+    const calculateY = top < 350 ? 250 : 325;
+
+    console.log(newEventNode.getBoundingClientRect());
     dateConfirmOpen.open = true;
-    dateConfirmOpen.x = x - 580;
-    dateConfirmOpen.y = y - 275;
+    dateConfirmOpen.x = x - 425;
+    dateConfirmOpen.y = top - calculateY;
   };
 
   let timeSlotOptions: Date[];
@@ -605,6 +609,10 @@
                 Add another attendee
               </span>
             </button>
+
+            <span slot="create" let:value>
+              Add external attendee {value}
+            </span>
           </Tags>
         </div>
       </div>
