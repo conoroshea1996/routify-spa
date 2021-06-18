@@ -224,7 +224,7 @@
 
       <ul
         bind:this={dropDownElement}
-        class="space-y-2 max-h-48 overflow-y-auto"
+        class="space-y-2 max-h-36 overflow-y-auto"
       >
         {#if autoComplete && arrelementsmatch.length > 0}
           {#each arrelementsmatch as element, index}

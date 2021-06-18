@@ -538,7 +538,6 @@
           <TextInput full />
         </div>
       {/if}
-
       <div class="flex flex-col my-4">
         <p class="text-gray-700 font-medium">Attendees</p>
 
@@ -576,6 +575,7 @@
             </li>
           {/each}
         </ul>
+
         <div
           class="bg-white  border-l border-r border-b border-gray-200 rounded-b-md text-gray-700 flex items-center justify-between p-3 font-medium"
         >

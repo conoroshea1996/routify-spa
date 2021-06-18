@@ -53,5 +53,8 @@ module.exports = {
       },
     },
   },
-  plugins: [require("windicss/plugin/forms")],
+  plugins: [
+    require("windicss/plugin/forms"),
+    require("@tailwindcss/typography"),
+  ],
 };
