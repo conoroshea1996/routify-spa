@@ -2,6 +2,7 @@
   // list of mentions;
   export let items: any[];
   export let command: Function;
+  export let query: string;
   export let cords: (() => DOMRect) | null;
 
   let menuCordinates: DOMRect | null;
@@ -9,7 +10,6 @@
   let selectedIndex = 0;
 
   export const onKeyDown = ({ event }: { event: KeyboardEvent }) => {
-    event.stopPropagation();
     if (event.key === "ArrowUp") {
       upHandler();
       return true;
@@ -21,8 +21,8 @@
     }
 
     if (event.key === "Enter") {
-      event.preventDefault();
-      return selectItem(selectedIndex);
+      selectItem(selectedIndex);
+      return true;
     }
     return false;
   };
@@ -39,9 +39,8 @@
     const item = items[index];
 
     if (item) {
-      command({ id: item });
+      command({ id: item, query });
     }
-    return true;
   }
 </script>
 

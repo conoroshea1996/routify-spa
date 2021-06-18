@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
   import { Editor } from "@tiptap/core";
+  import type { Range } from "@tiptap/core";
   import StarterKit from "@tiptap/starter-kit";
   import TextStyle from "@tiptap/extension-text-style";
   import Mention from "@tiptap/extension-mention";
@@ -9,11 +10,18 @@
   import Button from "hirehive-ui/src/Button/Button.svelte";
   import BulletList from "@tiptap/extension-bullet-list";
   import OrderList from "@tiptap/extension-ordered-list";
+  import { createImageExtension } from "./utils/image/image";
 
   let element: HTMLElement;
   let mentionMenuElement: HTMLElement;
   let editor: Editor;
 
+  const upload = async (file: File): Promise<string> => {
+    console.log(file);
+    return "x";
+  };
+
+  let mentionQuery;
   export let content =
     '<h2>   New header  <span data-mention data-id="Madonna"></span> </h2><p> <span style="font-size:40px;font-color:red;"> Job </span> purpose </p><p>   Provide a brief description of the general nature of the position; an overview of why the job exists; and what the job is to accomplish.   </p><p>   The job purpose is usually no more than a few sentences long.# </p><p> <a href="https://editorjs.io/"><font color="#0070ff">Link test</font></a> </p><h2> <i>  Duties and responsibilities  </i> </h2><p>   List the primary job duties and responsibilities using headings and then give examples of the types of activities under each heading. Identify between three and eight primary duties and responsibilities for the position.   </p><ul> <li>   List the primary duties and responsibilities in order of importance   </li><li>   Begin each statement with an action verb   </li><li>   Use the present tense of verbs   </li><li>   Use gender neutral language   </li><li>   Use generic language   </li><li>   Where appropriate use qualifiers to clarify the task – where, when, why or how often – for example instead of “greet visitor to the office” use “greet visitors to the office in a professional and friendly manner”   </li> </ul><p>  <b> Qualifications </b>  </p><p>   State the minimum qualifications required to successfully perform the job.   </p><p>   Qualifications include   </p><ul> <li>   Education   </li><li>   Specialized knowledge   </li><li>   Skills   </li><li>   Abilities   </li><li>   Other characteristics such as personal characteristics   </li><li>   Professional Certification   </li><li>   Experience   </li> </ul><p>   Perks/Benefits of the role   </p>';
 
@@ -26,6 +34,7 @@
         TextStyle,
         BulletList,
         OrderList,
+        createImageExtension((file) => upload(file)),
         Link.configure({
           openOnClick: false,
         }),
@@ -35,6 +44,7 @@
           },
           suggestion: {
             items: (query) => {
+              mentionQuery = query;
               return [
                 "Lea Thompson",
                 "Cyndi Lauper",
@@ -56,9 +66,31 @@
                 )
                 .slice(0, 5);
             },
+            command: ({ editor, range, props }) => {
+              const removeQueryStart: number = range.to;
+              const removeQueryEnd: number =
+                removeQueryStart + props.query.length;
+
+              const replaceRange: Range = {
+                from: removeQueryStart,
+                to: removeQueryEnd,
+              };
+
+              editor
+                .chain()
+                .focus()
+                .replaceRange(range, "mention", {
+                  ...props,
+                  id: props.id,
+                })
+                // hack for stoping query being added
+                // removing query and adding space
+                .deleteRange(replaceRange)
+                .insertContent(" ")
+                .run();
+            },
             render: () => {
               let component: SvelteComponent;
-
               return {
                 onStart: (props) => {
                   component = new MentionList({
@@ -67,6 +99,7 @@
                       items: props.items,
                       command: props.command,
                       cords: props.clientRect,
+                      query: props.query,
                     },
                   });
                 },
@@ -74,12 +107,13 @@
                   component.$set({
                     items: props.items,
                     cords: props.clientRect,
+                    query: props.query,
                   });
                 },
                 onKeyDown(props) {
                   return component.onKeyDown(props);
                 },
-                onExit() {
+                onExit(props) {
                   component.$destroy();
                 },
               };
@@ -87,11 +121,10 @@
           },
         }),
       ],
-      onTransaction: () => {
+      onTransaction: (props) => {
         // force re-render so `editor.isActive` works as expected
         editor = editor;
       },
-
       //   onSelectionUpdate: (c) => {
       //     console.log(c);
       //   },
@@ -217,12 +250,13 @@
     </button>
   </div>
 {/if}
+
 <div class="my-2 w-full">
   <Button kind="secondary" full on:click={() => save()}>Save</Button>
 </div>
 
 <div bind:this={mentionMenuElement} />
-
+{mentionQuery}
 <div bind:this={element} class="prose mx-auto relative" />
 
 <style global>
