@@ -16,14 +16,17 @@
   let element: HTMLElement;
   let mentionMenuElement: HTMLElement;
   let editor: Editor;
-
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
   const upload = async (file: File): Promise<string> => {
     alert("Upload to server");
+
+    await sleep(700);
     return "https://image.shutterstock.com/image-photo/cat-medical-mask-protective-antiviral-260nw-1684423789.jpg";
   };
 
   let cursorPos: number;
-  let mentionQuery;
   export let content =
     '<h2>   New header  <span data-mention data-id="Madonna"></span> </h2><p> <span style="font-size:40px;font-color:red;"> Job </span> purpose </p><p>   Provide a brief description of the general nature of the position; an overview of why the job exists; and what the job is to accomplish.   </p><p>   The job purpose is usually no more than a few sentences long.# </p><p> <a href="https://editorjs.io/"><font color="#0070ff">Link test</font></a> </p><h2> <i>  Duties and responsibilities  </i> </h2><p>   List the primary job duties and responsibilities using headings and then give examples of the types of activities under each heading. Identify between three and eight primary duties and responsibilities for the position.   </p><ul> <li>   List the primary duties and responsibilities in order of importance   </li><li>   Begin each statement with an action verb   </li><li>   Use the present tense of verbs   </li><li>   Use gender neutral language   </li><li>   Use generic language   </li><li>   Where appropriate use qualifiers to clarify the task – where, when, why or how often – for example instead of “greet visitor to the office” use “greet visitors to the office in a professional and friendly manner”   </li> </ul><p>  <b> Qualifications </b>  </p><p>   State the minimum qualifications required to successfully perform the job.   </p><p>   Qualifications include   </p><ul> <li>   Education   </li><li>   Specialized knowledge   </li><li>   Skills   </li><li>   Abilities   </li><li>   Other characteristics such as personal characteristics   </li><li>   Professional Certification   </li><li>   Experience   </li> </ul><p>   Perks/Benefits of the role   </p>';
 
@@ -47,7 +50,6 @@
           },
           suggestion: {
             items: (query) => {
-              mentionQuery = query;
               return [
                 "Lea Thompson",
                 "Cyndi Lauper",
@@ -166,7 +168,7 @@
       const imageSrc = await upload(file);
 
       //@ts-ignore
-      editor.commands.insertImage(imageSrc, cursorPos);
+      editor.commands.insertImage(imageSrc);
     }
   };
 </script>
@@ -287,7 +289,7 @@
 </div>
 
 <div bind:this={mentionMenuElement} />
-{mentionQuery}
+
 <div bind:this={element} class="prose mx-auto relative" />
 
 <style global>

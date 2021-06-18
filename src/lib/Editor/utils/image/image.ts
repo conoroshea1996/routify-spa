@@ -42,12 +42,16 @@ export const createImageExtension = (uploadFn: UploadFn) => {
     // @ts-ignore
     addCommands() {
       return {
-          insertImage: (imgSrc:string, postion: number) => ({ view}) => {
+          insertImage: (imgSrc:string) => ({commands, view}) => {
             const node = view.state.schema.nodes.image.create({
               src: imgSrc,
             });
-            const transaction = view.state.tr.insert(postion, node);
-            view.dispatch(transaction);
+
+            commands.insertContent({
+              type: node.type.name,
+              attrs: node.attrs,
+            });
+
             return true;
           }
       };
