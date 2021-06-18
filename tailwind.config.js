@@ -1,5 +1,17 @@
 module.exports = {
   theme: {
+    // Prose styling
+    typography: {
+      default: {
+        css: {
+          pre: false,
+          code: false,
+          "pre code": false,
+          "li::before": false,
+        },
+      },
+    },
+    // ----------------------
     blue: {
       50: "#EFF6FF",
       100: "#DBEAFE",

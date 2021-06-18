@@ -41,14 +41,15 @@ export const createImageExtension = (uploadFn: UploadFn) => {
 
     // @ts-ignore
     addCommands() {
-      return (attrs) => (state, dispatch) => {
-        const { selection } = state;
-        const position = selection.$cursor
-          ? selection.$cursor.pos
-          : selection.$to.pos;
-        const node = this.type.create(attrs);
-        const transaction = state.tr.insert(position, node);
-        dispatch(transaction);
+      return {
+          insertImage: (imgSrc:string, postion: number) => ({ view}) => {
+            const node = view.state.schema.nodes.image.create({
+              src: imgSrc,
+            });
+            const transaction = view.state.tr.insert(postion, node);
+            view.dispatch(transaction);
+            return true;
+          }
       };
     },
     addInputRules() {

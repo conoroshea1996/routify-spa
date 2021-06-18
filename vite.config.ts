@@ -1,4 +1,4 @@
-import WindiCSS from 'vite-plugin-windicss'
+import WindiCSS, { preflightTags } from 'vite-plugin-windicss'
 import path from 'path'
 const svelte = require('@sveltejs/vite-plugin-svelte');
 const { defineConfig } = require('vite');
@@ -19,12 +19,14 @@ module.exports = defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
 
   return {
+    preflight: true,
     optimizeDeps: {
       exclude: ['@roxi/routify',"@urql/svelte", "sswr"],
       include: ['clipboard-copy']
     },
     plugins: [
       WindiCSS({
+
       scan: {
         include:["./node_modules/hirehive-ui/src/**/*.svelte",
                 "./node_modules/svelte-inclusive-datepicker/src/**/*.svelte"
