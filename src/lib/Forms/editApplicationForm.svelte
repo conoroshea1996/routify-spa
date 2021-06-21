@@ -1,13 +1,23 @@
 <script>
-  import { Modal, Button, TextInput, Select, Switch } from "hirehive-ui";
+  import {
+    Modal,
+    Button,
+    TextInput,
+    Select,
+    Switch,
+    clickOutside,
+  } from "hirehive-ui";
   import { createEventDispatcher, onMount } from "svelte";
   import { flip } from "svelte/animate";
   import { dndzone } from "svelte-dnd-action";
+  import Tags from "../Candidates/Tags.svelte";
+  import { candidateTags } from "../../stores/tags";
   const dispatch = createEventDispatcher();
 
   const flipDurationMs = 500;
   export let open;
   export let form;
+
   let dragDisabled = false;
 
   const deleteForm = () => {
@@ -50,6 +60,7 @@
   let newQuestion = {
     question: "",
     type: "",
+    options: [],
   };
 
   const addNewQuestionToForm = () => {
@@ -59,6 +70,35 @@
     open = true;
     newQuestion = {};
   };
+
+  let newOptions = [];
+
+  let newOptionLabel = "";
+
+  let addOption = false;
+
+  const handleAddOption = () => {
+    if (addOption) {
+      const newOption = {
+        label: newOptionLabel,
+        id: Math.random().toString(36).slice(-6),
+        optionMenu: false,
+      };
+
+      newOptions = [...newOptions, newOption];
+      newQuestion.options = newOptions;
+      newOptionLabel = "";
+    } else {
+      addOption = true;
+    }
+  };
+
+  const addTagToOption = (e, option) => {
+    const tag = e.detail.tag;
+    option.tag = tag;
+  };
+
+  let activeMenuIndex = null;
 </script>
 
 <Modal bind:open>
@@ -73,7 +113,7 @@
     <Button kind="secondary" on:click={() => deleteForm()}>Delete form</Button>
   </div>
 
-  <div slot="content" class="flex flex-col my-4 px-8">
+  <div slot="content" class="flex flex-col px-8 py-4">
     {#if form.questions}
       <ul
         class="overflow-y-auto"
@@ -211,7 +251,7 @@
     </div>
   </div>
 
-  <div slot="footer" class="flex justify-end mt-4 px-8">
+  <div slot="footer" class="flex justify-end py-4 px-8">
     <div>
       <Button kind="white" on:click={() => (open = false)}>Cancel</Button>
       <Button kind="primary" on:click={() => saveForm()}>Save</Button>
@@ -219,7 +259,7 @@
   </div>
 </Modal>
 
-<Modal bind:open={addQuestionModal}>
+<Modal bind:open={addQuestionModal} hideOverflow={false}>
   <div
     slot="header"
     class="flex justify-between items-center w-screen max-w-5xl py-4 border-b border-gray-200 px-8"
@@ -267,10 +307,92 @@
         <span class="font-medium text-gray-500">Options</span>
       </div>
       <div class="w-3/4">
-        <div
-          class="border border-gray-300 rounded-md shadow-sm px-4 flex justify-between items-center py-2"
-        >
-          <span class="font-medium text-blue-500"> Add Option</span>
+        <div class="bg-white border border-gray-300 rounded-md">
+          <ul class="divide-y divide-gray-300">
+            {#each newQuestion.options as option, index}
+              <li class="px-6 py-3 flex items-center justify-between">
+                <span class="font-medium text-gray-700 flex items-center">
+                  {option.label}
+                </span>
+                {#if !option.tag}
+                  <Tags
+                    on:click={() => (activeMenuIndex = index)}
+                    bind:open={option.optionMenu}
+                    autoComplete={candidateTags}
+                    autoCompleteKey={"name"}
+                    onlyAutocomplete={false}
+                    placeholder="Add Tag"
+                    loadAll={true}
+                    position="right"
+                    on:tagAdded={(e) => addTagToOption(e, option)}
+                  >
+                    <span
+                      class="inline-flex px-3.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      Add Tag
+                    </span>
+                    <span slot="create" let:value>
+                      Add New Tag {value}
+                    </span>
+                  </Tags>
+                {:else}
+                  <span
+                    class="inline-flex rounded-full items-center py-0.5 pl-2.5 pr-1 text-sm font-medium bg-indigo-100 text-indigo-700"
+                  >
+                    {option.tag.name}
+                    <button
+                      type="button"
+                      on:click={() => (option.tag = null)}
+                      class="flex-shrink-0 ml-0.5 h-4 w-4 rounded-full inline-flex items-center justify-center text-indigo-400 hover:bg-indigo-200 hover:text-indigo-500 focus:outline-none focus:bg-indigo-500 focus:text-white"
+                    >
+                      <svg
+                        class="h-2 w-2"
+                        stroke="currentColor"
+                        fill="none"
+                        viewBox="0 0 8 8"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-width="1.5"
+                          d="M1 1l6 6m0-6L1 7"
+                        />
+                      </svg>
+                    </button>
+                  </span>
+                {/if}
+              </li>
+            {/each}
+
+            <li
+              use:clickOutside={() => {
+                addOption = false;
+                newOptionLabel = "";
+              }}
+              class="px-4 space-x-4 flex items-center py-2"
+            >
+              {#if addOption}
+                <TextInput bind:value={newOptionLabel} />
+              {/if}
+              <button
+                on:click={() => handleAddOption()}
+                class="font-medium text-blue-500"
+              >
+                Add Option</button
+              >
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -300,7 +422,7 @@
     </div>
   </div>
 
-  <div slot="footer" class="flex justify-end mt-4 px-8">
+  <div slot="footer" class="flex justify-end py-4 px-8">
     <div>
       <Button
         kind="white"
@@ -315,7 +437,7 @@
   </div>
 </Modal>
 
-<Modal bind:open={editQuestionModal}>
+<Modal bind:open={editQuestionModal} hideOverflow={false}>
   <div
     slot="header"
     class="flex justify-between items-center w-screen max-w-5xl py-4 border-b border-gray-200 px-8"
@@ -350,9 +472,108 @@
         />
       </div>
     </div>
+
+    {#if questionToEdit.options.length > 0}
+      <div class="my-2 flex justify-between item-center">
+        <div class="w-1/4 flex items-center">
+          <span class="font-medium text-gray-500">Options</span>
+        </div>
+        <div class="w-3/4">
+          <div class="bg-white border border-gray-300 rounded-md">
+            <ul class="divide-y divide-gray-300">
+              {#each questionToEdit.options as option, index}
+                <li class="px-6 py-3 flex items-center justify-between">
+                  <span class="font-medium text-gray-700 flex items-center">
+                    {option.label}
+                  </span>
+                  {#if !option.tag}
+                    <Tags
+                      on:click={() => (activeMenuIndex = index)}
+                      bind:open={option.optionMenu}
+                      autoComplete={candidateTags}
+                      autoCompleteKey={"name"}
+                      onlyAutocomplete={false}
+                      placeholder="Add Tag"
+                      loadAll={true}
+                      position="right"
+                      on:tagAdded={(e) => {
+                        option.tag = e.detail.tag;
+                      }}
+                    >
+                      <span
+                        class="inline-flex px-3.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-5 w-5"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        Add Tag
+                      </span>
+                      <span slot="create" let:value>
+                        Add New Tag {value}
+                      </span>
+                    </Tags>
+                  {:else}
+                    <span
+                      class="inline-flex rounded-full items-center py-0.5 pl-2.5 pr-1 text-sm font-medium bg-indigo-100 text-indigo-700"
+                    >
+                      {option.tag.name}
+                      <button
+                        type="button"
+                        on:click={() => (option.tag = null)}
+                        class="flex-shrink-0 ml-0.5 h-4 w-4 rounded-full inline-flex items-center justify-center text-indigo-400 hover:bg-indigo-200 hover:text-indigo-500 focus:outline-none focus:bg-indigo-500 focus:text-white"
+                      >
+                        <svg
+                          class="h-2 w-2"
+                          stroke="currentColor"
+                          fill="none"
+                          viewBox="0 0 8 8"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-width="1.5"
+                            d="M1 1l6 6m0-6L1 7"
+                          />
+                        </svg>
+                      </button>
+                    </span>
+                  {/if}
+                </li>
+              {/each}
+
+              <li
+                use:clickOutside={() => {
+                  addOption = false;
+                  newOptionLabel = "";
+                }}
+                class="px-4 space-x-4 flex items-center py-2"
+              >
+                {#if addOption}
+                  <TextInput bind:value={newOptionLabel} />
+                {/if}
+                <button
+                  on:click={() => handleAddOption()}
+                  class="font-medium text-blue-500"
+                >
+                  Add Option</button
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    {/if}
   </div>
 
-  <div slot="footer" class="flex justify-end mt-4 px-8">
+  <div slot="footer" class="flex justify-end py-4 px-8">
     <div>
       <Button
         kind="white"

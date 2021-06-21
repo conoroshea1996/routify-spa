@@ -18,6 +18,7 @@
   export let onlyAutocomplete;
   export let placeholder = "Find an option";
   export let loadAll = false;
+  export let position = "left";
 
   $: tags = tags || [];
   $: onlyUnique = onlyUnique || true;
@@ -191,11 +192,13 @@
 </script>
 
 <div
-  class="relative inline-block text-left z-10"
+  class="relative inline-block text-left"
   use:clickOutside={() => (open = false)}
 >
   <button
+    class="flex items-center"
     on:click|stopPropagation={() => (open = true)}
+    on:click|stopPropagation
     bind:this={triggerElement}
     tabindex="-1"
   >
@@ -203,8 +206,8 @@
   </button>
   {#if open}
     <div
-      class="origin-top-right absolute transition ease duration-100 left-0 mt-2 w-72 rounded-md 
-     border border-gray-200 bg-white focus:outline-none
+      class="origin-top-right absolute transition ease duration-100 {position}-0 mt-2 w-72 rounded-md
+     border border-gray-200 bg-white focus:outline-none z-10
     {open ? 'transform opacity-100 scale-100' : 'transform opacity-0 scale-95'}"
       role="menu"
       aria-orientation="vertical"

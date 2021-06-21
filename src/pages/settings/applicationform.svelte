@@ -540,6 +540,7 @@
   on:save={(e) => {
     $forms = [...$forms, e.detail.form];
     createFormModal = false;
+    console.log($forms);
   }}
 />
 

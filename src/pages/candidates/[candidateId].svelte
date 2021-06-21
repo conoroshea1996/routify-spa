@@ -7,8 +7,9 @@
     Tab,
     TabPanel,
     Modal,
-    Switch,
-    Select,
+    Menu,
+    TextInput,
+    CheckBox,
   } from "hirehive-ui";
   import Activities from "../../lib/Activites/Activities.svelte";
   import CandidateStatusPicker from "../../lib/Candidates/CandidateStatusPicker.svelte";
@@ -22,7 +23,7 @@
   import { getRandomBadgeColor } from "../../utils/badgeType";
   import TuiCalendar from "../../lib/General/TuiCalendar.svelte";
   import Calendars from "../../lib/General/Calendars.svelte";
-  import Calendar from "tui-calendar";
+  import TextArea from "hirehive-ui/src/Inputs/TextArea.svelte";
 
   export let candidateId: string;
   const parsedCandidateId = parseInt(candidateId);
@@ -60,6 +61,15 @@
   };
 
   let scheduleInterviewModal = false;
+
+  let candidateActionMenu = false;
+  let shareCandidateModal = false;
+
+  let shareCandidateModel = {
+    email: "",
+    message: "",
+    allowExternalNotes: false,
+  };
 </script>
 
 <!-- 3 column wrapper -->
@@ -284,24 +294,62 @@
                     </Button>
                   </CandidateStatusPicker>
 
-                  <Button kind="white" size="small">
-                    <span class="mx-1">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6 text-gray-500"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-                        />
-                      </svg>
+                  <Menu bind:open={candidateActionMenu} position="right">
+                    <span slot="menu_trigger">
+                      <Button kind="white">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+                          />
+                        </svg>
+                      </Button>
                     </span>
-                  </Button>
+
+                    <div
+                      slot="menu_context"
+                      class="w-56 rounded-md  bg-white border border-gray-200 focus:outline-none"
+                      role="menu"
+                      aria-orientation="vertical"
+                      aria-labelledby="menu-button"
+                      tabindex="-1"
+                    >
+                      <div
+                        class="py-1 w-full px-2 border-b border-gray-200"
+                        role="none"
+                      >
+                        <button
+                          on:click={() => {
+                            shareCandidateModal = true;
+                            candidateActionMenu = false;
+                          }}
+                          class="group text-gray-200 w-full rounded-md px-4 py-2 text-sm flex items-center space-x-2 font-medium hover:bg-gray-50 hover:text-gray-700"
+                        >
+                          <span>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="h-5 w-5 group-hover:text-gray-700"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                            >
+                              <path
+                                d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z"
+                              />
+                            </svg>
+                          </span>
+                          <span> Share </span>
+                        </button>
+                      </div>
+                    </div>
+                  </Menu>
                 </div>
               </div>
             </div>
@@ -523,5 +571,99 @@
 <Modal bind:open={scheduleInterviewModal}>
   <div slot="content" class="h-full w-screen max-w-screen-2xl bg-gray-50 p-4">
     <Calendars {candidate} />
+  </div>
+</Modal>
+
+<Modal bind:open={shareCandidateModal}>
+  <div
+    slot="content"
+    class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all max-w-screen-sm"
+  >
+    <div class="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
+      <button
+        type="button"
+        class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        <span class="sr-only">Close</span>
+        <!-- Heroicon name: outline/x -->
+        <svg
+          class="h-6 w-6"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+    </div>
+    <div class="sm:flex sm:items-start">
+      <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+        <h3
+          class="text-lg leading-6 font-medium text-gray-900"
+          id="modal-title"
+        >
+          Share externally
+        </h3>
+
+        <div class="mt-2 mr-6">
+          <div class="mt-2">
+            <p class="text-sm text-gray-500">
+              Sends a link to this candidate profile containing only the CV,
+              cover letter and basic details. Link expires after 14 days.
+
+              <a href="#" class="text-blue-500">Learn more. </a>
+            </p>
+          </div>
+
+          <TextInput
+            full
+            bind:value={shareCandidateModel.email}
+            placeholder="Enter Email"
+          />
+          <TextArea
+            full
+            bind:value={shareCandidateModel.message}
+            placeholder="Add an optional message"
+            rows="2"
+            resize="both"
+          />
+
+          <div class="relative flex items-start mt-2">
+            <div class="flex items-center h-5">
+              <CheckBox
+                size="medium"
+                bind:checked={shareCandidateModel.allowExternalNotes}
+              />
+            </div>
+            <div class="ml-3 text-sm">
+              <label for="offers" class="font-medium text-gray-700">
+                Allow external user to add notes
+              </label>
+              <p class="text-gray-500">
+                They won’t be able to see your notes or other users notes.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-5 sm:mt-4 sm:flex justify-end mr-6">
+      <Button
+        kind="primary"
+        on:click={() => {
+          alert("Log Model");
+          console.log(shareCandidateModel);
+        }}
+      >
+        Share
+      </Button>
+    </div>
   </div>
 </Modal>
