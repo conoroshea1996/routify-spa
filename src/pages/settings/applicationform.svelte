@@ -6,7 +6,6 @@
   let errors = {
     continueForm: false,
   };
-
   // modal statuses
   let personalDetailsModal = false;
   let workExperienceModal = false;
@@ -54,11 +53,7 @@
         <div class="my-2">
           <p class="flex items-center font-medium text-gray-500">
             Create questions that can be added to any job application form.
-             <a href="#"
-              class="text-blue-500 ml-1"
-            >
-              Learn more.
-            </a>
+            <a href="#" class="text-blue-500 ml-1"> Learn more. </a>
           </p>
         </div>
       </div>
