@@ -61,15 +61,24 @@
     allowExternalNotes: false,
   };
 
-  let candidateFeedback: any[];
+  interface GroupedFeedBack {
+    name: string;
+    values: any[];
+    canCompare: boolean;
+  }
 
-  candidateFeedback = groupBy(feedback, "companyFormId");
+  let groupedFeedback = groupBy(feedback, "companyFormId");
+  let candidateFeedback: GroupedFeedBack[];
 
-  candidateFeedback.forEach((group) => {
-    group.name = group.values[0].name;
-    group.canCompare = group.values.some(
-      (v) => v.questions != null && v.questions.length > 0
-    );
+  groupedFeedback.forEach((group) => {
+    const groupedFeedback: GroupedFeedBack = {
+      name: group.values[0].name,
+      canCompare: group.values.some(
+        (v) => v.questions != null && v.questions.length > 0
+      ),
+      values: group.values,
+    };
+    candidateFeedback = [...candidateFeedback, groupedFeedback];
   });
 </script>
 

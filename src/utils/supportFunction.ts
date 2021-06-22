@@ -1,9 +1,4 @@
-interface groupByResult {
-    key: string,
-    values: any[]
-}
-
-export const groupBy = (arr: any[], propertyKey: string): groupByResult[] => {
+export const groupBy = (arr: any[], propertyKey: string) => {
     var groups = {};
     arr.forEach(function(el) {
         var key = el[propertyKey];
