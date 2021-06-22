@@ -336,7 +336,7 @@
     </div>
   </div>
 
-  <div slot="footer" class="flex justify-end mt-4 max-w-3xl px-8">
+  <div slot="footer" class="flex justify-end py-4 max-w-3xl px-8">
     <div>
       <Button kind="white" on:click={() => (editHiringTeam = false)}
         >Cancel</Button

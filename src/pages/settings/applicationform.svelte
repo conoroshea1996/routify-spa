@@ -1,16 +1,8 @@
 <script>
-  import {
-    Button,
-    Modal,
-    Switch,
-    CheckBox,
-    TextInput,
-    Select,
-  } from "hirehive-ui";
+  import { Button, Modal, Switch, CheckBox, TextInput } from "hirehive-ui";
   import { forms } from "../../types/forms";
   import EditForm from "../../lib/Forms/editApplicationForm.svelte";
   import AddApplicationForm from "../../lib/Forms/addApplicationForm.svelte";
-  const flipDurationMs = 150;
   let errors = {
     continueForm: false,
   };
@@ -61,7 +53,8 @@
 
         <div class="my-2">
           <p class="flex items-center font-medium text-gray-500">
-            Create questions that can be added to any job application form. <a
+            Create questions that can be added to any job application form.
+             <a href="#"
               class="text-blue-500 ml-1"
             >
               Learn more.
@@ -367,7 +360,7 @@
     </div>
   </div>
 
-  <div slot="footer" class="flex justify-end mt-4 px-4">
+  <div slot="footer" class="flex justify-end py-4 px-4">
     <div>
       <Button kind="white" on:click={() => (personalDetailsModal = false)}
         >Cancel</Button
@@ -484,7 +477,7 @@
     </div>
   </div>
 
-  <div slot="footer" class="flex justify-end mt-4 px-4">
+  <div slot="footer" class="flex justify-end py-4 px-4">
     <div>
       <Button kind="white" on:click={() => (workExperienceModal = false)}
         >Cancel</Button

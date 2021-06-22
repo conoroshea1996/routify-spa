@@ -24,6 +24,8 @@
   import TuiCalendar from "../../lib/General/TuiCalendar.svelte";
   import Calendars from "../../lib/General/Calendars.svelte";
   import TextArea from "hirehive-ui/src/Inputs/TextArea.svelte";
+  import { feedback } from "../../stores/feedback";
+  import { groupBy } from "../../utils/supportFunction";
 
   export let candidateId: string;
   const parsedCandidateId = parseInt(candidateId);
@@ -33,19 +35,7 @@
   let otherApplications: any[] = candidate.otherApplications;
   let candidateStatusMenu = false;
 
-  const activeApplication = {
-    jobId: candidate.jobId,
-    jobTitle: candidate.jobTitle,
-    personApplicationId: candidate.id,
-    date: candidate.dateApplied,
-    parentStatusId: candidate.parentStatusId,
-    statusId: candidate.statusId,
-    statusName: candidate.statusName,
-    active: true,
-    canView: true,
-  };
-
-  otherApplications = [...otherApplications, activeApplication];
+  let otherCandidates: any[] = $candidates;
 
   let tagsMenu = false;
 
@@ -70,6 +60,17 @@
     message: "",
     allowExternalNotes: false,
   };
+
+  let candidateFeedback: any[];
+
+  candidateFeedback = groupBy(feedback, "companyFormId");
+
+  candidateFeedback.forEach((group) => {
+    group.name = group.values[0].name;
+    group.canCompare = group.values.some(
+      (v) => v.questions != null && v.questions.length > 0
+    );
+  });
 </script>
 
 <!-- 3 column wrapper -->
@@ -87,19 +88,20 @@
           </div>
 
           <ul class="divide-y divide-gray-100">
-            {#if otherApplications.length > 0}
-              {#each otherApplications as otherApplication}
+            {#if otherCandidates.length > 0}
+              {#each otherCandidates as otherCandidate}
                 <li
-                  class="p-6 flex justify-between items-center {otherApplication.active
+                  class="p-6 flex justify-between items-center 
+                  {otherCandidate.id === parsedCandidateId
                     ? 'bg-yellow-100'
                     : 'bg-gray-50'}"
                 >
                   <span class="font-medium text-gray-900">
-                    {candidate.fullName}
+                    {otherCandidate.fullName}
                   </span>
                   <span>
                     <Badge size="large" kind="gray">
-                      {otherApplication.statusName}
+                      {otherCandidate.statusName}
                     </Badge>
                   </span>
                 </li>
@@ -395,6 +397,24 @@
                             </svg>
                           </div>
                         </div>
+
+                        {#if candidate.otherApplications.length > 0}
+                          <ul class="space-y-3 mt-4">
+                            {#each otherApplications as application}
+                              <li
+                                class="bg-white shadow overflow-hidden px-4 py-4 sm:px-6 sm:rounded-md flex items-center justify-between"
+                              >
+                                <div class="bg-gray-300 h-8 w-8 rounded-full" />
+
+                                <p class="text-gray-500">
+                                  {application.jobTitle}
+                                </p>
+
+                                <p class="text-gray-500">{application.date}</p>
+                              </li>
+                            {/each}
+                          </ul>
+                        {/if}
                       </div>
                     </div>
                   </div>
@@ -525,9 +545,103 @@
 
                         <TabPanel panelId={3}>
                           <div
-                            class=" my-2 mx-auto sm:px-6 lg:px-8 border border-dashed border-gray-400 h-32"
+                            class="bg-white px-4 py-6 shadow sm:rounded-lg sm:px-6"
                           >
-                            <h1 class="text-xl text-gray-500">Feedback</h1>
+                            <div
+                              class="sm:flex sm:justify-between sm:items-baseline"
+                            >
+                              <h1 class="font-bold text-gray-900">Feedback</h1>
+
+                              <Button kind="secondary">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  class="h-5 w-5"
+                                  viewBox="0 0 20 20"
+                                  fill="currentColor"
+                                >
+                                  <path
+                                    d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
+                                  />
+                                  <path
+                                    d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
+                                  />
+                                </svg>
+
+                                <span class="mx-1"> Give feedback </span>
+                              </Button>
+                            </div>
+
+                            {#each candidateFeedback as feedbackGroup}
+                              <div class="mt-2">
+                                <p class="text-gray-500 font-medium">
+                                  {feedbackGroup.name}
+                                </p>
+                              </div>
+                              <ul class="mt-4 space-y-4">
+                                {#each feedbackGroup.values as feedback}
+                                  <li
+                                    class="border border-gray-200 rounded-md p-5 my-2"
+                                  >
+                                    <div
+                                      class="flex items-center justify-between"
+                                    >
+                                      <div class="flex items-center space-x-3">
+                                        <div
+                                          class="bg-yellow-100 text-yellow-400 p-2 rounded-md shadow-sm mr-4"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                          >
+                                            <path
+                                              d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"
+                                            />
+                                            <path
+                                              fill-rule="evenodd"
+                                              d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                              clip-rule="evenodd"
+                                            />
+                                          </svg>
+                                        </div>
+                                        <p
+                                          class="text-sm font-medium text-gray-900 truncate"
+                                        >
+                                          From: {feedback.reviewerName}
+                                        </p>
+
+                                        <p
+                                          class="text-sm font-medium text-gray-500 truncate"
+                                        >
+                                          {feedback.dateComplete ||
+                                            feedback.dateCreated}
+                                        </p>
+                                      </div>
+                                      <button
+                                        class="ml-2 flex-shrink-0 flex cursor-pointer"
+                                      >
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          class="h-5 w-5 text-gray-500"
+                                          viewBox="0 0 20 20"
+                                          fill="currentColor"
+                                        >
+                                          <path
+                                            d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                                          />
+                                          <path
+                                            fill-rule="evenodd"
+                                            d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                                            clip-rule="evenodd"
+                                          />
+                                        </svg>
+                                      </button>
+                                    </div>
+                                  </li>
+                                {/each}
+                              </ul>
+                            {/each}
                           </div>
                         </TabPanel>
 
@@ -654,7 +768,7 @@
         </div>
       </div>
     </div>
-    <div class="mt-5 sm:mt-4 sm:flex justify-end mr-6">
+    <div class="mt-5 py-4 sm:flex justify-end mr-6">
       <Button
         kind="primary"
         on:click={() => {

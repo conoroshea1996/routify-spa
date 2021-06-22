@@ -102,6 +102,12 @@
     $activeTabId = 1;
   };
 
+  const openShare = () => {
+    jobActionMenu = false;
+    jobSidepanel = true;
+    $activeTabId = 3;
+  };
+
   const openActivity = () => {
     jobActionMenu = false;
     jobSidepanel = true;
@@ -270,7 +276,7 @@
 
         <div class="flex space-x-2">
           <Button kind="white">Edit</Button>
-          <Button kind="white">Share</Button>
+          <Button kind="white" on:click={() => openShare()}>Share</Button>
           <Button kind="white" on:click={() => openNotes()}>
             <span>Notes</span>
 
@@ -382,6 +388,7 @@
               </button>
 
               <button
+                on:click={() => openShare()}
                 class="group text-gray-200 w-full rounded-md px-4 py-2 text-sm flex items-center space-x-2 font-medium hover:bg-gray-50 hover:text-gray-700"
               >
                 <span>
@@ -755,10 +762,10 @@
 </div>
 
 {#if jobSidepanel}
-  <Sidepanel bind:open={jobSidepanel}>
-    <TabsContainer bind:selectedTab={activeTabId}>
-      <div class="w-screen max-w-2xl h-screen">
-        <TabBar class="flex space-x-8 px-4">
+  <Sidepanel bind:open={jobSidepanel} klass="bg-gray-50">
+    <div class="max-h-100vh w-screen bg-gray-50 max-w-xl">
+      <TabsContainer bind:selectedTab={activeTabId}>
+        <TabBar class="flex space-x-8 px-4 bg-white">
           <Tab
             TabId={1}
             class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center {$activeTabId ===
@@ -804,7 +811,7 @@
         <!-- Notes -->
         <TabPanel
           panelId={1}
-          class="flex-1 grid grid-rows-4"
+          class="flex-1 grid grid-rows-4 focus:outline-none"
           style="height:94%;"
         >
           <ul class="space-y-3 row-span-3 overflow-y-auto py-2 px-4 bg-gray-50">
@@ -939,7 +946,7 @@
         </TabPanel>
 
         <!-- Activity -->
-        <TabPanel panelId={2} class="h-full">
+        <TabPanel panelId={2} class="h-full focus:outline-transparent">
           <!-- Activity Feed -->
 
           <div class=" flex bg-gray-50 h-full">
@@ -948,7 +955,10 @@
         </TabPanel>
 
         <!-- Share -->
-        <TabPanel panelId={3} class="h-full bg-gray-50">
+        <TabPanel
+          panelId={3}
+          class="h-full bg-gray-50 focus:outline-transparent"
+        >
           <div class="px-10">
             <h1 class="text-gray-900 text-lg py-4 font-bold">
               Share on social media
@@ -1088,8 +1098,8 @@
         </TabPanel>
 
         <TabPanel panelId={4} />
-      </div>
-    </TabsContainer>
+      </TabsContainer>
+    </div>
   </Sidepanel>
 {/if}
 
@@ -1132,7 +1142,7 @@
     </div>
 
     <div class="flex justify-end px-4">
-      <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+      <div class="mt-5 py-4 sm:flex sm:flex-row-reverse">
         <button
           type="button"
           on:click={() => deleteJob()}

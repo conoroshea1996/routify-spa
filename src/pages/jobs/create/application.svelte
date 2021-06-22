@@ -309,7 +309,7 @@
     </div>
   </div>
 
-  <div slot="footer" class="flex justify-end mt-4 px-8">
+  <div slot="footer" class="flex justify-end py-4 px-8">
     <div>
       <Button kind="white">Cancel</Button>
       <Button kind="primary">Apply changes</Button>
